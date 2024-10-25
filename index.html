@@ -40,11 +40,10 @@
         .button-container {
             position: fixed;
             width: 300px;
-            height: auto;
-            aspect-ratio: 3/1;
-            /* Mantém proporção do botão */
-            top: 75%;
-            left: 50%;
+            height: 50px;
+            aspect-ratio: 4/0.5;
+            top: 72%;
+            left: 49%;
             transform: translate(-50%, -50%);
             z-index: 100;
             display: flex;
@@ -53,9 +52,10 @@
 
             transition: all 0.3s ease;
             background-image: url('./assets/Arte 360 data 3.png');
-            background-position: 50% 72%;
-            background-size: auto;
+            background-position: 49% 70%;
+            background-size: fixed;
             cursor: pointer;
+            position: absolute;
         }
 
         .button-container:hover {
