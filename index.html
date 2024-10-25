@@ -20,16 +20,6 @@
             padding: 0;
             overflow-x: hidden;
         }
-        .container {
-            /*max-width: 800px;*/
-            height: 100vh;
-            /* Ocupa 100% da altura da viewport */
-            margin-top: 0px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
 
         .header {
             background: linear-gradient(to right, #000000, hsl(0, 0%, 0%), #000000);
@@ -46,28 +36,43 @@
         .header img {
             max-width: 150px;
         }
-          .button-container {
-              position: fixed;
-              width: 300px; /* Largura fixa do container */
-              top: 75%; /* Centraliza verticalmente */
-              left: 50%; /* Centraliza horizontalmente */
-              transform: translate(-50%, -50%); /* Ajuste fino da centralização */
-              z-index: 100; /* Garante que o botão fique acima do background */
-          }
+        .button-container {
+            position: fixed;
+            width: 20vw; /* Width relative to viewport width */
+            min-width: 200px; /* Minimum width to maintain readability */
+            max-width: 400px; /* Maximum width for larger screens */
+            top: 73%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+        }
 
-          .btn-primary.orange {
-              background-color: #3d7517;
-              border-color: #3d7517;
-              padding: 15px 30px;
-              font-size: 28px;
-              width: 300px; /* Largura fixa do botão */
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona sombra para destacar */
-              transition: transform 0.2s ease;
-          }
+        .btn-primary.orange {
+            background-color: #3d7517;
+            border-color: #3d7517;
+            padding: 1.5vh 2vw; /* Padding relative to viewport */
+            font-size: calc(16px + 0.5vw); /* Responsive font size */
+            width: 100%; /* Takes full width of container */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+            white-space: nowrap; /* Prevents text from wrapping */
+        }
 
-          .btn-primary.orange:hover {
-              transform: scale(1.05); /* Efeito de zoom suave ao passar o mouse */
-          }
+        .btn-primary.orange:hover {
+            transform: scale(1.05); /* Efeito de zoom suave ao passar o mouse */
+        }
+
+        /* Media queries for better mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            .button-container {
+                width: 80vw;
+            }
+            
+            .btn-primary.orange {
+                font-size: calc(14px + 1vw);
+                padding: 2vh 4vw;
+            }
+        }
         .btn-primary.purple {
             background-color: #ff0000;
             border-color: #ff0000;
