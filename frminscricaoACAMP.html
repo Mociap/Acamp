@@ -28,23 +28,39 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+          .header {
+              background: linear-gradient(45deg, #000000, #000000);
+              padding: 20px;
+              text-align: center;
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              z-index: 1000;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+              height: 60px;
+          }
 
-        .header {
-            background: linear-gradient(45deg, #000000, #000000);
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+          .logo-circle {
+              width: 120px;
+              height: 120px;
+              background: white;
+              border-radius: 50%;
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -30%);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          }
 
-        .header img {
-            max-width: 150px;
-        }
-
+          .logo-circle img {
+              max-width: 150px;
+              height: auto;
+              margin-top: 15px;
+          }
         .divider {
             width: 75%;
             height: 2px;
@@ -124,10 +140,12 @@
 
 <body>
     <div class="header">
-        <img src="./assets/Logo 360 sem Fundo.png" alt="Logo ACAMP">
+        <div class="logo-circle">
+            <img src="./assets/Logo_360 black-sem fundo.png" alt="Logo ACAMP">
+        </div>
     </div>
     <div class="container">
-        <h2 class="text-center mb-4 font-weight-bold">INSCRIÇÕES ACAMP 360º 2025</h2>
+        <h2 class="text-center mb-4 font-weight-bold">INSCRIÇÕES 360º CAMP 2025</h2>
         <div class="divider"></div>
 
         <div class="info-box">
@@ -171,11 +189,11 @@
 
             </div>
             <div class="form-group">
-                <label for="contato">Nome para Contato</label>
+                <label for="contato">Nome do Responsável</label>
                 <input type="text" class="form-control" id="contato" required>
             </div>
             <div class="form-group">
-                <label for="fonecontato">Celular do Contato</label>
+                <label for="fonecontato">Celular do Responsável</label>
                 <input type="tel" class="form-control" id="fonecontato" placeholder="(99) 99999-9999" required>
             </div>
             <div class="form-row">
@@ -223,7 +241,7 @@
                     <input type="text" class="form-control" id="outraIgreja">
                 </div>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label>Tem alguma alergia?
                     <label class="switch">
                         <input type="checkbox" id="alergia">
@@ -234,7 +252,7 @@
             <div class="form-group" id="quaisAlergiasDiv" style="display: none;">
                 <label for="quaisAlergias">Quais alergias?</label>
                 <input type="text" class="form-control" id="quaisAlergias">
-            </div>
+            </div>-->
             <!-- <div class="form-group">
                 <label>Pago?
                     <label class="switch">
@@ -365,6 +383,21 @@
                 age--;
             }
             document.getElementById('idade').value = age + " anos";
+            // New code for handling responsible person fields
+            const contatoField = document.getElementById('contato');
+            const fonecontatoField = document.getElementById('fonecontato');
+
+            if (age < 18) {
+                contatoField.required = true;
+                fonecontatoField.required = true;
+                contatoField.parentElement.querySelector('label').innerHTML = 'Nome Responsável (Menor de 18) *';
+            } else {
+                contatoField.required = false;
+                fonecontatoField.required = false;
+                contatoField.value = '';
+                fonecontatoField.value = '';
+                contatoField.parentElement.querySelector('label').innerHTML = 'Nome Responsável (Menor de 18)';
+            }
         });
 
         // Mostrar/esconder campo de outra igreja
@@ -425,8 +458,8 @@
                     cidade: document.getElementById('cidade').value,
                     igreja: document.getElementById('igreja').value,
                     outraIgreja: document.getElementById('outraIgreja').value,
-                    alergia: document.getElementById('alergia').checked,
-                    quaisAlergias: document.getElementById('quaisAlergias').value,
+                    //alergia: document.getElementById('alergia').checked, Saiu porque não faz sentido
+                    //quaisAlergias: document.getElementById('quaisAlergias').value,
                     //pago: document.getElementById('pago').checked,
                     //nomePagante: document.getElementById('nomePagante').value,
                     dataPreenchimento: document.getElementById('dataPreenchimento').value,

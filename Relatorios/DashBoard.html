@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard 360º CAMP</title>
+    <link rel="shortcut icon" href="3.ico" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background: linear-gradient(45deg, #000000, #000000);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .counter-card {
+            text-align: center;
+            background: linear-gradient(45deg, #ff9100, #ff9100);
+            color: white;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Dashboard 360º CAMP</h1>
+    </div>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dashboard-card counter-card">
+                    <h3>Total de Inscritos</h3>
+                    <h2 id="totalInscritos">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="dashboard-card">
+                    <h4>Inscritos por Faixa Etária</h4>
+                    <div class="chart-container">
+                        <canvas id="faixaEtariaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="dashboard-card">
+                    <h4>Inscritos por Bairro</h4>
+                    <div class="chart-container">
+                        <canvas id="bairroChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dashboard-card">
+                    <h4>Inscritos por Igreja</h4>
+                    <div class="chart-container">
+                        <canvas id="igrejaChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC31C1X13eqVAOq_o5K2evI8q3GOfnpOpo",
+            authDomain: "iebi-2e84e.firebaseapp.com",
+            projectId: "iebi-2e84e",
+            storageBucket: "iebi-2e84e.appspot.com",
+            messagingSenderId: "634456198202",
+            appId: "1:634456198202:web:8b4de1b4def23a49303903"
+        };
+
+        const colorPalette = {
+            cold: '#48c9b0',     // Soft Teal - Cold
+            coolMid: '#82e0aa',  // Mint Green - Cool
+            mild: '#f7dc6f',     // Soft Yellow - Mild
+            warm: '#f0b27a',     // Peach - Warm
+            hot: '#ec7063'       // Coral Red - Hot
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function getFaixaEtaria(idade) {
+            idade = parseInt(idade);
+            if (idade < 14) return "< 14 Anos";
+            if (idade >= 14 && idade <= 17) return "Entre 14 e 17 Anos";
+            if (idade >= 18 && idade <= 25) return "Entre 18 e 25 Anos";
+            if (idade >= 26 && idade <= 35) return "Entre 25 Anos e 35 Anos";
+            return "> 35 Anos";
+        }
+
+        async function loadDashboardData() {
+            const snapshot = await db.collection("ACAMP360").get();
+            const data = snapshot.docs.map(doc => doc.data());
+
+            document.getElementById('totalInscritos').textContent = data.length;
+
+            const faixasEtarias = {
+                "< 14 Anos": 0,
+                "Entre 14 e 17 Anos": 0,
+                "Entre 18 e 25 Anos": 0,
+                "Entre 25 Anos e 35 Anos": 0,
+                "> 35 Anos": 0
+            };
+
+            data.forEach(inscrito => {
+                const idade = parseInt(inscrito.idade);
+                const faixa = getFaixaEtaria(idade);
+                faixasEtarias[faixa]++;
+            });
+
+            const bairros = {};
+            data.forEach(inscrito => {
+                bairros[inscrito.bairro] = (bairros[inscrito.bairro] || 0) + 1;
+            });
+
+            const igrejas = {};
+            data.forEach(inscrito => {
+                const igreja = inscrito.igreja === 'Outra' ? inscrito.outraIgreja : inscrito.igreja;
+                igrejas[igreja] = (igrejas[igreja] || 0) + 1;
+            });
+
+            createFaixaEtariaChart(faixasEtarias);
+            createBairroChart(bairros);
+            createIgrejaChart(igrejas);
+        }
+
+        function createFaixaEtariaChart(data) {
+            const ctx = document.getElementById('faixaEtariaChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        label: 'Quantidade de Inscritos',
+                        data: Object.values(data),
+                        backgroundColor: [
+                            colorPalette.cold,
+                            colorPalette.coolMid,
+                            colorPalette.mild,
+                            colorPalette.warm,
+                            colorPalette.hot
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createBairroChart(data) {
+            const ctx = document.getElementById('bairroChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: [
+                            colorPalette.cold,
+                            colorPalette.coolMid,
+                            colorPalette.mild,
+                            colorPalette.warm,
+                            colorPalette.hot
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        function createIgrejaChart(data) {
+            const ctx = document.getElementById('igrejaChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(data),
+                    datasets: [{
+                        data: Object.values(data),
+                        backgroundColor: [
+                            colorPalette.cold,
+                            colorPalette.coolMid,
+                            colorPalette.mild,
+                            colorPalette.warm,
+                            colorPalette.hot
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        loadDashboardData();
+    </script>
+</body>
+</html>
