@@ -236,9 +236,64 @@
                         <option value="Outra">Outra Igreja</option>
                     </select>
                 </div>
-                <div class="form-group col-md-6" id="outraIgrejaDiv" style="display: none;">
-                    <label for="outraIgreja">Qual é a sua Célula?</label>
-                    <input type="text" class="form-control" id="celula">
+                <div class="form-group col-md-6" id="celulaDiv" style="display: none;">
+                    <label for="celula">Qual é a sua Célula?</label>
+                    <select class="form-control" id="celula">
+                        <option value="">Selecione</option>
+                        <option value="ALLAN / AILDA">ALLAN / AILDA</option>
+                        <option value="ANA / JOYCE">ANA / JOYCE</option>
+                        <option value="ANDERSON / LAURISA">ANDERSON / LAURISA</option>
+                        <option value="ANDERSON / SAMARA">ANDERSON / SAMARA</option>
+                        <option value="ANNA">ANNA</option>
+                        <option value="BELMIRO / MÔNICA">BELMIRO / MÔNICA</option>
+                        <option value="BERNADETE">BERNADETE</option>
+                        <option value="CAIO / BIANCA">CAIO / BIANCA</option>
+                        <option value="CLÁUDIO / JAQUELINE">CLÁUDIO / JAQUELINE</option>
+                        <option value="CLOVILDA / JOSIMAR">CLOVILDA / JOSIMAR</option>
+                        <option value="CLOVIS / LÍVIA">CLOVIS / LÍVIA</option>
+                        <option value="DANIEL / EVELLYN">DANIEL / EVELLYN</option>
+                        <option value="EDUARDO / EMÍLIA">EDUARDO / EMÍLIA</option>
+                        <option value="FÁBIO / EDNALVA">FÁBIO / EDNALVA</option>
+                        <option value="FABRÍCIO / NADJA">FABRÍCIO / NADJA</option>
+                        <option value="FERNANDES / ZELÂNDIA">FERNANDES / ZELÂNDIA</option>
+                        <option value="FLAVIO / CRISTIANE">FLAVIO / CRISTIANE</option>
+                        <option value="FLÁVIO / LUCIÉLLEN">FLÁVIO / LUCIÉLLEN</option>
+                        <option value="GABRIEL / BARBARA">GABRIEL / BARBARA</option>
+                        <option value="GABRIEL / RAYZA">GABRIEL / RAYZA</option>
+                        <option value="GABRIEL / REBECCA">GABRIEL / REBECCA</option>
+                        <option value="GILBERTO / MARCIA">GILBERTO / MARCIA</option>
+                        <option value="GILBERTO / MÁRCIA">GILBERTO / MÁRCIA</option>
+                        <option value="GUILHERME / MIGUEL">GUILHERME / MIGUEL</option>
+                        <option value="GUSTAVO / MARIANA">GUSTAVO / MARIANA</option>
+                        <option value="GUTEMBERG / ELAINE">GUTEMBERG / ELAINE</option>
+                        <option value="JAIRO / ROSANA">JAIRO / ROSANA</option>
+                        <option value="JOHN / KAMYLLE">JOHN / KAMYLLE</option>
+                        <option value="JOSINALDO / ELAINE">JOSINALDO / ELAINE</option>
+                        <option value="KAMYLLE / MARIA">KAMYLLE / MARIA</option>
+                        <option value="LEONARDO / LIDIA">LEONARDO / LIDIA</option>
+                        <option value="LINDEMBERG / ADRIANA / LUCIENE">LINDEMBERG / ADRIANA / LUCIENE</option>
+                        <option value="LÍVIA / NICOLY">LÍVIA / NICOLY</option>
+                        <option value="LUCAS / SAYMON">LUCAS / SAYMON</option>
+                        <option value="MANUEL / FERNANDA">MANUEL / FERNANDA</option>
+                        <option value="MARCIO / MARCIA">MARCIO / MARCIA</option>
+                        <option value="MARIA">MARIA</option>
+                        <option value="NATIVA">NATIVA</option>
+                        <option value="PATRÍCIA">PATRÍCIA</option>
+                        <option value="PEDRO / FILIPE">PEDRO / FILIPE</option>
+                        <option value="RAMON / NAZELIA">RAMON / NAZELIA</option>
+                        <option value="RAQUEL">RAQUEL</option>
+                        <option value="REBEKAH / MONIQUE">REBEKAH / MONIQUE</option>
+                        <option value="RHODNEY / KAREN">RHODNEY / KAREN</option>
+                        <option value="RHODNEY / KAREN - ARCA">RHODNEY / KAREN - ARCA</option>
+                        <option value="RIBAMAR / JOSELMA">RIBAMAR / JOSELMA</option>
+                        <option value="RICARDO / ROSANE">RICARDO / ROSANE</option>
+                        <option value="RUBENS / EMILLY">RUBENS / EMILLY</option>
+                        <option value="SAMUEL / RAISSA">SAMUEL / RAISSA</option>
+                        <option value="SAULO / ERIKA">SAULO / ERIKA</option>
+                        <option value="VANDERLEI / ANDRÉA">VANDERLEI / ANDRÉA</option>
+                        <option value="WALTER / JESSYKA">WALTER / JESSYKA</option>
+                        <option value="YANN / SARAH">YANN / SARAH</option>
+                    </select>
                 </div>
                 <div class="form-group col-md-6" id="outraIgrejaDiv" style="display: none;">
                     <label for="outraIgreja">Qual Igreja?</label>
@@ -405,16 +460,18 @@
         });
 
         // Mostrar/esconder campo de outra igreja
-        document.getElementById('igreja').addEventListener('change', function () {
-            document.getElementById('outraIgrejaDiv').style.display =
-                this.value === 'Outra' ? 'block' : 'none';
-        });
+            document.getElementById('igreja').addEventListener('change', function () {
+                document.getElementById('outraIgrejaDiv').style.display =
+                    this.value === 'Outra' ? 'block' : 'none';
+                document.getElementById('celulaDiv').style.display = 
+                    this.value === 'IEB Intermares' ? 'block' : 'none';
+            });
 
         // Mostrar/esconder campo de alergias
-        document.getElementById('alergia').addEventListener('change', function () {
-            document.getElementById('quaisAlergiasDiv').style.display =
-                this.checked ? 'block' : 'none';
-        });
+        //document.getElementById('alergia').addEventListener('change', function () {
+        //    document.getElementById('quaisAlergiasDiv').style.display =
+        //        this.checked ? 'block' : 'none';
+        //});
 
         // Definir data de preenchimento
         document.getElementById('dataPreenchimento').value = new Date().toLocaleDateString('pt-BR');
