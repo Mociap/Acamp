@@ -36,30 +36,33 @@
         .header img {
             max-width: 150px;
         }
-        .button-container {
-            position: fixed;
-            width: 20vw; /* Width relative to viewport width */
-            min-width: 200px; /* Minimum width to maintain readability */
-            max-width: 400px; /* Maximum width for larger screens */
-            top: 73%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 100;
-        }
-
+          .button-container {
+              position: fixed;
+              width: 300px;
+              height: 100px; /* Ajuste conforme a altura desejada do botão */
+              top: 75%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              z-index: 100;
+              background-image: url('./assets/Arte 360 data 3.png');
+              background-position: 50% 73%; /* Substitua X Y pelas coordenadas da parte da imagem que você quer usar */
+              background-size: auto;
+              cursor: pointer;
+          }
         .btn-primary.orange {
-            background-color: #3d7517;
-            border-color: #3d7517;
-            padding: 1.5vh 2vw; /* Padding relative to viewport */
-            font-size: calc(16px + 0.5vw); /* Responsive font size */
-            width: 100%; /* Takes full width of container */
+            background-color: transparent;
+            border-color: transparent;
+            padding: 1.5vh 2vw;
+            font-size: calc(16px + 0.5vw);
+            width: 100%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s ease;
-            white-space: nowrap; /* Prevents text from wrapping */
+            white-space: nowrap;
         }
 
         .btn-primary.orange:hover {
-            transform: scale(1.05); /* Efeito de zoom suave ao passar o mouse */
+            transform: scale(1.05);
+            /* Efeito de zoom suave ao passar o mouse */
         }
 
         /* Media queries for better mobile responsiveness */
@@ -67,12 +70,13 @@
             .button-container {
                 width: 80vw;
             }
-            
+
             .btn-primary.orange {
                 font-size: calc(14px + 1vw);
                 padding: 2vh 4vw;
             }
         }
+
         .btn-primary.purple {
             background-color: #ff0000;
             border-color: #ff0000;
@@ -94,7 +98,7 @@
         }
 
         .orange-bullet {
-            background-color: #3d7517;
+            background-color: transparent;
         }
 
         .purple-bullet {
@@ -139,9 +143,9 @@
 <body>
 
     <div class="text-center button-container">
-        <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscreva-se Aqui</a>
+        <a href="frminscricaoACAMP.html" class="btn btn-primary orange"></a>
     </div>
-    
+
     <!--<div class="text-center" style="padding-top: 330px;">
         <div class="arrow">⬅</div>
         <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscreva-se Aqui</a>
@@ -173,7 +177,7 @@
                 </div>
             </div>
         </div> -->
-        <!--<div class="text-center mt-4">
+    <!--<div class="text-center mt-4">
             <img src="" alt="Logo ACAMP" class="img-fluid" style="width: 30%;">
         </div>
     </div>-->
