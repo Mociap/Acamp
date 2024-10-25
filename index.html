@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <style>
-        /*body {
+        body {
             background-image: url('./assets/Arte 360 data 2.jpg');
             background-size: cover;
             background-attachment: fixed;
@@ -17,7 +17,7 @@
             font-family: 'Montserrat', sans-serif;
             color: #333;
             padding-top: 100px;
-        }*/
+        }
 
         .container {
             /*max-width: 800px;*/
@@ -28,13 +28,6 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-image: url('./assets/Arte 360 data 2.jpg');
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-            font-family: 'Montserrat', sans-serif;
-            color: #333;
-
         }
 
         .header {
@@ -52,20 +45,26 @@
         .header img {
             max-width: 150px;
         }
+          .button-container {
+              position: fixed;
+              top: 75%; /* Centraliza verticalmente */
+              left: 50%; /* Centraliza horizontalmente */
+              transform: translate(-50%, -50%); /* Ajuste fino da centralização */
+              z-index: 100; /* Garante que o botão fique acima do background */
+          }
 
-        .btn-primary.orange {
-            background-color: #3d7517;
-            border-color: #3d7517;
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-size: 28px;
-        }
+          .btn-primary.orange {
+              background-color: #3d7517;
+              border-color: #3d7517;
+              padding: 15px 30px;
+              font-size: 28px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adiciona sombra para destacar */
+              transition: transform 0.2s ease;
+          }
 
-        .btn-primary.orange:hover {
-            background-color: #3d7517;
-            border-color: #3d7517;
-        }
-
+          .btn-primary.orange:hover {
+              transform: scale(1.05); /* Efeito de zoom suave ao passar o mouse */
+          }
         .btn-primary.purple {
             background-color: #ff0000;
             border-color: #ff0000;
@@ -131,17 +130,19 @@
 
 <body>
 
+    <div class="text-center button-container">
+        <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscreva-se Aqui</a>
+    </div>
+    
     <!--<div class="text-center" style="padding-top: 330px;">
         <div class="arrow">⬅</div>
         <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscreva-se Aqui</a>
     </div>-->
 
-    <div class="container">
-        <div class="text-center" style="padding-top: 365px;">
-            <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscreva-se Aqui</a>
-        </div>
+    <!-- <div class="container">
 
-        <!--            
+
+                   
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -167,7 +168,7 @@
         <!--<div class="text-center mt-4">
             <img src="" alt="Logo ACAMP" class="img-fluid" style="width: 30%;">
         </div>
-    </div>
+    </div>-->
 </body>
 
 </html>
