@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <style>
-        body {
+        /*body {
             background-image: url('./assets/Arte 360 data 2.jpg');
             background-size: cover;
             background-attachment: fixed;
@@ -17,15 +17,24 @@
             font-family: 'Montserrat', sans-serif;
             color: #333;
             padding-top: 100px;
-        }
+        }*/
 
         .container {
-            max-width: 800px;
-            margin-top: 80px;
+            /*max-width: 800px;*/
+            height: 100vh;
+            /* Ocupa 100% da altura da viewport */
+            margin-top: 0px;
             background-color: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-image: url('./assets/Arte 360 data 2.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Montserrat', sans-serif;
+            color: #333;
+
         }
 
         .header {
@@ -91,10 +100,12 @@
             color: #ffffff;
             animation: bounce 2s infinite;
             display: block;
-            margin-bottom: -150px;
+            margin-bottom: 0px;
             transform: rotate(45deg);
             position: relative;
-            left: 150px;
+            left: 200px;
+            overflow: hidden;
+            height: 100vh;
         }
 
         @keyframes bounce {
@@ -120,16 +131,17 @@
 
 <body>
 
-    <div class="text-center" style="padding-top: 330px;">
+    <!--<div class="text-center" style="padding-top: 330px;">
         <div class="arrow">⬅</div>
         <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscreva-se Aqui</a>
-    </div>
+    </div>-->
 
-    <!--<div class="container">
-        <h1 class="text-center mb-4">360º CAMP 2025</h1>
-        <h3 class="text-center mb-4">Inscreva-se para o 360º Camp 2025</h3>-->
+    <div class="container">
+        <div class="text-center" style="padding-top: 365px;">
+            <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscreva-se Aqui</a>
+        </div>
 
-    <!--            
+        <!--            
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -152,10 +164,10 @@
                 </div>
             </div>
         </div> -->
-    <!--<div class="text-center mt-4">
+        <!--<div class="text-center mt-4">
             <img src="" alt="Logo ACAMP" class="img-fluid" style="width: 30%;">
         </div>
-    </div>-->
+    </div>
 </body>
 
 </html>
