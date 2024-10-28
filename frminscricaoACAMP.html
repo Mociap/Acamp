@@ -17,7 +17,7 @@
             background-position: center;
             font-family: 'Montserrat', sans-serif;
             color: #333;
-            padding-top: 100px;
+            padding-top: 80px;
         }
 
         .container {
@@ -28,39 +28,73 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-          .header {
-              background: linear-gradient(45deg, #000000, #000000);
-              padding: 20px;
-              text-align: center;
-              position: fixed;
-              top: 0;
-              left: 0;
-              right: 0;
-              z-index: 1000;
-              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-              height: 60px;
-          }
 
-          .logo-circle {
-              width: 120px;
-              height: 120px;
-              background: white;
-              border-radius: 50%;
-              position: absolute;
-              left: 50%;
-              top: 50%;
-              transform: translate(-50%, -30%);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-          }
+        .header {
+            background: linear-gradient(45deg, #000000, #000000);
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 80px;
+        }
 
-          .logo-circle img {
-              max-width: 150px;
-              height: auto;
-              margin-top: 15px;
-          }
+        .logo-circle {
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -30%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo-circle img {
+            max-width: 150px;
+            height: auto;
+            margin-top: 15px;
+        }
+
+        .logo-circle.scrolled {
+            left: 60px;
+            transform: translate(0, -30%);
+            background: transparent;
+            box-shadow: none;
+            top: 5px;
+        }
+
+        .scrolled .logo-circle img {
+            content: url('../assets/Logo 360 sem Fundo.png');
+            width: 180px;
+            height: auto;
+            margin-top: -80;
+        }
+
+        .header-title {
+            color: white;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: none;
+        }
+
+        .header-title.visible {
+            opacity: 1;
+            display: block;
+        }
+
+
         .divider {
             width: 75%;
             height: 2px;
@@ -135,6 +169,40 @@
         input:checked+.slider:before {
             transform: translateX(16px);
         }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 120px;
+            }
+
+            .container {
+                max-width: 89%;
+                margin: 10px 5px;
+                padding: 15px;
+                border-radius: 0;
+            }
+
+            .logo-circle.scrolled {
+                left: 3px;
+                transform: translate(0, -30%);
+            }
+
+            .scrolled .logo-circle img {
+                width: 96px;
+                /* Redução de 20% de 120px */
+                height: auto;
+            }
+            .header-title {
+        font-size: 1rem;
+    }
+    .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+        }
     </style>
 </head>
 
@@ -143,6 +211,7 @@
         <div class="logo-circle">
             <img src="./assets/Logo_360 black-sem fundo.png" alt="Logo ACAMP">
         </div>
+        <h2 class="header-title">INSCRIÇÕES 360º CAMP 2025</h2>
     </div>
     <div class="container">
         <h2 class="text-center mb-4 font-weight-bold">INSCRIÇÕES 360º CAMP 2025</h2>
@@ -460,12 +529,12 @@
         });
 
         // Mostrar/esconder campo de outra igreja
-            document.getElementById('igreja').addEventListener('change', function () {
-                document.getElementById('outraIgrejaDiv').style.display =
-                    this.value === 'Outra' ? 'block' : 'none';
-                document.getElementById('celulaDiv').style.display = 
-                    this.value === 'IEB Intermares' ? 'block' : 'none';
-            });
+        document.getElementById('igreja').addEventListener('change', function () {
+            document.getElementById('outraIgrejaDiv').style.display =
+                this.value === 'Outra' ? 'block' : 'none';
+            document.getElementById('celulaDiv').style.display =
+                this.value === 'IEB Intermares' ? 'block' : 'none';
+        });
 
         // Mostrar/esconder campo de alergias
         //document.getElementById('alergia').addEventListener('change', function () {
@@ -567,6 +636,24 @@
                     });
             });
         });
+
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('.header');
+            const logoCircle = document.querySelector('.logo-circle');
+            const headerTitle = document.querySelector('.header-title');
+
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+                logoCircle.classList.add('scrolled');
+                headerTitle.classList.add('visible');
+            } else {
+                header.classList.remove('scrolled');
+                logoCircle.classList.remove('scrolled');
+                headerTitle.classList.remove('visible');
+            }
+        });
+
+
     </script>
 </body>
 
