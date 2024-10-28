@@ -16,13 +16,16 @@
             background-position: center;
             font-family: 'Montserrat', sans-serif;
             color: #333;
-            padding-top: 20px;
+            padding-top: 0px;
+            overflow: hidden;
         }
 
         .container-main {
             max-width: 800px;
-            margin-top: 0px;
-            background-color: rgba(255, 255, 255, 0.7);
+            min-height: 600px;         /* Define altura mínima */
+            height: 80vh; 
+            margin-top: -45px;
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -65,6 +68,31 @@
             transform: translateX(-50%);
             max-width: 100%;
         }
+        .mobile-image {
+    display: none;
+}
+
+.desktop-image {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-image {
+        display: block;
+    }
+    .desktop-image {
+        display: none;
+    }
+    .container-main {
+        min-height: 100px;    /* Diminui altura mínima */
+                 /* Diminui altura relativa */
+        margin-top: -25px;    /* Ajusta margem superior */
+    }
+    .btn-bottom {
+        bottom: 0px;  /* Ajusta a posição para cima em telas menores */
+    }
+}
+
     </style>
 </head>
 
@@ -72,7 +100,8 @@
     <div class="container-fluid px-4 py-5">
         <div class="row justify-content-center">
             <div class="container-main col-12 col-sm-10 col-md-8 col-lg-6 position-relative">
-                <img src="./assets/Texto.png" alt="Texto" class="img-fluid mb-4">
+                <img src="./assets/Texto.png" alt="Texto" class="img-fluid mb-4 desktop-image">
+                <img src="./assets/Texto Celular.png" alt="Texto" class="img-fluid mb-4 mobile-image">
                 <a href="frminscricaoACAMP.html">
                     <img src="./assets/Botão.png" alt="Botão" class="img-fluid btn-bottom">
                 </a>
@@ -82,3 +111,4 @@
 </body>
 
 </html>
+
