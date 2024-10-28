@@ -19,18 +19,18 @@
             padding-top: 20px;
         }
 
-        .container {
+        .container-main {
             max-width: 800px;
             margin-top: 0px;
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         .header {
             background: linear-gradient(to right, #000000, hsl(0, 0%, 0%), #000000);
-            padding: 10px;
+            padding: 0px;
             text-align: center;
             position: fixed;
             top: 0;
@@ -44,28 +44,6 @@
             max-width: 150px;
         }
 
-        .btn-primary.orange {
-            background-color: #3d7517;
-            border-color: #3d7517;
-            margin-top: 10px;
-        }
-
-        .btn-primary.orange:hover {
-            background-color: #3d7517;
-            border-color: #3d7517;
-        }
-
-        .btn-primary.purple {
-            background-color: #ff0000;
-            border-color: #ff0000;
-            margin-top: 10px;
-        }
-
-        .btn-primary.purple:hover {
-            background-color: #ff0000;
-            border-color: #ff0000;
-        }
-
         .bullet {
             display: inline-block;
             width: 10px;
@@ -75,13 +53,6 @@
             vertical-align: middle;
         }
 
-        .orange-bullet {
-            background-color: #3d7517;
-        }
-
-        .purple-bullet {
-            background-color: #ff0000;
-        }
 
         .position-relative {
             position: relative;
@@ -89,7 +60,7 @@
 
         .btn-bottom {
             position: absolute;
-            bottom: -200px;
+            bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
             max-width: 100%;
@@ -98,39 +69,15 @@
 </head>
 
 <body>
-
-    <div class="container position-relative">
-        <img src="./assets/Texto.png" alt="Texto" class="img-fluid">
-        <a href="frminscricaoACAMP.html">
-            <img src="./assets/Botão.png" alt="Botão" class="btn-bottom">
-        </a>
-    </div>
-        <!--            
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold"><span class="bullet orange-bullet"></span> Inscrição GERAL</h5>
-                        <p class="card-text">Inscreva-se para o 360º Camp 2025</p>
-                        <a href="frminscricaoACAMP.html" class="btn btn-primary orange">Inscrever Aqui</a>
-                    </div>
-                </div>
+    <div class="container-fluid px-4 py-5">
+        <div class="row justify-content-center">
+            <div class="container-main col-12 col-sm-10 col-md-8 col-lg-6 position-relative">
+                <img src="./assets/Texto.png" alt="Texto" class="img-fluid mb-4">
+                <a href="frminscricaoACAMP.html">
+                    <img src="./assets/Botão.png" alt="Botão" class="img-fluid btn-bottom">
+                </a>
             </div>
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title font-weight-bold"><span class="bullet purple-bullet"></span> Inscrição para TRABALHADORES</h5>
-                        <p class="card-text">Vc que irá servir em algum ministério, aguarde as inscrições para TRABALHADORES</p>
-                        
-                        <p class="card-text">Vc que irá servir em algum ministério, inscreva-se nesse link.</p>
-                        <a href="frmTrabalhadores.html" class="btn btn-primary purple">Inscrever Trabalhador</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <!--<div class="text-center mt-4">
-            <img src="" alt="Logo ACAMP" class="img-fluid" style="width: 30%;">
-        </div>-->
+        </div>
     </div>
 </body>
 
