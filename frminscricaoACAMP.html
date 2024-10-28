@@ -479,10 +479,18 @@
         document.getElementById('acampForm').addEventListener('submit', function (e) {
             e.preventDefault();
 
-            // Validar campos ocultos
-            const outraIgrejaVisivel = document.getElementById('outraIgrejaDiv').style.display === 'block';
-            const quaisAlergiasVisivel = document.getElementById('quaisAlergiasDiv').style.display === 'block';
 
+
+
+            // First check if elements exist before accessing their style property
+            const outraIgrejaDiv = document.getElementById('outraIgrejaDiv');
+            const quaisAlergiasDiv = document.getElementById('quaisAlergiasDiv');
+
+            // Only check display style if elements exist
+            const outraIgrejaVisivel = outraIgrejaDiv ? outraIgrejaDiv.style.display === 'block' : false;
+            const quaisAlergiasVisivel = quaisAlergiasDiv ? quaisAlergiasDiv.style.display === 'block' : false;
+
+            // Rest of your validation logic
             if (outraIgrejaVisivel && !document.getElementById('outraIgreja').value.trim()) {
                 alert('Por favor, preencha o campo "Qual Igreja?".');
                 return;
@@ -548,7 +556,6 @@
                         this.reset();
                         // Resetar campos adicionais
                         document.getElementById('outraIgrejaDiv').style.display = 'none';
-                        document.getElementById('quaisAlergiasDiv').style.display = 'none';
                         document.getElementById('dataPreenchimento').value = new Date().toLocaleDateString('pt-BR');
                         document.getElementById('idade').value = '';
                     })
