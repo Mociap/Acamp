@@ -311,93 +311,27 @@
                     <label for="celula">Qual é a sua Célula?</label>
                     <select class="form-control" id="celula">
                         <option value="">Selecione seu Líder de Célula</option>
-                        <option value="AIRTON / EMÍLIA">AIRTON / EMÍLIA</option>
-                        <option value="ALLAN / AILDA">ALLAN / AILDA</option>
-                        <option value="ANA / JOYCE">ANA / JOYCE</option>
-                        <option value="ANNA BEATRIZ">ANNA BEATRIZ</option>
-                        <option value="ANDERSON / LAURISA">ANDERSON / LAURISA</option>
-                        <option value="ANDERSON / SAMARA">ANDERSON / SAMARA</option>
-                        <option value="ANNA">ANNA</option>
-                        <option value="BELMIRO / MÔNICA">BELMIRO / MÔNICA</option>
-                        <option value="BERNADETE">BERNADETE</option>
-                        <option value="CAIO / BIANCA">CAIO / BIANCA</option>
-                        <option value="CLÁUDIO / JAQUELINE">CLÁUDIO / JAQUELINE</option>
-                        <option value="CLOVILDA / JOSIMAR">CLOVILDA / JOSIMAR</option>
-                        <option value="CLOVIS / ANDREI">CLOVIS / ANDREI</option>
-                        <option value="DANIEL / EVELLYN">DANIEL / EVELLYN</option>
-                        <option value="EDUARDO / NICOLLY">EDUARDO / NYCOLLY</option>
-                        <option value="FÁBIO / EDNALVA">FÁBIO / EDNALVA</option>
-                        <option value="FABRÍCIO / NADJA">FABRÍCIO / NADJA</option>
-                        <option value="FERNANDES / ZELÂNDIA">FERNANDES / ZELÂNDIA</option>
-                        <option value="FLAVIO / CRISTIANE">FLAVIO / CRISTIANE</option>
-                        <option value="FLÁVIO / LUCIÉLLEN">FLÁVIO / LUCIÉLLEN</option>
-                        <option value="GABRIEL / BARBARA">GABRIEL / BARBARA</option>
-                        <option value="GABRIEL / RAYZA">GABRIEL / RAYZA</option>
-                        <option value="GABRIEL / REBECCA">GABRIEL / REBECCA</option>
-                        <option value="GILBERTO / MARCIA">GILBERTO / MARCIA</option>
-                        <option value="GUILHERME / MIGUEL">GUILHERME / MIGUEL</option>
-                        <option value="GUSTAVO / MARIANA">GUSTAVO / MARIANA</option>
-                        <option value="GUTEMBERG / ELAINE">GUTEMBERG / ELAINE</option>
-                        <option value="JONATHAN / ALINE">JONATHAN / ALINE</option>
-                        <option value="JAIRO / ROSANA">JAIRO / ROSANA</option>
-                        <option value="JOHN / KAMYLLE">JOHN / KAMYLLE</option>
-                        <option value="JOSINALDO / ELAINE">JOSINALDO / ELAINE</option>
-                        <option value="JÚNIOR / FERNANDA">JÚNIOR / FERNANDA</option>
-                        <option value="KAMYLLE / MARIA">KAMYLLE / MARIA</option>
-                        <option value="LEONARDO / LIDIA">LEONARDO / LIDIA</option>
-                        <option value="LINDEMBERG / ADRIANA / LUCIENE">LINDEMBERG / ADRIANA / LUCIENE</option>
-                        <option value="LÍVIA / NICOLY">LÍVIA / NICOLY</option>
-                        <option value="LUCAS / SAYMON">LUCAS / SAYMON</option>
-                        <option value="MARCIO / MARCIA">MARCIO / MARCIA</option>
-                        <option value="MARIA">MARIA</option>
-                        <option value="MARIANA / ANA">MARIANA / ANA</option>
-                        <option value="NATIVA">NATIVA</option>
-                        <option value="PATRÍCIA">PATRÍCIA</option>
-                        <option value="PEDRO / FILIPE">PEDRO / FILIPE</option>
-                        <option value="RAMON / NAZELIA">RAMON / NAZELIA</option>
-                        <option value="RAQUEL">RAQUEL</option>
-                        <option value="REBEKAH / MONIQUE">REBEKAH / MONIQUE</option>
-                        <option value="RHODNEY / KAREN">RHODNEY / KAREN</option>
-                        <option value="RHODNEY / KAREN - ARCA">RHODNEY / KAREN - ARCA</option>
-                        <option value="RIBAMAR / JOSELMA">RIBAMAR / JOSELMA</option>
-                        <option value="RICARDO / ROSANE">RICARDO / ROSANE</option>
-                        <option value="RUBENS / EMILLY">RUBENS / EMILLY</option>
-                        <option value="SAMUEL / RAISSA">SAMUEL / RAISSA</option>
-                        <option value="SAULO / ERIKA">SAULO / ERIKA</option>
-                        <option value="VANDERLEI / ANDRÉA">VANDERLEI / ANDRÉA</option>
-                        <option value="WALTER / JESSYKA">WALTER / JESSYKA</option>
-                        <option value="YANN / SARAH">YANN / SARAH</option>
                     </select>
                 </div>
+
+                <div class="form-row" id="infoRedeDiv" style="display: none;">
+                    <div class="form-group col-md-6">
+                        <label for="supervisor">Supervisor</label>
+                        <input type="text" class="form-control" id="supervisor" readonly>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="rede">Rede</label>
+                        <input type="text" class="form-control" id="rede" readonly>
+                    </div>
+                </div>
+
+
                 <div class="form-group col-md-6" id="outraIgrejaDiv" style="display: none;">
                     <label for="outraIgreja">Qual Igreja?</label>
                     <input type="text" class="form-control" id="outraIgreja">
                 </div>
             </div>
-            <!--<div class="form-group">
-                <label>Tem alguma alergia?
-                    <label class="switch">
-                        <input type="checkbox" id="alergia">
-                        <span class="slider"></span>
-                    </label>
-                </label>
-            </div>
-            <div class="form-group" id="quaisAlergiasDiv" style="display: none;">
-                <label for="quaisAlergias">Quais alergias?</label>
-                <input type="text" class="form-control" id="quaisAlergias">
-            </div>-->
-            <!-- <div class="form-group">
-                <label>Pago?
-                    <label class="switch">
-                        <input type="checkbox" id="pago">
-                        <span class="slider"></span>
-                    </label>
-                </label>
-            </div>
-            <div class="form-group" id="nomePaganteDiv">
-                <label for="nomePagante">Nome no Comprovante de quem Fez ou Fará o Pix</label>
-                <input type="text" class="form-control" id="nomePagante">
-            </div> -->
+
             <div class="form-group">
                 <label for="dataPreenchimento">Data de Preenchimento</label>
                 <input type="text" class="form-control" id="dataPreenchimento" readonly>
@@ -410,6 +344,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.0/vanilla-masker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="firebaseConfig2.js"></script>
 
     <script>
         // Configuração do Firebase
@@ -541,14 +476,73 @@
                 this.value === 'IEB Intermares' ? 'block' : 'none';
         });
 
-        // Mostrar/esconder campo de alergias
-        //document.getElementById('alergia').addEventListener('change', function () {
-        //    document.getElementById('quaisAlergiasDiv').style.display =
-        //        this.checked ? 'block' : 'none';
-        //});
+        function carregarLideres() {
+            const selectCelula = document.getElementById('celula');
 
-        // Definir data de preenchimento
-        document.getElementById('dataPreenchimento').value = new Date().toLocaleDateString('pt-BR');
+            db2.collection("estruturacelula")
+                .orderBy("conclider")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        const option = document.createElement('option');
+                        option.value = doc.data().conclider;
+                        option.textContent = doc.data().conclider;
+                        selectCelula.appendChild(option);
+                    });
+                });
+        }
+
+        document.getElementById('celula').addEventListener('change', function () {
+            const liderSelecionado = this.value;
+            const infoRedeDiv = document.getElementById('infoRedeDiv');
+
+            if (liderSelecionado) {
+                db2.collection("estruturacelula")
+                    .where("conclider", "==", liderSelecionado)
+                    .get()
+                    .then((querySnapshot) => {
+                        querySnapshot.forEach((doc) => {
+                            document.getElementById('supervisor').value = doc.data().supervisor;
+                            document.getElementById('rede').value = doc.data().rede;
+                            infoRedeDiv.style.display = 'flex';
+                        });
+                    });
+            } else {
+                document.getElementById('supervisor').value = '';
+                document.getElementById('rede').value = '';
+                infoRedeDiv.style.display = 'none';
+            }
+        });
+
+
+        // Chame a função quando a igreja for selecionada
+        document.getElementById('igreja').addEventListener('change', function () {
+            const celulaDiv = document.getElementById('celulaDiv');
+            const outraIgrejaDiv = document.getElementById('outraIgrejaDiv');
+            const infoRedeDiv = document.getElementById('infoRedeDiv');
+
+            if (this.value === 'IEB Intermares') {
+                celulaDiv.style.display = 'block';
+                outraIgrejaDiv.style.display = 'none';
+                carregarLideres();
+            } else if (this.value === 'Outra') {
+                celulaDiv.style.display = 'none';
+                outraIgrejaDiv.style.display = 'block';
+                infoRedeDiv.style.display = 'none';
+                document.getElementById('supervisor').value = '';
+                document.getElementById('rede').value = '';
+                document.getElementById('celula').value = '';
+            } else {
+                celulaDiv.style.display = 'none';
+                outraIgrejaDiv.style.display = 'none';
+                infoRedeDiv.style.display = 'none';
+                document.getElementById('supervisor').value = '';
+                document.getElementById('rede').value = '';
+                document.getElementById('celula').value = '';
+            }
+        });
+
+        // Definir data de preenchimento        document.getElementById('dataPreenchimento').value = new Date().toLocaleDateString('pt-BR');
 
         document.getElementById('acampForm').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -600,12 +594,10 @@
                     bairro: document.getElementById('bairro').value,
                     cidade: document.getElementById('cidade').value,
                     igreja: document.getElementById('igreja').value,
-                    celula: document.getElementById('celula').value, // Adicionar esta linha
+                    celula: document.getElementById('celula').value,
+                    supervisor: document.getElementById('supervisor').value,
+                    rede: document.getElementById('rede').value,
                     outraIgreja: document.getElementById('outraIgreja').value,
-                    //alergia: document.getElementById('alergia').checked, Saiu porque não faz sentido
-                    //quaisAlergias: document.getElementById('quaisAlergias').value,
-                    //pago: document.getElementById('pago').checked,
-                    //nomePagante: document.getElementById('nomePagante').value,
                     dataPreenchimento: document.getElementById('dataPreenchimento').value,
                     anoacamp: '2025',
                     dtRegistro: new Date().toISOString()

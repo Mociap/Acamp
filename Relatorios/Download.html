@@ -70,6 +70,14 @@
             </select>
         </div>
         <button onclick="downloadDados()" class="btn btn-primary btn-block">Download</button>
+        <!-- Adicionar após o botão de download existente -->
+        <button onclick="excluirDados()" class="btn btn-danger btn-block mt-2">Excluir Dados da Coleção</button>
+
+        <div class="form-group mt-3">
+            <label for="uploadExcel">Upload Excel</label>
+            <input type="file" class="form-control-file" id="uploadExcel" accept=".xlsx">
+        </div>
+        <button onclick="uploadDados()" class="btn btn-success btn-block">Upload para Coleção</button>
     </div>
 
     <script>
@@ -111,6 +119,60 @@
                 console.error("Erro ao buscar dados: ", error);
                 alert('Erro ao buscar dados. Por favor, tente novamente.');
             });
+        }
+
+        function excluirDados() {
+            const colecao = document.getElementById('colecaoSelect').value;
+            if (!colecao) {
+                alert('Por favor, selecione uma coleção');
+                return;
+            }
+
+            if (confirm(`Tem certeza que deseja excluir todos os dados da coleção ${colecao}?`)) {
+                db.collection(colecao).get().then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        doc.ref.delete();
+                    });
+                    alert('Dados excluídos com sucesso!');
+                }).catch((error) => {
+                    console.error("Erro ao excluir dados: ", error);
+                    alert('Erro ao excluir dados. Por favor, tente novamente.');
+                });
+            }
+        }
+
+        function uploadDados() {
+            const colecao = document.getElementById('colecaoSelect').value;
+            const file = document.getElementById('uploadExcel').files[0];
+            
+            if (!colecao || !file) {
+                alert('Por favor, selecione uma coleção e um arquivo Excel');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {type: 'array'});
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+
+                const batch = db.batch();
+                
+                jsonData.forEach((item) => {
+                    const docRef = db.collection(colecao).doc();
+                    batch.set(docRef, item);
+                });
+
+                batch.commit().then(() => {
+                    alert('Dados importados com sucesso!');
+                    document.getElementById('uploadExcel').value = '';
+                }).catch((error) => {
+                    console.error("Erro ao importar dados: ", error);
+                    alert('Erro ao importar dados. Por favor, tente novamente.');
+                });
+            };
+            reader.readAsArrayBuffer(file);
         }
     </script>
 </body>
