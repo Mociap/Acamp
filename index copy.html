@@ -22,12 +22,9 @@
         }
 
         .container-main {
-            width: 800px;
-            /* Largura fixa de 800px */
-            max-width: 800px;
-            /* Mantém limitação máxima para compatibilidade */
-            height: 720px;
-            /* Altura fixa de 720px */
+            width: 800px;          /* Largura fixa de 800px */
+        max-width: 800px;      /* Mantém limitação máxima para compatibilidade */
+        height: 720px;         /* Altura fixa de 720px */
             margin-top: -45px;
             background-color: rgba(255, 255, 255, 0);
             padding: 20px;
@@ -65,72 +62,42 @@
             position: relative;
         }
 
-        .btn-gradient {
-            background: linear-gradient(to right, #D35400, #F39C12);
-            /* Laranja para amarelo */
-            color: white;
-            font-weight: bold;
-            padding: 12px 30px;
-            border-radius: 50px;
-            font-size: 18px;
-            text-transform: uppercase;
-            border: none;
-            box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4);
-            transition: all 0.3s ease;
+        .btn-bottom {
             position: absolute;
-            top: 55%;
+            bottom: -150px;
             left: 50%;
             transform: translateX(-50%);
-            text-decoration: none;
-            min-width: 200px;
-            text-align: center;
+            max-width: 100%;
         }
-
-        .btn-gradient:hover {
-            background: linear-gradient(to right, #E67E22, #C0392B);
-            /* Inverte o gradiente no hover */
-            transform: translateX(-50%) scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.6);
-            color: white;
-            text-decoration: none;
-        }
-
         .mobile-image {
-            display: none;
+    display: none;
+}
+
+.desktop-image {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .mobile-image {
+        display: block;
+    }
+    .desktop-image {
+        display: none;
+    }
+    .container-main {
+        min-height: 100px;    /* Diminui altura mínima */
+        
+        width: 100%;         /* Em telas pequenas, ocupa a largura disponível */
+            height: 720px;       /* Mantém a altura mesmo em telas pequenas */
+            margin-top: -25px;   /* Ajusta margem superior */
+            overflow-y: auto;    /* Adiciona rolagem vertical se necessário */
         }
 
-        .desktop-image {
-            display: block;
-        }
+    .btn-bottom {
+        bottom: 0px;  /* Ajusta a posição para cima em telas menores */
+    }
+}
 
-        @media screen and (max-width: 768px) {
-            .mobile-image {
-                display: block;
-            }
-
-            .desktop-image {
-                display: none;
-            }
-
-            .container-main {
-                min-height: 100px;
-                /* Diminui altura mínima */
-                width: 100%;
-                /* Em telas pequenas, ocupa a largura disponível */
-                height: 720px;
-                /* Mantém a altura mesmo em telas pequenas */
-                margin-top: -25px;
-                /* Ajusta margem superior */
-                overflow-y: auto;
-                /* Adiciona rolagem vertical se necessário */
-            }
-
-            .btn-gradient {
-                padding: 10px 20px;
-                font-size: 16px;
-                min-width: 180px;
-            }
-        }
     </style>
 </head>
 
@@ -140,13 +107,13 @@
             <div class="container-main col-12 col-sm-10 col-md-8 col-lg-6 position-relative">
                 <img src="./assets/Texto.png" alt="Texto" class="img-fluid mb-4 desktop-image">
                 <img src="./assets/Texto Celular.png" alt="Texto" class="img-fluid mb-4 mobile-image">
-                <!-- Novo botão Bootstrap com gradiente -->
-            <a href="frminscricaoACAMP.html" class="btn-gradient">
-                Inscreva-se Agora
-            </a>
+                <a href="frminscricaoACAMP.html">
+                    <img src="./assets/Botão.png" alt="Botão" class="img-fluid btn-bottom">
+                </a>
             </div>
         </div>
     </div>
 </body>
 
 </html>
+
