@@ -210,9 +210,9 @@
 
 <body>
     <div class="header">
-        <div class="logo-circle">
-            <img src="./assets/Logo_360 black-sem fundo.png" alt="Logo ACAMP">
-        </div>
+        <!--<div class="logo-circle">
+             <img src="./assets/Logo_360 black-sem fundo.png" alt="Logo ACAMP">
+        </div>-->
         <h2 class="header-title">INSCRIÇÕES 360º CAMP 2025</h2>
     </div>
     <div class="container">
@@ -220,13 +220,13 @@
         <div class="divider"></div>
 
         <div class="info-box">
-            <p><strong>Pré-requisito:</strong> maior de 14 anos</p>
-            <p><strong>Valor da inscrição:</strong> R$ 450,00</p>
+            <p><strong>Pré-requisito:</strong> Ter entre 10 e 17 anos</p>
+            <p><strong>Valor da inscrição:</strong> R$ 250,00</p>
             <p><strong>Tipo de Pagamento:</strong> PIX OU CARTÃO*</p>
             <p style="margin-top: -15px;"><small><i>*Pagamento CARTÃO está sujeito a taxa da maquininha.</i></small></p>
-            <p>Para realização do Pagamento, entrar em contato com <b>Gustavo (Guga)</b></p>
+            <p>Para realização do Pagamento, entrar em contato com <b>Ana Clara (Rede Teen)</b></p>
             <p style="margin-top: -15px;"><b>Tel.: </b><a href="https://wa.me/5583999127728" target="_blank">83
-                    99912-7728</a></p>
+                    98684-8637</a></p>
         </div>
 
         <form id="acampForm">
@@ -365,7 +365,7 @@
 
         // Função para verificar se o nome já existe
         function verificarNomeExistente(nome) {
-            return db.collection("ACAMP360")
+            return db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
                 .where("nome", "==", nome)
                 .where("anoacamp", "==", "2025")
                 .get()
@@ -380,7 +380,7 @@
             if (nome) {
                 verificarNomeExistente(nome).then(existe => {
                     if (existe) {
-                        alert('Este nome já está cadastrado para O ACAMP 360 2025.');
+                        alert('Este nome já está cadastrado para O ACAMP.');
                         this.value = ''; // Limpa o campo
                         this.focus(); // Redireciona o cursor para o campo
                         document.getElementById('cadastrarBtn').disabled = true;
@@ -479,7 +479,11 @@
         function carregarLideres() {
             const selectCelula = document.getElementById('celula');
 
+            // Limpar opções anteriores
+            selectCelula.innerHTML = '<option value="">Selecione seu Líder de Célula</option>';
+
             db2.collection("estruturacelula")
+                .where("supervisor", "==", "MOZER / MARCIELLE")  // Filtro adicionado aqui
                 .orderBy("conclider")
                 .get()
                 .then((querySnapshot) => {
@@ -489,8 +493,12 @@
                         option.textContent = doc.data().conclider;
                         selectCelula.appendChild(option);
                     });
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar líderes:", error);
                 });
         }
+
 
         document.getElementById('celula').addEventListener('change', function () {
             const liderSelecionado = this.value;
@@ -542,7 +550,18 @@
             }
         });
 
-        // Definir data de preenchimento        document.getElementById('dataPreenchimento').value = new Date().toLocaleDateString('pt-BR');
+        // Adicionar log para verificar quando o script é carregado
+        //console.log('Script inicializado');
+
+        // Verificar se o elemento dataPreenchimento existe
+        const dataPreenchimentoElement = document.getElementById('dataPreenchimento');
+        //console.log('Elemento dataPreenchimento encontrado:', dataPreenchimentoElement);
+
+        // Definir a data de preenchimento e verificar o valor
+        const dataAtual = new Date().toLocaleDateString('pt-BR');
+        //console.log('Data atual formatada:', dataAtual);
+        dataPreenchimentoElement.value = dataAtual;
+        //console.log('Valor após atribuição:', dataPreenchimentoElement.value);
 
         document.getElementById('acampForm').addEventListener('submit', function (e) {
             e.preventDefault();
@@ -573,7 +592,7 @@
             const nome = document.getElementById('nome').value.trim().toUpperCase();
             verificarNomeExistente(nome).then(existe => {
                 if (existe) {
-                    alert('Este nome já está cadastrado para o ACAMP 360º 2025. Não é possível prosseguir com o cadastro.');
+                    alert('Este nome já está cadastrado para o ACAMP. Não é possível prosseguir com o cadastro.');
                     return;
                 }
 
@@ -603,14 +622,14 @@
                     dtRegistro: new Date().toISOString()
                 };
 
-                db.collection("ACAMP360").add(formData)
+                db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes").add(formData)
                     .then((docRef) => {
                         console.log("Documento escrito com ID: ", docRef.id);
 
                         // Send email notification
                         const emailData = {
                             to: "mozer.cielle@gmail.com",
-                            subject: "Nova Inscrição ACAMP 360º 2025",
+                            subject: "Nova Inscrição ACAMP Black Teen 2025",
                             text: `Nova inscrição realizada:\nNome: ${formData.nome}\nTelefone: ${formData.celular}\nData: ${formData.dataPreenchimento}`
                         };
 
@@ -636,16 +655,16 @@
 
         window.addEventListener('scroll', function () {
             const header = document.querySelector('.header');
-            const logoCircle = document.querySelector('.logo-circle');
+            //const logoCircle = document.querySelector('.logo-circle');
             const headerTitle = document.querySelector('.header-title');
 
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
-                logoCircle.classList.add('scrolled');
+                //logoCircle.classList.add('scrolled');
                 headerTitle.classList.add('visible');
             } else {
                 header.classList.remove('scrolled');
-                logoCircle.classList.remove('scrolled');
+                //logoCircle.classList.remove('scrolled');
                 headerTitle.classList.remove('visible');
             }
         });
