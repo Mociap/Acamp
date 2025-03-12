@@ -1,1 +1,9 @@
-  agora analisando o contexto e as págrinas frminscricaoACAMP.html participantes.html gestaodetarefas.html  e pagamentos.html  gere insights de página inicial para acesso a esses links e que fique bonita aos olhos do usuário. use cores black e roxa para essa capa
+Endereço da página: mociap.github.io/Acamp/
+
+  agora analisando o contexto e as págrinas 
+  frminscricaoACAMP.html participantes.html 
+  gestaodetarefas.html  e pagamentos.html  gere 
+  insights de página inicial para acesso a esses 
+  links e que fique bonita aos olhos do usuário. 
+  use cores black e roxa para essa capa
+
