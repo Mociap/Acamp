@@ -67,7 +67,7 @@
             box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4);
             transition: all 0.3s ease;
             position: absolute;
-            top: 54%;
+            top: 61%;
             left: 50%;
             transform: translateX(-50%);
             text-decoration: none;
@@ -84,10 +84,18 @@
             text-decoration: none;
         }
 
-        .desktop-image, .mobile-image {
-            margin-top: 0; /* Posiciona no topo vertical */
+        .desktop-image {
+            margin-top: 10px; /* Posiciona no topo vertical */
             max-width: 100%; 
             display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mobile-image {
+            margin-top: 0; /* Posiciona no topo vertical */
+            max-width: 100%; 
+            display: none;
             margin-left: auto;
             margin-right: auto;
         }
@@ -106,6 +114,7 @@
                 padding: 12px 30px;
                 font-size: 16px;
                 min-width: 250px;
+                top: 54%;
             }
         }
     </style>
