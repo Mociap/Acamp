@@ -515,6 +515,7 @@
             listaPagamentos.innerHTML = '';
             
             db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos")
+                .where("status", "==", "pago")
                 .orderBy("dataPagamento", "desc")
                 .limit(5)
                 .get()
