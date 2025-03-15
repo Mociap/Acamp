@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Participantes - ACAMP IEBI 2025</title>
-    <link rel="shortcut icon" href="3.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/3.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -62,34 +62,50 @@
         }
 
         .btn-voltar {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-.btn-voltar:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-50%) scale(1.05);
-    color: white;
-    text-decoration: none;
-}
+        .btn-voltar:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-50%) scale(1.05);
+            color: white;
+            text-decoration: none;
+        }
 
-.btn-voltar .material-icons {
-    font-size: 24px;
-}
+        .btn-voltar .material-icons {
+            font-size: 24px;
+        }
 
+        /* Adicione isso à seção de estilos */
+        .dataTables_scrollBody {
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table-responsive {
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            /* Espaço adicional na parte inferior */
+        }
+
+        /* Ajuste para garantir que a tabela ocupe toda a largura disponível */
+        table.dataTable {
+            width: 100% !important;
+        }
     </style>
 </head>
 
@@ -109,9 +125,6 @@
             <div class="col-md-4 text-right">
                 <button class="btn btn-export mr-2">
                     <i class="material-icons align-middle">file_download</i> Exportar Excel
-                </button>
-                <button class="btn btn-export">
-                    <i class="material-icons align-middle">print</i> Imprimir
                 </button>
             </div>
         </div>
@@ -135,6 +148,7 @@
                         <option value="10-12">10-12 anos</option>
                         <option value="13-15">13-15 anos</option>
                         <option value="16-17">16-17 anos</option>
+                        <option value="18+">18+</option>
                     </select>
                 </div>
                 <div class="form-group col-md-3">
@@ -173,6 +187,19 @@
                     <!-- Os dados serão carregados dinamicamente do Firebase -->
                 </tbody>
             </table>
+        </div>
+
+        <!-- Adicionar este elemento após a tabela -->
+        <div class="row mt-3 mb-4">
+            <div class="col-12">
+                <div class="card bg-light">
+                    <div class="card-body py-2">
+                        <strong>Total de participantes:</strong> <span id="contador-participantes">0</span>
+                        <span id="texto-filtro" class="ml-2 text-muted font-italic" style="display: none;">(filtrados de
+                            <span id="total-participantes">0</span>)</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Modal de Detalhes do Participante -->
@@ -250,6 +277,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-danger mr-auto" id="btnExcluirParticipante">
+                            <i class="material-icons align-middle">delete</i> Excluir Participante
+                        </button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
@@ -284,7 +314,9 @@
 
         // Inicialização do DataTable
         let dataTable;
+        let totalParticipantes = 0;
 
+        //Modal e gestão do doc
         $(document).ready(function () {
             // Carregar participantes do Firebase
             carregarParticipantes();
@@ -295,7 +327,10 @@
                     url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
                 },
                 responsive: true,
-                dom: 'Bfrtip',
+                dom: 'Bfrti', // Removido 'p' (paginação)
+                paging: false, // Desativa a paginação
+                scrollY: '400px', // Altura fixa com rolagem vertical
+                scrollCollapse: true, // Colapsa a altura quando há poucos registros
                 buttons: [
                     {
                         extend: 'excel',
@@ -305,14 +340,6 @@
                             columns: [0, 1, 2, 3, 4, 5]
                         }
                     },
-                    {
-                        extend: 'print',
-                        text: 'Imprimir',
-                        className: 'btn btn-export d-none',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
-                        }
-                    }
                 ]
             });
 
@@ -384,15 +411,43 @@
                     });
             });
 
+            // Adicione este código ao seu script existente
+            $('#participanteModal').on('hide.bs.modal', function (e) {
+                // Remover o foco de todos os elementos focáveis dentro do modal
+                $(this).find('button, input, select, textarea, a[href]').blur();
+            });
+
+            // Configurar o botão de exclusão
+            $('#btnExcluirParticipante').on('click', function () {
+                const participanteId = $(this).data('id');
+
+                if (!participanteId) {
+                    // Tentar recuperar do outro botão como fallback
+                    const fallbackId = $('#btnSalvarPagamento').data('id');
+
+                    if (fallbackId) {
+                        excluirParticipante(fallbackId);
+                    } else {
+                        alert("Erro: Não foi possível identificar o participante para exclusão.");
+                    }
+                } else {
+                    excluirParticipante(participanteId);
+                }
+            });
         });
 
+        // Função para Carregar participante
         function carregarParticipantes() {
             db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
                 .where("anoacamp", "==", "2025")
                 .get()
                 .then((querySnapshot) => {
+
                     // Limpar DataTable
                     dataTable.clear();
+
+                    // Armazenar o total de participantes
+                    totalParticipantes = querySnapshot.size;
 
                     querySnapshot.forEach((doc) => {
                         const participante = doc.data();
@@ -411,11 +466,30 @@
 
                     // Renderizar DataTable
                     dataTable.draw();
+
+                    // Atualizar contador
+                    atualizarContador();
+
                 })
                 .catch((error) => {
                     console.error("Erro ao carregar participantes: ", error);
                     alert("Erro ao carregar lista de participantes. Tente novamente.");
                 });
+        }
+
+        // Adicione esta função para atualizar o contador
+        function atualizarContador() {
+            const participantesFiltrados = dataTable.rows({ search: 'applied' }).count();
+
+            $('#contador-participantes').text(participantesFiltrados);
+            $('#total-participantes').text(totalParticipantes);
+
+            // Mostrar ou esconder o texto de filtro
+            if (participantesFiltrados < totalParticipantes) {
+                $('#texto-filtro').show();
+            } else {
+                $('#texto-filtro').hide();
+            }
         }
 
         function verDetalhes(participanteId) {
@@ -458,10 +532,12 @@
 
                         // Armazenar ID do participante no botão
                         $('#btnSalvarPagamento').data('id', doc.id);
+                        $('#btnExcluirParticipante').data('id', doc.id);
 
                         // Abrir modal
                         $('#participanteModal').modal('show');
                     } else {
+                        console.error("Documento não encontrado para ID:", participanteId);
                         alert("Participante não encontrado!");
                     }
                 })
@@ -485,29 +561,32 @@
             }
 
             if (filtroIdade) {
-                const [min, max] = filtroIdade.split('-');
-
                 // Filtro personalizado para idade
                 $.fn.dataTable.ext.search.push(
                     function (settings, data, dataIndex) {
                         const idade = parseInt(data[1].replace(' anos', ''));
-                        const minIdade = parseInt(min);
-                        const maxIdade = parseInt(max);
 
-                        if ((isNaN(minIdade) && isNaN(maxIdade)) ||
-                            (isNaN(minIdade) && idade <= maxIdade) ||
-                            (minIdade <= idade && isNaN(maxIdade)) ||
-                            (minIdade <= idade && idade <= maxIdade)) {
-                            return true;
+                        if (filtroIdade === '18+') {
+                            // Para "Acima de 17", verificar se idade > 17
+                            return idade > 17;
+                        } else {
+                            // Para as outras faixas etárias, manter o comportamento atual
+                            const [min, max] = filtroIdade.split('-');
+                            const minIdade = parseInt(min);
+                            const maxIdade = parseInt(max);
+
+                            if ((isNaN(minIdade) && isNaN(maxIdade)) ||
+                                (isNaN(minIdade) && idade <= maxIdade) ||
+                                (minIdade <= idade && isNaN(maxIdade)) ||
+                                (minIdade <= idade && idade <= maxIdade)) {
+                                return true;
+                            }
+                            return false;
                         }
-                        return false;
                     }
                 );
 
                 dataTable.draw();
-
-                // Remover o filtro personalizado
-                $.fn.dataTable.ext.search.pop();
             }
 
             if (filtroPagamento) {
@@ -527,6 +606,32 @@
                 return dataString;
             }
         }
+
+        function excluirParticipante(participanteId) {
+            if (!participanteId) {
+                alert("Erro: Não foi possível identificar o participante para exclusão.");
+                return;
+            }
+
+            if (confirm("Tem certeza que deseja excluir este participante? Esta ação não pode ser desfeita.")) {
+                db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes").doc(participanteId)
+                    .delete()
+                    .then(() => {
+                        alert("Participante excluído com sucesso!");
+                        $('#participanteModal').modal('hide');
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 500);
+                    })
+                    .catch((error) => {
+                        alert("Erro ao excluir participante: " + error.message);
+                    });
+            }
+
+            carregarParticipantes(); // Recarrega a lista após exclusão
+
+        }
+
     </script>
 </body>
 
