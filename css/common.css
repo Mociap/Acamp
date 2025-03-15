@@ -1,0 +1,25 @@
+/* Estilos comuns para todas as páginas do ACAMP IEBI */
+
+.header {
+    background: linear-gradient(45deg, #000000, #000000);
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 80px;
+}
+
+.header-title {
+    color: white;
+}
+
+/* Responsividade para dispositivos móveis */
+@media (max-width: 768px) {
+    .header-title {
+        font-size: 1rem;
+    }
+}

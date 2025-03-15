@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pagamentos</title>
-    <link rel="shortcut icon" href="3.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/3.ico" type="image/x-icon">
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -15,112 +17,98 @@
             color: #333;
             padding-top: 80px;
         }
-        
-        .header {
-            background: linear-gradient(45deg, #000000, #000000);
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            height: 80px;
-        }
-        
-        .header-title {
-            color: white;
-        }
-        
+
         .dashboard-card {
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
             margin-bottom: 20px;
         }
-        
+
         .dashboard-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .card-header {
             border-radius: 10px 10px 0 0;
             font-weight: bold;
         }
-        
+
         .total-card {
             background: linear-gradient(45deg, #3d7517, #4a8c20);
             color: white;
         }
-        
+
         .pago-card {
             background: linear-gradient(45deg, #28a745, #5cb85c);
             color: white;
         }
-        
+
         .pendente-card {
             background: linear-gradient(45deg, #e6a800, #ddb945);
             color: white;
         }
-        
+
         .chart-container {
             position: relative;
             height: 300px;
             width: 100%;
         }
-        
+
         .payment-action {
             background-color: #f8f9fa;
             border-radius: 10px;
             padding: 15px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .table-responsive {
             border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .badge-pago {
             background-color: #28a745;
         }
-        
+
         .badge-pendente {
             background-color: #ffc107;
         }
 
         .btn-voltar {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-.btn-voltar:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-50%) scale(1.05);
-    color: white;
-    text-decoration: none;
-}
+        .btn-voltar:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-50%) scale(1.05);
+            color: white;
+            text-decoration: none;
+        }
 
-.btn-voltar .material-icons {
-    font-size: 24px;
-}
+        .btn-voltar .material-icons {
+            font-size: 24px;
+        }
+
+
     </style>
 </head>
+
 <body>
     <div class="header">
         <a href="gestao.html" class="btn-voltar">
@@ -140,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4">
                 <div class="card dashboard-card">
                     <div class="card-body pago-card text-center">
@@ -150,7 +138,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4">
                 <div class="card dashboard-card">
                     <div class="card-body pendente-card text-center">
@@ -161,7 +149,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row mt-4">
             <div class="col-md-6">
                 <div class="card dashboard-card">
@@ -175,7 +163,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="card dashboard-card">
                     <div class="card-header">
@@ -189,7 +177,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="payment-action">
@@ -221,7 +209,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row mt-3">
             <div class="col-md-12">
                 <div class="card dashboard-card">
@@ -251,9 +239,10 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Modal de Confirmação de Estorno -->
-    <div class="modal fade" id="estornoModal" tabindex="-1" role="dialog" aria-labelledby="estornoModalLabel" aria-hidden="true">
+    <div class="modal fade" id="estornoModal" tabindex="-1" role="dialog" aria-labelledby="estornoModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -273,14 +262,14 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    
+
     <script>
         // Configuração do Firebase
         const firebaseConfig = {
@@ -294,32 +283,32 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        
+
         // Variáveis para gráficos
         let graficoStatus;
         let graficoFormas;
-        
-        $(document).ready(function() {
+
+        $(document).ready(function () {
             // Carregar dados
             carregarDashboard();
             carregarParticipantesPendentes();
             carregarUltimosPagamentos();
-            
+
             // Inicializar gráficos
             initGraficos();
-            
+
             // Registrar novo pagamento
-            $('#paymentForm').on('submit', function(e) {
+            $('#paymentForm').on('submit', function (e) {
                 e.preventDefault();
-                
+
                 const participanteId = $('#participante').val();
                 const formaPagamento = $('#formaPagamento').val();
-                
+
                 if (!participanteId || !formaPagamento) {
                     alert('Por favor, preencha todos os campos.');
                     return;
                 }
-                
+
                 // Atualizar participante com informações de pagamento
                 db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes").doc(participanteId)
                     .update({
@@ -334,175 +323,175 @@
                             participanteId: participanteId,
                             participanteNome: $('#participante option:selected').text(),
                             valor: 250.00,
-            formaPagamento: formaPagamento,
-            dataPagamento: new Date().toISOString(),
-            status: 'confirmado'
-        });
-    })
-    .then(() => {
-        alert('Pagamento registrado com sucesso!');
-        $('#paymentForm')[0].reset();
-        
-        // Recarregar dados
-        carregarDashboard();
-        carregarParticipantesPendentes();
-        carregarUltimosPagamentos();
-    })
-    .catch((error) => {
-        console.error("Erro ao registrar pagamento: ", error);
-        alert("Erro ao registrar pagamento. Tente novamente.");
-    });
-});
+                            formaPagamento: formaPagamento,
+                            dataPagamento: new Date().toISOString(),
+                            status: 'confirmado'
+                        });
+                    })
+                    .then(() => {
+                        alert('Pagamento registrado com sucesso!');
+                        $('#paymentForm')[0].reset();
 
-// Confirmar estorno de pagamento
-$('#confirmarEstorno').on('click', function() {
-    const pagamentoId = $(this).data('pagamento');
-    const participanteId = $(this).data('participante');
-    
-    // Atualizar status do pagamento
-    db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos").doc(pagamentoId)
-        .update({
-            status: 'estornado',
-            dataEstorno: new Date().toISOString()
-        })
-        .then(() => {
-            // Atualizar status do participante
-            return db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes").doc(participanteId)
-                .update({
-                    statusPagamento: 'pendente',
-                    dataPagamento: null,
-                    formaPagamento: null,
-                    valorPago: null
+                        // Recarregar dados
+                        carregarDashboard();
+                        carregarParticipantesPendentes();
+                        carregarUltimosPagamentos();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao registrar pagamento: ", error);
+                        alert("Erro ao registrar pagamento. Tente novamente.");
+                    });
+            });
+
+            // Confirmar estorno de pagamento
+            $('#confirmarEstorno').on('click', function () {
+                const pagamentoId = $(this).data('pagamento');
+                const participanteId = $(this).data('participante');
+
+                // Atualizar status do pagamento
+                db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos").doc(pagamentoId)
+                    .update({
+                        status: 'estornado',
+                        dataEstorno: new Date().toISOString()
+                    })
+                    .then(() => {
+                        // Atualizar status do participante
+                        return db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes").doc(participanteId)
+                            .update({
+                                statusPagamento: 'pendente',
+                                dataPagamento: null,
+                                formaPagamento: null,
+                                valorPago: null
+                            });
+                    })
+                    .then(() => {
+                        alert('Pagamento estornado com sucesso!');
+                        $('#estornoModal').modal('hide');
+
+                        // Recarregar dados
+                        carregarDashboard();
+                        carregarParticipantesPendentes();
+                        carregarUltimosPagamentos();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao estornar pagamento: ", error);
+                        alert("Erro ao estornar pagamento. Tente novamente.");
+                    });
+            });
+        });
+
+        function carregarDashboard() {
+            // Buscar todas as inscrições
+            db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                .where("anoacamp", "==", "2025")
+                .get()
+                .then((querySnapshot) => {
+                    let totalInscritos = querySnapshot.size;
+                    let totalPagos = 0;
+                    let totalPendentes = 0;
+                    const valorInscricao = 250.00;
+
+                    querySnapshot.forEach((doc) => {
+                        const participante = doc.data();
+                        if (participante.statusPagamento === 'pago') {
+                            totalPagos++;
+                        } else {
+                            totalPendentes++;
+                        }
+                    });
+
+                    // Atualizar contadores
+                    $('#totalInscritos').text(totalInscritos);
+                    $('#totalPagos').text(totalPagos);
+                    $('#totalPendentes').text(totalPendentes);
+
+                    // Atualizar valores financeiros
+                    const valorTotal = (totalInscritos * valorInscricao).toFixed(2).replace('.', ',');
+                    const valorPago = (totalPagos * valorInscricao).toFixed(2).replace('.', ',');
+                    const valorPendente = (totalPendentes * valorInscricao).toFixed(2).replace('.', ',');
+
+                    $('#valorTotal').text(valorTotal);
+                    $('#valorPago').text(valorPago);
+                    $('#valorPendente').text(valorPendente);
+
+                    // Atualizar gráfico de status
+                    atualizarGraficoStatus(totalPagos, totalPendentes);
+
+                    // Contar formas de pagamento
+                    buscarFormasPagamento();
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar dashboard: ", error);
                 });
-        })
-        .then(() => {
-            alert('Pagamento estornado com sucesso!');
-            $('#estornoModal').modal('hide');
-            
-            // Recarregar dados
-            carregarDashboard();
-            carregarParticipantesPendentes();
-            carregarUltimosPagamentos();
-        })
-        .catch((error) => {
-            console.error("Erro ao estornar pagamento: ", error);
-            alert("Erro ao estornar pagamento. Tente novamente.");
-        });
-});
-});
+        }
 
-function carregarDashboard() {
-    // Buscar todas as inscrições
-    db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
-        .where("anoacamp", "==", "2025")
-        .get()
-        .then((querySnapshot) => {
-            let totalInscritos = querySnapshot.size;
-            let totalPagos = 0;
-            let totalPendentes = 0;
-            const valorInscricao = 250.00;
-            
-            querySnapshot.forEach((doc) => {
-                const participante = doc.data();
-                if (participante.statusPagamento === 'pago') {
-                    totalPagos++;
-                } else {
-                    totalPendentes++;
-                }
-            });
-            
-            // Atualizar contadores
-            $('#totalInscritos').text(totalInscritos);
-            $('#totalPagos').text(totalPagos);
-            $('#totalPendentes').text(totalPendentes);
-            
-            // Atualizar valores financeiros
-            const valorTotal = (totalInscritos * valorInscricao).toFixed(2).replace('.', ',');
-            const valorPago = (totalPagos * valorInscricao).toFixed(2).replace('.', ',');
-            const valorPendente = (totalPendentes * valorInscricao).toFixed(2).replace('.', ',');
-            
-            $('#valorTotal').text(valorTotal);
-            $('#valorPago').text(valorPago);
-            $('#valorPendente').text(valorPendente);
-            
-            // Atualizar gráfico de status
-            atualizarGraficoStatus(totalPagos, totalPendentes);
-            
-            // Contar formas de pagamento
-            buscarFormasPagamento();
-        })
-        .catch((error) => {
-            console.error("Erro ao carregar dashboard: ", error);
-        });
-}
+        function buscarFormasPagamento() {
+            // Buscar pagamentos confirmados
+            db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos")
+                .where("status", "==", "confirmado")
+                .get()
+                .then((querySnapshot) => {
+                    const formasPagamento = {
+                        pix: 0,
+                        cartao: 0,
+                        dinheiro: 0
+                    };
 
-function buscarFormasPagamento() {
-    // Buscar pagamentos confirmados
-    db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos")
-        .where("status", "==", "confirmado")
-        .get()
-        .then((querySnapshot) => {
-            const formasPagamento = {
-                pix: 0,
-                cartao: 0,
-                dinheiro: 0
-            };
-            
-            querySnapshot.forEach((doc) => {
-                const pagamento = doc.data();
-                if (pagamento.formaPagamento) {
-                    formasPagamento[pagamento.formaPagamento]++;
-                }
-            });
-            
-            // Atualizar gráfico de formas de pagamento
-            atualizarGraficoFormas(formasPagamento);
-        })
-        .catch((error) => {
-            console.error("Erro ao buscar formas de pagamento: ", error);
-        });
-}
+                    querySnapshot.forEach((doc) => {
+                        const pagamento = doc.data();
+                        if (pagamento.formaPagamento) {
+                            formasPagamento[pagamento.formaPagamento]++;
+                        }
+                    });
 
-function carregarParticipantesPendentes() {
-    // Limpar select de participantes
-    const selectParticipante = $('#participante');
-    selectParticipante.html('<option value="">Selecione um participante</option>');
-    
-    // Buscar participantes com pagamento pendente
-    db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
-        .where("anoacamp", "==", "2025")
-        .where("statusPagamento", "!=", "pago")
-        .orderBy("statusPagamento")
-        .orderBy("nome")
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                const participante = doc.data();
-                selectParticipante.append(`<option value="${doc.id}">${participante.nome}</option>`);
-            });
-        })
-        .catch((error) => {
-            console.error("Erro ao carregar participantes pendentes: ", error);
-        });
-}
+                    // Atualizar gráfico de formas de pagamento
+                    atualizarGraficoFormas(formasPagamento);
+                })
+                .catch((error) => {
+                    console.error("Erro ao buscar formas de pagamento: ", error);
+                });
+        }
 
-function carregarUltimosPagamentos() {
-    // Limpar tabela de pagamentos
-    const tabelaPagamentos = $('#pagamentosList');
-    tabelaPagamentos.html('');
-    
-    // Buscar últimos pagamentos
-    db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos")
-        .orderBy("dataPagamento", "desc")
-        .limit(10)
-        .get()
-        .then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                const pagamento = doc.data();
-                const dataPagamento = formatarData(pagamento.dataPagamento);
-                const valor = (pagamento.valor).toFixed(2).replace('.', ',');
-                
-                const linha = `
+        function carregarParticipantesPendentes() {
+            // Limpar select de participantes
+            const selectParticipante = $('#participante');
+            selectParticipante.html('<option value="">Selecione um participante</option>');
+
+            // Buscar participantes com pagamento pendente
+            db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                .where("anoacamp", "==", "2025")
+                .where("statusPagamento", "!=", "pago")
+                .orderBy("statusPagamento")
+                .orderBy("nome")
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        const participante = doc.data();
+                        selectParticipante.append(`<option value="${doc.id}">${participante.nome}</option>`);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar participantes pendentes: ", error);
+                });
+        }
+
+        function carregarUltimosPagamentos() {
+            // Limpar tabela de pagamentos
+            const tabelaPagamentos = $('#pagamentosList');
+            tabelaPagamentos.html('');
+
+            // Buscar últimos pagamentos
+            db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos")
+                .orderBy("dataPagamento", "desc")
+                .limit(10)
+                .get()
+                .then((querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        const pagamento = doc.data();
+                        const dataPagamento = formatarData(pagamento.dataPagamento);
+                        const valor = (pagamento.valor).toFixed(2).replace('.', ',');
+
+                        const linha = `
                     <tr>
                         <td>${pagamento.participanteNome}</td>
                         <td>${dataPagamento}</td>
@@ -514,124 +503,126 @@ function carregarUltimosPagamentos() {
                             </span>
                         </td>
                         <td>
-                            ${pagamento.status === 'confirmado' ? 
+                            ${pagamento.status === 'confirmado' ?
                                 `<button class="btn btn-danger btn-sm" onclick="prepararEstorno('${doc.id}', '${pagamento.participanteId}', '${pagamento.participanteNome}')">
                                     <i class="material-icons">cancel</i>
-                                </button>` : 
+                                </button>` :
                                 ''}
                         </td>
                     </tr>
                 `;
-                
-                tabelaPagamentos.append(linha);
-            });
-        })
-        .catch((error) => {
-            console.error("Erro ao carregar pagamentos: ", error);
-        });
-}
 
-function prepararEstorno(pagamentoId, participanteId, participanteNome) {
-    $('#estornoNome').text(participanteNome);
-    $('#confirmarEstorno').data('pagamento', pagamentoId);
-    $('#confirmarEstorno').data('participante', participanteId);
-    $('#estornoModal').modal('show');
-}
-
-function initGraficos() {
-    // Inicializar gráfico de status
-    const ctxStatus = document.getElementById('graficoStatus').getContext('2d');
-    graficoStatus = new Chart(ctxStatus, {
-        type: 'doughnut',
-        data: {
-            labels: ['Pagos', 'Pendentes'],
-            datasets: [{
-                data: [0, 0],
-                backgroundColor: ['#28a745', '#ffc107'],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            }
+                        tabelaPagamentos.append(linha);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar pagamentos: ", error);
+                });
         }
-    });
-    
-    // Inicializar gráfico de formas de pagamento
-    const ctxFormas = document.getElementById('graficoFormas').getContext('2d');
-    graficoFormas = new Chart(ctxFormas, {
-        type: 'bar',
-        data: {
-            labels: ['PIX', 'Cartão', 'Dinheiro'],
-            datasets: [{
-                label: 'Quantidade',
-                data: [0, 0, 0],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.7)',
-                    'rgba(54, 162, 235, 0.7)',
-                    'rgba(153, 102, 255, 0.7)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        stepSize: 1
+
+        function prepararEstorno(pagamentoId, participanteId, participanteNome) {
+            $('#estornoNome').text(participanteNome);
+            $('#confirmarEstorno').data('pagamento', pagamentoId);
+            $('#confirmarEstorno').data('participante', participanteId);
+            $('#estornoModal').modal('show');
+        }
+
+        function initGraficos() {
+            // Inicializar gráfico de status
+            const ctxStatus = document.getElementById('graficoStatus').getContext('2d');
+            graficoStatus = new Chart(ctxStatus, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pagos', 'Pendentes'],
+                    datasets: [{
+                        data: [0, 0],
+                        backgroundColor: ['#28a745', '#ffc107'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
                     }
                 }
+            });
+
+            // Inicializar gráfico de formas de pagamento
+            const ctxFormas = document.getElementById('graficoFormas').getContext('2d');
+            graficoFormas = new Chart(ctxFormas, {
+                type: 'bar',
+                data: {
+                    labels: ['PIX', 'Cartão', 'Dinheiro'],
+                    datasets: [{
+                        label: 'Quantidade',
+                        data: [0, 0, 0],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(153, 102, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function atualizarGraficoStatus(totalPagos, totalPendentes) {
+            graficoStatus.data.datasets[0].data = [totalPagos, totalPendentes];
+            graficoStatus.update();
+        }
+
+        function atualizarGraficoFormas(formasPagamento) {
+            graficoFormas.data.datasets[0].data = [
+                formasPagamento.pix,
+                formasPagamento.cartao,
+                formasPagamento.dinheiro
+            ];
+            graficoFormas.update();
+        }
+
+        function formatarData(dataString) {
+            if (!dataString) return '';
+
+            try {
+                const data = new Date(dataString);
+                return data.toLocaleDateString('pt-BR') + ' ' + data.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+            } catch (e) {
+                return dataString;
             }
         }
-    });
-}
 
-function atualizarGraficoStatus(totalPagos, totalPendentes) {
-    graficoStatus.data.datasets[0].data = [totalPagos, totalPendentes];
-    graficoStatus.update();
-}
-
-function atualizarGraficoFormas(formasPagamento) {
-    graficoFormas.data.datasets[0].data = [
-        formasPagamento.pix,
-        formasPagamento.cartao,
-        formasPagamento.dinheiro
-    ];
-    graficoFormas.update();
-}
-
-function formatarData(dataString) {
-    if (!dataString) return '';
-    
-    try {
-        const data = new Date(dataString);
-        return data.toLocaleDateString('pt-BR') + ' ' + data.toLocaleTimeString('pt-BR', {hour: '2-digit', minute: '2-digit'});
-    } catch (e) {
-        return dataString;
-    }
-}
-
-function formatarFormaPagamento(forma) {
-    switch (forma) {
-        case 'pix': return 'PIX';
-        case 'cartao': return 'Cartão';
-        case 'dinheiro': return 'Dinheiro';
-        default: return forma;
-    }
-}
-</script>
+        function formatarFormaPagamento(forma) {
+            switch (forma) {
+                case 'pix': return 'PIX';
+                case 'cartao': return 'Cartão';
+                case 'dinheiro': return 'Dinheiro';
+                default: return forma;
+            }
+        }
+    </script>
 </body>
+
 </html>
+<link rel="stylesheet" href="../css/common.css">

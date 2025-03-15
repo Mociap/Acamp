@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GESTÃO ACAMP IEBI 2025</title>
-    <link rel="shortcut icon" href="3.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/3.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/common.css">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -16,24 +19,7 @@
             padding-top: 80px;
             background-color: #f8f9fa;
         }
-        
-        .header {
-            background: linear-gradient(45deg, #000000, #000000);
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            height: 80px;
-        }
-        
-        .header-title {
-            color: white;
-        }
-        
+
         .dashboard-card {
             border-radius: 15px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -42,42 +28,42 @@
             height: 100%;
             border: none;
         }
-        
+
         .dashboard-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
-        
+
         .card-icon {
             font-size: 3rem;
             margin-bottom: 15px;
             color: #3d7517;
         }
-        
+
         .summary-card {
             border-radius: 10px;
             margin-bottom: 20px;
         }
-        
+
         .summary-card.tarefas {
             border-left: 5px solid #3d7517;
         }
-        
+
         .summary-card.financeiro {
             border-left: 5px solid #17a2b8;
         }
-        
+
         .summary-card.participantes {
             border-left: 5px solid #ffc107;
         }
-        
+
         .summary-card-header {
             font-weight: bold;
             padding: 10px 15px;
             background-color: #f8f9fa;
             border-bottom: 1px solid #eee;
         }
-        
+
         .btn-acamp {
             background: linear-gradient(45deg, #3d7517, #3d7517);
             color: white;
@@ -86,57 +72,57 @@
             padding: 8px 15px;
             transition: all 0.3s;
         }
-        
+
         .btn-acamp:hover {
             background: linear-gradient(45deg, #2b5210, #3d7517);
             color: white;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .stats-value {
             font-size: 2.5rem;
             font-weight: bold;
             margin-bottom: 0;
             color: #3d7517;
         }
-        
+
         .stats-label {
             color: #6c757d;
             font-size: 0.9rem;
         }
-        
+
         .progress {
             height: 10px;
             border-radius: 5px;
             margin-top: 5px;
         }
-        
+
         .progress-bar {
             background-color: #3d7517;
         }
-        
+
         .task-item {
             padding: 10px 0;
             border-bottom: 1px solid #eee;
         }
-        
+
         .task-item:last-child {
             border-bottom: none;
         }
-        
+
         .badge-high {
             background-color: #dc3545;
         }
-        
+
         .badge-medium {
             background-color: #ffc107;
         }
-        
+
         .badge-low {
             background-color: #17a2b8;
         }
-        
+
         .user-avatar {
             width: 35px;
             height: 35px;
@@ -151,11 +137,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="header">
-        <h2 class="header-title">GESTÃO ACAMP IEBI 2025</h2>
+        <h2 class="header-title">GESTÃO ACAMP IEBI</h2>
     </div>
-    
+
     <div class="container mt-5">
         <!-- Estatísticas Principais -->
         <div class="row mb-4">
@@ -170,14 +157,15 @@
                                 <h3 class="stats-value" id="valorPago">R$ 0,00</h3>
                                 <p class="stats-label">Arrecadado</p>
                                 <div class="progress">
-                                    <div class="progress-bar bg-info" id="progressoPagamentos" role="progressbar" style="width: 0%"></div>
+                                    <div class="progress-bar bg-info" id="progressoPagamentos" role="progressbar"
+                                        style="width: 0%"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4">
                 <div class="card summary-card participantes">
                     <div class="card-body">
@@ -189,14 +177,15 @@
                                 <h3 class="stats-value" id="totalInscritos">0</h3>
                                 <p class="stats-label">Participantes</p>
                                 <div class="progress">
-                                    <div class="progress-bar bg-warning" id="progressoInscricoes" role="progressbar" style="width: 0%"></div>
+                                    <div class="progress-bar bg-warning" id="progressoInscricoes" role="progressbar"
+                                        style="width: 0%"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4">
                 <div class="card summary-card tarefas">
                     <div class="card-body">
@@ -208,7 +197,8 @@
                                 <h3 class="stats-value" id="progressoGeral">0%</h3>
                                 <p class="stats-label">Tarefas Concluídas</p>
                                 <div class="progress">
-                                    <div class="progress-bar bg-success" id="progressoTarefasBar" role="progressbar" style="width: 0%"></div>
+                                    <div class="progress-bar bg-success" id="progressoTarefasBar" role="progressbar"
+                                        style="width: 0%"></div>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +206,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Módulos do Sistema -->
         <h4 class="mb-3">Módulos de Gestão</h4>
         <div class="row mb-5">
@@ -225,12 +215,13 @@
                     <div class="card-body text-center p-4">
                         <i class="bi bi-person-badge card-icon"></i>
                         <h5 class="card-title">Participantes</h5>
-                        <p class="card-text">Gerenciar inscrições, dados e informações dos participantes do acampamento.</p>
+                        <p class="card-text">Gerenciar inscrições, dados e informações dos participantes do acampamento.
+                        </p>
                         <a href="participantes.html" class="btn btn-acamp">Acessar</a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 mb-4">
                 <div class="card dashboard-card">
                     <div class="card-body text-center p-4">
@@ -241,40 +232,43 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 mb-4">
                 <div class="card dashboard-card">
                     <div class="card-body text-center p-4">
                         <i class="bi bi-clipboard-check card-icon"></i>
                         <h5 class="card-title">Gestão de Tarefas</h5>
-                        <p class="card-text">Dashboard completo para gerenciamento e acompanhamento de todas as tarefas.</p>
+                        <p class="card-text">Dashboard completo para gerenciamento e acompanhamento de todas as tarefas.
+                        </p>
                         <a href="gestaodetarefas.html" class="btn btn-acamp">Acessar</a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 mb-4">
                 <div class="card dashboard-card">
                     <div class="card-body text-center p-4">
                         <i class="bi bi-kanban card-icon"></i>
                         <h5 class="card-title">Checklist</h5>
-                        <p class="card-text">Visualização em kanban das tarefas pendentes, em andamento e concluídas.</p>
+                        <p class="card-text">Visualização em kanban das tarefas pendentes, em andamento e concluídas.
+                        </p>
                         <a href="tarefas.html" class="btn btn-acamp">Acessar</a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 mb-4">
                 <div class="card dashboard-card">
                     <div class="card-body text-center p-4">
                         <i class="bi bi-diagram-3 card-icon"></i>
                         <h5 class="card-title">Departamentos</h5>
-                        <p class="card-text">Gerenciamento específico de tarefas e responsabilidades por departamento.</p>
+                        <p class="card-text">Gerenciamento específico de tarefas e responsabilidades por departamento.
+                        </p>
                         <a href="departamento.html" class="btn btn-acamp">Acessar</a>
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-4 mb-4">
                 <div class="card dashboard-card">
                     <div class="card-body text-center p-4">
@@ -286,7 +280,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Resumo das Tarefas e Atividades Recentes -->
         <div class="row">
             <div class="col-md-6">
@@ -304,7 +298,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-6">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -312,7 +306,7 @@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush" id="ultimosPagamentos">
-                                                        <!-- Os pagamentos serão carregados dinamicamente aqui -->
+                            <!-- Os pagamentos serão carregados dinamicamente aqui -->
                         </ul>
                         <div class="p-3 text-center">
                             <a href="pagamentos.html" class="btn btn-sm btn-acamp">Ver todos os pagamentos</a>
@@ -334,13 +328,13 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    
+
     <script>
         // Configuração do Firebase
         const firebaseConfig = {
@@ -354,15 +348,15 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        
+
         // Carregar dados quando a página carregar
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             carregarEstatisticas();
             carregarTarefasPrioritarias();
             carregarUltimosPagamentos();
             carregarProgressoDepartamentos();
         });
-        
+
         // Função para carregar estatísticas gerais
         function carregarEstatisticas() {
             // Carregar dados de pagamentos
@@ -373,25 +367,25 @@
                     let totalInscritos = querySnapshot.size;
                     let totalPagos = 0;
                     const valorInscricao = 250.00;
-                    
+
                     querySnapshot.forEach((doc) => {
                         const participante = doc.data();
                         if (participante.statusPagamento === 'pago') {
                             totalPagos++;
                         }
                     });
-                    
+
                     // Atualizar contadores
                     document.getElementById('totalInscritos').textContent = totalInscritos;
-                    
+
                     // Atualizar valores financeiros
                     const valorPago = (totalPagos * valorInscricao).toFixed(2).replace('.', ',');
                     document.getElementById('valorPago').textContent = 'R$ ' + valorPago;
-                    
+
                     // Calcular porcentagem de pagamentos
                     const porcentagemPagamentos = totalInscritos > 0 ? Math.round((totalPagos / totalInscritos) * 100) : 0;
                     document.getElementById('progressoPagamentos').style.width = porcentagemPagamentos + '%';
-                    
+
                     // Atualizar progresso de inscrições (vamos supor uma meta de 100 participantes)
                     const meta = 100;
                     const porcentagemInscritos = Math.min(Math.round((totalInscritos / meta) * 100), 100);
@@ -400,21 +394,21 @@
                 .catch((error) => {
                     console.error("Erro ao carregar estatísticas de pagamentos: ", error);
                 });
-            
+
             // Carregar dados de tarefas
             db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
                 .get()
                 .then((querySnapshot) => {
                     let totalTarefas = querySnapshot.size;
                     let tarefasConcluidas = 0;
-                    
+
                     querySnapshot.forEach((doc) => {
                         const tarefa = doc.data();
                         if (tarefa.status === "completed") {
                             tarefasConcluidas++;
                         }
                     });
-                    
+
                     // Calcular progresso geral das tarefas
                     const porcentagemConcluida = totalTarefas > 0 ? Math.round((tarefasConcluidas / totalTarefas) * 100) : 0;
                     document.getElementById('progressoGeral').textContent = porcentagemConcluida + '%';
@@ -424,12 +418,12 @@
                     console.error("Erro ao carregar estatísticas de tarefas: ", error);
                 });
         }
-        
+
         // Função para carregar tarefas prioritárias
         function carregarTarefasPrioritarias() {
             const listaTarefas = document.getElementById('tarefasPrioritarias');
             listaTarefas.innerHTML = '';
-            
+
             // Buscar tarefas de alta prioridade que não estão concluídas
             db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
                 .where("prioridade", "==", "high")
@@ -459,14 +453,14 @@
                         listaTarefas.appendChild(li);
                         return;
                     }
-                    
+
                     querySnapshot.forEach((doc) => {
                         const tarefa = doc.data();
                         const dataVencimento = new Date(tarefa.dataVencimento);
-                        
+
                         const li = document.createElement('li');
                         li.className = 'list-group-item task-item';
-                        
+
                         let priorityBadge = '';
                         if (tarefa.prioridade === 'high') {
                             priorityBadge = '<span class="badge badge-high">Alta</span>';
@@ -475,14 +469,14 @@
                         } else {
                             priorityBadge = '<span class="badge badge-low">Baixa</span>';
                         }
-                        
+
                         let statusBadge = '';
                         if (tarefa.status === 'todo') {
                             statusBadge = '<span class="badge badge-secondary">A Fazer</span>';
                         } else if (tarefa.status === 'inProgress') {
                             statusBadge = '<span class="badge badge-primary">Em Andamento</span>';
                         }
-                        
+
                         li.innerHTML = `
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
@@ -500,7 +494,7 @@
                                 </a>
                             </div>
                         `;
-                        
+
                         listaTarefas.appendChild(li);
                     });
                 })
@@ -508,12 +502,12 @@
                     console.error("Erro ao carregar tarefas prioritárias: ", error);
                 });
         }
-        
+
         // Função para carregar últimos pagamentos
         function carregarUltimosPagamentos() {
             const listaPagamentos = document.getElementById('ultimosPagamentos');
             listaPagamentos.innerHTML = '';
-            
+
             db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos")
                 .where("status", "==", "pago")
                 .orderBy("dataPagamento", "desc")
@@ -527,14 +521,14 @@
                         listaPagamentos.appendChild(li);
                         return;
                     }
-                    
+
                     querySnapshot.forEach((doc) => {
                         const pagamento = doc.data();
                         const dataPagamento = new Date(pagamento.dataPagamento);
-                        
+
                         const li = document.createElement('li');
                         li.className = 'list-group-item task-item';
-                        
+
                         // Obter iniciais do nome para o avatar
                         let iniciais = "";
                         if (pagamento.participanteNome) {
@@ -545,7 +539,7 @@
                                 iniciais = nomes[0].charAt(0);
                             }
                         }
-                        
+
                         let formaPagamento = "";
                         switch (pagamento.formaPagamento) {
                             case 'pix': formaPagamento = "PIX"; break;
@@ -553,7 +547,7 @@
                             case 'dinheiro': formaPagamento = "Dinheiro"; break;
                             default: formaPagamento = pagamento.formaPagamento;
                         }
-                        
+
                         li.innerHTML = `
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center">
@@ -572,7 +566,7 @@
                                 <span class="badge badge-success">Confirmado</span>
                             </div>
                         `;
-                        
+
                         listaPagamentos.appendChild(li);
                     });
                 })
@@ -580,25 +574,25 @@
                     console.error("Erro ao carregar últimos pagamentos: ", error);
                 });
         }
-        
+
         // Função para carregar progresso por departamento
         function carregarProgressoDepartamentos() {
             const progressoContainer = document.getElementById('progressoDepartamentos');
             progressoContainer.innerHTML = '';
-            
+
             // Lista de departamentos
             const departamentos = [
-                "Supervisão", "Financeiro", "Cronograma", "Midia", "MidiaFisica", 
+                "Supervisão", "Financeiro", "Cronograma", "Midia", "MidiaFisica",
                 "Gincana", "Decoração", "Devocionais", "Louvor", "CoberturaEspiritual"
             ];
-            
+
             // Buscar todas as tarefas
             db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
                 .get()
                 .then((querySnapshot) => {
                     // Objeto para armazenar estatísticas por departamento
                     const estatisticas = {};
-                    
+
                     // Inicializar estatísticas para cada departamento
                     departamentos.forEach(dept => {
                         estatisticas[dept] = {
@@ -606,12 +600,12 @@
                             concluidas: 0
                         };
                     });
-                    
+
                     // Contabilizar tarefas
                     querySnapshot.forEach((doc) => {
                         const tarefa = doc.data();
                         const dept = tarefa.departamento;
-                        
+
                         if (estatisticas[dept]) {
                             estatisticas[dept].total++;
                             if (tarefa.status === "completed") {
@@ -619,17 +613,17 @@
                             }
                         }
                     });
-                    
+
                     // Criar elementos para cada departamento
                     departamentos.forEach(dept => {
                         if (estatisticas[dept].total > 0) {
                             const porcentagem = Math.round((estatisticas[dept].concluidas / estatisticas[dept].total) * 100);
-                            
+
                             // Formatar nome do departamento para exibição
                             let nomeDepartamento = dept;
                             if (dept === "MidiaFisica") nomeDepartamento = "Mídia Física";
                             if (dept === "CoberturaEspiritual") nomeDepartamento = "Cobertura Espiritual";
-                            
+
                             const colDiv = document.createElement('div');
                             colDiv.className = 'col-md-3 mb-3';
                             colDiv.innerHTML = `
@@ -645,7 +639,7 @@
                                 </div>
                                 <small class="text-muted">${estatisticas[dept].concluidas} de ${estatisticas[dept].total} tarefas</small>
                             `;
-                            
+
                             progressoContainer.appendChild(colDiv);
                         }
                     });
@@ -654,9 +648,9 @@
                     console.error("Erro ao carregar progresso dos departamentos: ", error);
                 });
         }
-        
+
         // Função para atualizar todos os dados a cada 5 minutos
-        setInterval(function() {
+        setInterval(function () {
             carregarEstatisticas();
             carregarTarefasPrioritarias();
             carregarUltimosPagamentos();
@@ -664,4 +658,5 @@
         }, 300000); // 5 minutos em milissegundos
     </script>
 </body>
+
 </html>
