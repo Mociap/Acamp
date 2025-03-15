@@ -2,8 +2,8 @@
 
 .header {
     background: linear-gradient(45deg, #000000, #000000);
-    padding: 20px;
-    text-align: center;
+    padding: 0 20px; /* Removido padding vertical para controlar altura apenas com height */
+    /*text-align: center;*/
     position: fixed;
     top: 0;
     left: 0;
@@ -11,15 +11,21 @@
     z-index: 1000;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     height: 80px;
+
+        /* Adicionando flexbox para centralizar o conteúdo verticalmente */
+        display: flex;
+        align-items: center; /* Centraliza verticalmente */
+        justify-content: center; /* Centraliza horizontalmente */
 }
 
 .header-title {
     color: white;
+    margin: 0; /* Remove margens padrão do h2 */
 }
 
 /* Responsividade para dispositivos móveis */
 @media (max-width: 768px) {
     .header-title {
-        font-size: 1rem;
+        font-size: 1.2rem;
     }
 }
