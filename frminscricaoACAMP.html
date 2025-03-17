@@ -467,20 +467,51 @@
         function carregarLideres() {
             const selectCelula = document.getElementById('celula');
 
-            // Limpar opções anteriores
+            // Limpar opções anteriores e adicionar a opção padrão
             selectCelula.innerHTML = '<option value="">Selecione seu Líder de Célula</option>';
 
-            db2.collection("estruturacelula")
-                .where("supervisor", "==", "MOZER / MARCIELLE")  // Filtro adicionado aqui
-                .orderBy("conclider")
-                .get()
-                .then((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
+            // Buscar líderes de ambos os supervisores
+            const supervisores = ["MOZER / MARCIELLE", "GILBERTO / MARCIA"];
+
+            // Criar um array para armazenar todas as promessas de consulta
+            const promises = supervisores.map(supervisor => {
+                return db2.collection("estruturacelula")
+                    .where("supervisor", "==", supervisor)
+                    .get();
+            });
+
+            // Executar todas as consultas e processar os resultados
+            Promise.all(promises)
+                .then((snapshots) => {
+                    // Array para armazenar todos os líderes
+                    const lideres = [];
+
+                    // Coletar todos os líderes de todas as consultas
+                    snapshots.forEach(querySnapshot => {
+                        querySnapshot.forEach((doc) => {
+                            lideres.push({
+                                value: doc.data().conclider,
+                                text: doc.data().conclider
+                            });
+                        });
+                    });
+
+                    // Ordenar os líderes alfabeticamente
+                    lideres.sort((a, b) => a.text.localeCompare(b.text));
+
+                    // Adicionar os líderes ordenados ao dropdown
+                    lideres.forEach(lider => {
                         const option = document.createElement('option');
-                        option.value = doc.data().conclider;
-                        option.textContent = doc.data().conclider;
+                        option.value = lider.value;
+                        option.textContent = lider.text;
                         selectCelula.appendChild(option);
                     });
+
+                    // Adicionar "Outras Células" como última opção
+                    const outrasCelulasOption = document.createElement('option');
+                    outrasCelulasOption.value = "Outras Células";
+                    outrasCelulasOption.textContent = "Outras Células";
+                    selectCelula.appendChild(outrasCelulasOption);
                 })
                 .catch((error) => {
                     console.error("Erro ao carregar líderes:", error);
