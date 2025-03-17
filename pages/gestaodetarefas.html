@@ -7,6 +7,7 @@
     <title>Destão de Tarefas ACAMP</title>
     <link rel="shortcut icon" href="../assets/3.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -113,6 +114,67 @@
         .btn-voltar .material-icons {
             font-size: 24px;
         }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        #insights .card-header {
+            background: linear-gradient(45deg, #3d7517, #3d7517);
+            color: white;
+            font-weight: bold;
+        }
+
+        #insights h3 {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #3d7517;
+        }
+
+        #insights p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        #recomendacoesList .list-group-item {
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        #recomendacoesList .list-group-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        #recomendacoesList .text-warning {
+            border-left-color: #ffc107;
+        }
+
+        #recomendacoesList .text-info {
+            border-left-color: #17a2b8;
+        }
+
+        #recomendacoesList .text-primary {
+            border-left-color: #007bff;
+        }
+
+        #recomendacoesList .text-success {
+            border-left-color: #28a745;
+        }
+
+        #recomendacoesList .text-danger {
+            border-left-color: #dc3545;
+        }
     </style>
 </head>
 
@@ -131,6 +193,7 @@
                     <a href="#" class="list-group-item list-group-item-action active"
                         data-section="dashboard">Dashboard</a>
                     <a href="#" class="list-group-item list-group-item-action" data-section="checklist">Checklist</a>
+                    <a href="#" class="list-group-item list-group-item-action" data-section="insights">Insights</a>
                     <!--<a href="#" class="list-group-item list-group-item-action">Participantes</a>
                     <a href="#" class="list-group-item list-group-item-action">Configurações</a>-->
                 </div>
@@ -284,6 +347,85 @@
                                 <!-- Os dados serão carregados dinamicamente do Firebase -->
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+
+                <!-- Adicione esta nova seção de conteúdo -->
+                <div id="insights" class="content-section">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            Visão Geral dos Participantes
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4 text-center">
+                                    <h3 id="totalParticipantesInsight">0</h3>
+                                    <p>Total de Inscritos</p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <h3 id="totalPagosInsight">0</h3>
+                                    <p>Pagamentos Confirmados</p>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <h3 id="totalPendentesInsight">0</h3>
+                                    <p>Pagamentos Pendentes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Faixa Etária -->
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <h4>Inscritos por Faixa Etária</h4>
+                                <div class="chart-container">
+                                    <canvas id="faixaEtariaInsightChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Igreja -->
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <h4>Inscritos por Igreja</h4>
+                                <div class="chart-container">
+                                    <canvas id="igrejaInsightChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <!-- Status de Pagamento -->
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <h4>Status de Pagamento</h4>
+                                <div class="chart-container">
+                                    <canvas id="pagamentoInsightChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Progresso de Inscrições -->
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <h4>Progresso de Inscrições</h4>
+                                <div class="chart-container">
+                                    <canvas id="progressoInscricoesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            Recomendações para Gestão
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group" id="recomendacoesList">
+                                <!-- Recomendações serão adicionadas dinamicamente aqui -->
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -502,6 +644,7 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -533,6 +676,15 @@
 
         // Função para alternar entre as abas
         $(document).ready(function () {
+            // Adicionar botão de atualização ao cabeçalho da primeira card
+            const primeiroCardHeader = $('#insights .card-header').first();
+            primeiroCardHeader.append(`
+        <button id="atualizarInsightsBtn" class="btn btn-sm btn-light float-right">
+            <i class="bi bi-arrow-clockwise"></i> Atualizar
+        </button>
+    `);
+
+    
             $('.list-group-item').on('click', function (e) {
                 e.preventDefault();
 
@@ -555,6 +707,21 @@
                 if (section === 'checklist' && !dataTable) {
                     inicializarDataTable();
                 }
+
+                // Se for a seção de insights, carregar os dados
+                if (section === 'insights') {
+                    carregarInsights();
+                }
+
+                if (section === 'insights' && window.faixaEtariaChart) {
+                    setTimeout(function () {
+                        window.faixaEtariaChart.resize();
+                        window.igrejaChart.resize();
+                        window.pagamentoChart.resize();
+                        window.progressoChart.resize();
+                    }, 100);
+                }
+
             });
 
             // Botão "Ver todas as tarefas"
@@ -1127,6 +1294,347 @@
                 dataTable.column(4).search(textoPrioridade).draw();
             }
         }
+
+        // Adicione este código ao final do script existente
+
+        // Função para carregar dados dos insights
+
+        // Função para carregar dados dos insights
+        function carregarInsights() {
+            // Verificar se os gráficos já foram criados
+            if (window.faixaEtariaChart) {
+                return; // Evitar recarregar os gráficos se já existirem
+            }
+
+            // Limpar dados anteriores
+            let totalParticipantes = 0;
+            let totalPagos = 0;
+            let totalPendentes = 0;
+
+            // Dados para gráficos
+            const faixasEtarias = {
+                "10-12 anos": 0,
+                "13-15 anos": 0,
+                "16-17 anos": 0,
+                "18+ anos": 0
+            };
+
+            const igrejas = {};
+            const statusPagamento = {
+                "Pago": 0,
+                "Pendente": 0
+            };
+
+            // Dados para progresso de inscrições (simulado por semana)
+            const progressoInscricoes = {
+                labels: [],
+                data: []
+            };
+
+            // Buscar participantes do Firestore
+            db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                .where("anoacamp", "==", "2025")
+                .get()
+                .then((querySnapshot) => {
+                    totalParticipantes = querySnapshot.size;
+
+                    // Processar dados dos participantes
+                    querySnapshot.forEach((doc) => {
+                        const participante = doc.data();
+
+                        // Contabilizar status de pagamento
+                        if (participante.statusPagamento === 'pago') {
+                            totalPagos++;
+                            statusPagamento["Pago"]++;
+                        } else {
+                            totalPendentes++;
+                            statusPagamento["Pendente"]++;
+                        }
+
+                        // Contabilizar faixa etária
+                        const idade = parseInt(participante.idade);
+                        if (idade >= 10 && idade <= 12) {
+                            faixasEtarias["10-12 anos"]++;
+                        } else if (idade >= 13 && idade <= 15) {
+                            faixasEtarias["13-15 anos"]++;
+                        } else if (idade >= 16 && idade <= 17) {
+                            faixasEtarias["16-17 anos"]++;
+                        } else {
+                            faixasEtarias["18+ anos"]++;
+                        }
+
+                        // Contabilizar igreja
+                        const igreja = participante.igreja === 'Outra' ? participante.outraIgreja : participante.igreja;
+                        igrejas[igreja] = (igrejas[igreja] || 0) + 1;
+
+                        // Processar data de registro para o gráfico de progresso
+                        if (participante.dtRegistro) {
+                            const dataRegistro = new Date(participante.dtRegistro);
+                            const semana = `Semana ${Math.floor(dataRegistro.getDate() / 7) + 1}`;
+
+                            if (!progressoInscricoes.labels.includes(semana)) {
+                                progressoInscricoes.labels.push(semana);
+                                progressoInscricoes.data.push(1);
+                            } else {
+                                const index = progressoInscricoes.labels.indexOf(semana);
+                                progressoInscricoes.data[index]++;
+                            }
+                        }
+                    });
+
+                    // Ordenar as semanas cronologicamente
+                    const semanas = progressoInscricoes.labels.map((semana, index) => {
+                        return {
+                            label: semana,
+                            data: progressoInscricoes.data[index],
+                            num: parseInt(semana.replace('Semana ', ''))
+                        };
+                    }).sort((a, b) => a.num - b.num);
+
+                    progressoInscricoes.labels = semanas.map(s => s.label);
+                    progressoInscricoes.data = semanas.map(s => s.data);
+
+                    // Atualizar contadores
+                    document.getElementById('totalParticipantesInsight').textContent = totalParticipantes;
+                    document.getElementById('totalPagosInsight').textContent = totalPagos;
+                    document.getElementById('totalPendentesInsight').textContent = totalPendentes;
+
+                    // Criar gráficos
+                    window.faixaEtariaChart = criarGraficoFaixaEtaria(faixasEtarias);
+                    window.igrejaChart = criarGraficoIgrejas(igrejas);
+                    window.pagamentoChart = criarGraficoPagamento(statusPagamento);
+                    window.progressoChart = criarGraficoProgressoInscricoes(progressoInscricoes);
+
+                    // Gerar recomendações
+                    gerarRecomendacoes(totalParticipantes, totalPagos, faixasEtarias);
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar dados para insights: ", error);
+                });
+        }
+
+        // Função para criar gráfico de faixa etária
+        function criarGraficoFaixaEtaria(dados) {
+            const ctx = document.getElementById('faixaEtariaInsightChart').getContext('2d');
+            return new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(dados),
+                    datasets: [{
+                        label: 'Quantidade de Inscritos',
+                        data: Object.values(dados),
+                        backgroundColor: [
+                            '#48c9b0',  // Teal
+                            '#82e0aa',  // Mint Green
+                            '#f7dc6f',  // Soft Yellow
+                            '#f0b27a'   // Peach
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Função para criar gráfico de igrejas
+        function criarGraficoIgrejas(dados) {
+            const ctx = document.getElementById('igrejaInsightChart').getContext('2d');
+            return new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(dados),
+                    datasets: [{
+                        data: Object.values(dados),
+                        backgroundColor: [
+                            '#48c9b0',  // Teal
+                            '#82e0aa',  // Mint Green
+                            '#f7dc6f',  // Soft Yellow
+                            '#f0b27a',  // Peach
+                            '#ec7063'   // Coral Red
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Função para criar gráfico de status de pagamento
+        function criarGraficoPagamento(dados) {
+            const ctx = document.getElementById('pagamentoInsightChart').getContext('2d');
+            return new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(dados),
+                    datasets: [{
+                        data: Object.values(dados),
+                        backgroundColor: [
+                            '#28a745',  // Verde para Pago
+                            '#ffc107'   // Amarelo para Pendente
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+
+        // Função para criar gráfico de progresso de inscrições
+        function criarGraficoProgressoInscricoes(dados) {
+            const ctx = document.getElementById('progressoInscricoesChart').getContext('2d');
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dados.labels,
+                    datasets: [{
+                        label: 'Novas Inscrições',
+                        data: dados.data,
+                        backgroundColor: 'rgba(61, 117, 23, 0.2)',
+                        borderColor: 'rgba(61, 117, 23, 1)',
+                        borderWidth: 2,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Função para gerar recomendações baseadas nos dados
+        function gerarRecomendacoes(totalParticipantes, totalPagos, faixasEtarias) {
+            const recomendacoesList = document.getElementById('recomendacoesList');
+            recomendacoesList.innerHTML = '';
+
+            const recomendacoes = [];
+
+            // Recomendação baseada em pagamentos
+            const percentualPago = (totalPagos / totalParticipantes) * 100;
+            if (percentualPago < 50) {
+                recomendacoes.push({
+                    texto: `Apenas ${percentualPago.toFixed(0)}% dos participantes confirmaram pagamento. Considere enviar lembretes ou facilitar formas de pagamento.`,
+                    icone: 'bi-cash-coin',
+                    classe: 'text-warning'
+                });
+            }
+
+            // Recomendação baseada em faixa etária
+            const menoresIdade = faixasEtarias["10-12 anos"] + faixasEtarias["13-15 anos"] + faixasEtarias["16-17 anos"];
+            if (menoresIdade > 0) {
+                recomendacoes.push({
+                    texto: `Há ${menoresIdade} participantes menores de idade. Certifique-se de que todos tenham autorização dos responsáveis.`,
+                    icone: 'bi-exclamation-triangle',
+                    classe: 'text-info'
+                });
+            }
+
+            // Recomendação sobre tarefas
+            recomendacoes.push({
+                texto: `Verifique se todas as tarefas relacionadas à acomodação estão sendo planejadas para ${totalParticipantes} participantes.`,
+                icone: 'bi-house',
+                classe: 'text-primary'
+            });
+
+            // Recomendação sobre equipe
+            const equipesNecessarias = Math.ceil(totalParticipantes / 15);
+            recomendacoes.push({
+                texto: `Com base no número de inscritos, recomenda-se formar pelo menos ${equipesNecessarias} equipes para atividades em grupo.`,
+                icone: 'bi-people',
+                classe: 'text-success'
+            });
+
+            // Recomendação sobre tarefas pendentes
+            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
+                .where("status", "!=", "completed")
+                .get()
+                .then((querySnapshot) => {
+                    if (querySnapshot.size > 0) {
+                        recomendacoes.push({
+                            texto: `Existem ${querySnapshot.size} tarefas pendentes. Considere priorizar as de alta prioridade.`,
+                            icone: 'bi-list-check',
+                            classe: 'text-danger'
+                        });
+
+                        // Adicionar recomendações à lista após buscar tarefas pendentes
+                        adicionarRecomendacoesALista(recomendacoes);
+                    } else {
+                        // Adicionar recomendações à lista se não houver tarefas pendentes
+                        adicionarRecomendacoesALista(recomendacoes);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erro ao buscar tarefas pendentes: ", error);
+                    // Adicionar recomendações à lista mesmo em caso de erro
+                    adicionarRecomendacoesALista(recomendacoes);
+                });
+        }
+
+        // Função auxiliar para adicionar recomendações à lista
+        function adicionarRecomendacoesALista(recomendacoes) {
+            const recomendacoesList = document.getElementById('recomendacoesList');
+
+            // Adicionar recomendações à lista
+            recomendacoes.forEach(rec => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex align-items-center';
+                li.innerHTML = `
+            <i class="bi ${rec.icone} ${rec.classe} me-3" style="font-size: 1.5rem; margin-right: 10px;"></i>
+            <span>${rec.texto}</span>
+        `;
+                recomendacoesList.appendChild(li);
+            });
+        }
+
+        // Adicionar event listener para a aba de insights
+        $('.list-group-item[data-section="insights"]').on('click', function () {
+            // Carregar dados apenas quando a aba for selecionada
+            setTimeout(carregarInsights, 100);
+        });
+
+        // Adicionar CSS necessário
+        document.head.insertAdjacentHTML('beforeend', `
+<style>
+    .dashboard-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        width: 100%;
+    }
+</style>
+`);
+
     </script>
 </body>
 
