@@ -175,10 +175,33 @@
         #recomendacoesList .text-danger {
             border-left-color: #dc3545;
         }
+
+        .filter-status {
+            margin-right: 8px;
+        }
+
+        .form-check {
+            margin-bottom: 8px;
+        }
+
+        .form-check:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-check-label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-check-input {
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Header -->
     <div class="header">
         <a href="gestao.html" class="btn-voltar">
             <i class="material-icons">arrow_back</i>
@@ -186,21 +209,27 @@
         <h2 class="header-title">GESTÃO DE TAREFAS - ACAMP</h2>
     </div>
 
+    <!-- Content -->
     <div class="container mt-5">
         <div class="row">
+            <!-- Barra Lateral -->
             <div class="col-md-3">
+                <!-- Itens da Barra Lateral -->
                 <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active"
-                        data-section="dashboard">Dashboard</a>
+                    <a href="#" class="list-group-item list-group-item-action active" data-section="dashboard">Progresso
+                        Geral</a>
                     <a href="#" class="list-group-item list-group-item-action" data-section="checklist">Checklist</a>
-                    <a href="#" class="list-group-item list-group-item-action" data-section="insights">Insights</a>
+                    <a href="#" class="list-group-item list-group-item-action" data-section="insights">Relatórios</a>
                     <!--<a href="#" class="list-group-item list-group-item-action">Participantes</a>
                     <a href="#" class="list-group-item list-group-item-action">Configurações</a>-->
                 </div>
             </div>
 
+            <!-- Conteúdo Principal -->
+            <!-- Lado Direito-->
             <div class="col-md-9">
-                <!-- Seção do Dashboard -->
+
+                <!-- Seção do Progrecsso Geral -->
                 <div id="dashboard" class="content-section active">
                     <div class="card mb-4">
                         <div class="card-header">
@@ -301,15 +330,34 @@
                                     <option value="CoberturaEspiritual">Cobertura Espiritual</option>
                                 </select>
                             </div>
+                            <!-- Drop Status -->
                             <div class="form-group col-md-3">
-                                <label for="filterStatus">Status</label>
-                                <select class="form-control" id="filterStatus">
-                                    <option value="">Todos</option>
-                                    <option value="todo">A Fazer</option>
-                                    <option value="inProgress">Em Andamento</option>
-                                    <option value="completed">Concluído</option>
-                                </select>
+                                <label>Status</label>
+                                <div class="border p-2 rounded bg-light">
+                                    <div class="form-check">
+                                        <input class="form-check-input filter-status" type="checkbox" value="todo"
+                                            id="statusTodo">
+                                        <label class="form-check-label" for="statusTodo">
+                                            <span class="badge badge-secondary">A Fazer</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input filter-status" type="checkbox" value="inProgress"
+                                            id="statusInProgress">
+                                        <label class="form-check-label" for="statusInProgress">
+                                            <span class="badge badge-primary">Em Andamento</span>
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input filter-status" type="checkbox" value="completed"
+                                            id="statusCompleted">
+                                        <label class="form-check-label" for="statusCompleted">
+                                            <span class="badge badge-success">Concluído</span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="form-group col-md-3">
                                 <label for="filterPrioridade">Prioridade</label>
                                 <select class="form-control" id="filterPrioridade">
@@ -350,9 +398,9 @@
                     </div>
                 </div>
 
-
-                <!-- Adicione esta nova seção de conteúdo -->
+                <!-- Seção Relatórios -->
                 <div id="insights" class="content-section">
+                    <!-- Seção Geral de Inscritos -->
                     <div class="card mb-4">
                         <div class="card-header">
                             Visão Geral dos Participantes
@@ -375,535 +423,566 @@
                         </div>
                     </div>
 
+                    <!-- GRÁFICOS ######### -->
+                    <!-- >Conteiner Geral -->
                     <div class="row">
-                        <!-- Faixa Etária -->
-                        <div class="col-md-6">
-                            <div class="dashboard-card">
-                                <h4>Inscritos por Faixa Etária</h4>
-                                <div class="chart-container">
-                                    <canvas id="faixaEtariaInsightChart"></canvas>
+                        <!-- Linha 1 -->
+                        <div class="row mt-4">
+                            <!-- Por Célula -->
+                            <div class="col-md-6">
+                                <div class="dashboard-card">
+                                    <h4>Inscritos por Célula</h4>
+                                    <div class="chart-container">
+                                        <canvas id="celulaInsightChart"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- Igreja -->
-                        <div class="col-md-6">
-                            <div class="dashboard-card">
-                                <h4>Inscritos por Igreja</h4>
-                                <div class="chart-container">
-                                    <canvas id="igrejaInsightChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row mt-4">
-                        <!-- Status de Pagamento -->
-                        <div class="col-md-6">
-                            <div class="dashboard-card">
-                                <h4>Status de Pagamento</h4>
-                                <div class="chart-container">
-                                    <canvas id="pagamentoInsightChart"></canvas>
+                            <!-- Faixa Etária -->
+                            <div class="col-md-6">
+                                <div class="dashboard-card">
+                                    <h4>Inscritos por Faixa Etária</h4>
+                                    <div class="chart-container">
+                                        <canvas id="faixaEtariaInsightChart"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <!-- Progresso de Inscrições -->
-                        <div class="col-md-6">
-                            <div class="dashboard-card">
-                                <h4>Progresso de Inscrições</h4>
-                                <div class="chart-container">
-                                    <canvas id="progressoInscricoesChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="card mt-4">
-                        <div class="card-header">
-                            Recomendações para Gestão
+                        <!-- >inha 2 -->
+                        <div class="row mt-4">
+                            <!-- Status de Pagamento -->
+                            <div class="col-md-6">
+                                <div class="dashboard-card">
+                                    <h4>Status de Pagamento</h4>
+                                    <div class="chart-container">
+                                        <canvas id="pagamentoInsightChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Igreja -->
+                            <div class="col-md-6">
+                                <div class="dashboard-card">
+                                    <h4>Inscritos por Igreja</h4>
+                                    <div class="chart-container">
+                                        <canvas id="igrejaInsightChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Progresso de Inscrições -->
+                            <div class="col-md-6">
+                                <div class="dashboard-card">
+                                    <h4>Progresso de Inscrições</h4>
+                                    <div class="chart-container">
+                                        <canvas id="progressoInscricoesChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <ul class="list-group" id="recomendacoesList">
-                                <!-- Recomendações serão adicionadas dinamicamente aqui -->
-                            </ul>
+                        <!-- End GRÁFICOS ######### -->
+
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                Recomendações para Gestão
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group" id="recomendacoesList">
+                                    <!-- Recomendações serão adicionadas dinamicamente aqui -->
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal para Adicionar Tarefa -->
-    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addTaskModalLabel">Adicionar Nova Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="newTaskForm">
-                        <div class="form-group">
-                            <label for="taskDepartment">Departamento</label>
-                            <select class="form-control" id="taskDepartment" required>
-                                <option value="">Selecione um departamento</option>
-                                <option value="Supervisão">Supervisão: Mozer e Marcielle</option>
-                                <option value="Financeiro">Financeiro: Ana Clara</option>
-                                <option value="Cronograma">Cronograma: Monique</option>
-                                <option value="Midia">Midia: Rebekah</option>
-                                <option value="MidiaFisica">Midia Fisica: Lívia</option>
-                                <option value="Gincana">Gincana: Pedro / Felipe</option>
-                                <option value="Decoração">Decoração: Amanda / Pietra / Lucas / Saymon</option>
-                                <option value="Devocionais">Devocionais: Clóvis</option>
-                                <option value="Louvor">Louvor: Mozer / Andrei / Nicoly E</option>
-                                <option value="CoberturaEspiritual">Cobertura Espiritual</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskTitle">Título da Tarefa</label>
-                            <input type="text" class="form-control" id="taskTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskDescription">Descrição</label>
-                            <textarea class="form-control" id="taskDescription" rows="3"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="taskDueDate">Data de Vencimento</label>
-                                <input type="date" class="form-control" id="taskDueDate" required>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="taskPriority">Prioridade</label>
-                                <select class="form-control" id="taskPriority">
-                                    <option value="low">Baixa</option>
-                                    <option value="medium">Média</option>
-                                    <option value="high">Alta</option>
+        <!-- Modal para Adicionar Tarefa -->
+        <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addTaskModalLabel">Adicionar Nova Tarefa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="newTaskForm">
+                            <div class="form-group">
+                                <label for="taskDepartment">Departamento</label>
+                                <select class="form-control" id="taskDepartment" required>
+                                    <option value="">Selecione um departamento</option>
+                                    <option value="Supervisão">Supervisão: Mozer e Marcielle</option>
+                                    <option value="Financeiro">Financeiro: Ana Clara</option>
+                                    <option value="Cronograma">Cronograma: Monique</option>
+                                    <option value="Midia">Midia: Rebekah</option>
+                                    <option value="MidiaFisica">Midia Fisica: Lívia</option>
+                                    <option value="Gincana">Gincana: Pedro / Felipe</option>
+                                    <option value="Decoração">Decoração: Amanda / Pietra / Lucas / Saymon</option>
+                                    <option value="Devocionais">Devocionais: Clóvis</option>
+                                    <option value="Louvor">Louvor: Mozer / Andrei / Nicoly E</option>
+                                    <option value="CoberturaEspiritual">Cobertura Espiritual</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="taskResponsible">Responsável</label>
-                            <select class="form-control" id="taskResponsible">
-                                <option value="">Selecione um responsável</option>
-                                <option value="Mozer">Mozer</option>
-                                <option value="Marcielle">Marcielle</option>
-                                <option value="Ana Clara">Ana Clara</option>
-                                <option value="Monique">Monique</option>
-                                <option value="Rebekah">Rebekah</option>
-                                <option value="Lívia">Lívia</option>
-                                <option value="Pedro">Pedro</option>
-                                <option value="Felipe">Felipe</option>
-                                <option value="Amanda">Amanda</option>
-                                <option value="Pietra">Pietra</option>
-                                <option value="Lucas">Lucas</option>
-                                <option value="Saymon">Saymon</option>
-                                <option value="Clóvis">Clóvis</option>
-                                <option value="Andrei">Andrei</option>
-                                <option value="Nicoly E">Nicoly E</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="saveTaskBtn">Salvar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal para Editar Tarefa -->
-    <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editTaskModalLabel">Editar Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="editTaskForm">
-                        <input type="hidden" id="editTaskId">
-                        <div class="form-group">
-                            <label for="editTaskDepartment">Departamento</label>
-                            <select class="form-control" id="editTaskDepartment" required>
-                                <option value="">Selecione um departamento</option>
-                                <option value="Supervisão">Supervisão: Mozer e Marcielle</option>
-                                <option value="Financeiro">Financeiro: Ana Clara</option>
-                                <option value="Cronograma">Cronograma: Monique</option>
-                                <option value="Midia">Midia: Rebekah</option>
-                                <option value="MidiaFisica">Midia Fisica: Lívia</option>
-                                <option value="Gincana">Gincana: Pedro / Felipe</option>
-                                <option value="Decoração">Decoração: Amanda / Pietra / Lucas / Saymon</option>
-                                <option value="Devocionais">Devocionais: Clóvis</option>
-                                <option value="Louvor">Louvor: Mozer / Andrei / Nicoly E</option>
-                                <option value="CoberturaEspiritual">Cobertura Espiritual</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="editTaskTitle">Título da Tarefa</label>
-                            <input type="text" class="form-control" id="editTaskTitle" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editTaskDescription">Descrição</label>
-                            <textarea class="form-control" id="editTaskDescription" rows="3"></textarea>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label for="editTaskDueDate">Data de Vencimento</label>
-                                <input type="date" class="form-control" id="editTaskDueDate" required>
+                            <div class="form-group">
+                                <label for="taskTitle">Título da Tarefa</label>
+                                <input type="text" class="form-control" id="taskTitle" required>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="editTaskPriority">Prioridade</label>
-                                <select class="form-control" id="editTaskPriority">
-                                    <option value="low">Baixa</option>
-                                    <option value="medium">Média</option>
-                                    <option value="high">Alta</option>
+                            <div class="form-group">
+                                <label for="taskDescription">Descrição</label>
+                                <textarea class="form-control" id="taskDescription" rows="3"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="taskDueDate">Data de Vencimento</label>
+                                    <input type="date" class="form-control" id="taskDueDate" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="taskPriority">Prioridade</label>
+                                    <select class="form-control" id="taskPriority">
+                                        <option value="low">Baixa</option>
+                                        <option value="medium">Média</option>
+                                        <option value="high">Alta</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="taskResponsible">Responsável</label>
+                                <select class="form-control" id="taskResponsible">
+                                    <option value="">Selecione um responsável</option>
+                                    <option value="Mozer">Mozer</option>
+                                    <option value="Marcielle">Marcielle</option>
+                                    <option value="Ana Clara">Ana Clara</option>
+                                    <option value="Monique">Monique</option>
+                                    <option value="Rebekah">Rebekah</option>
+                                    <option value="Lívia">Lívia</option>
+                                    <option value="Pedro">Pedro</option>
+                                    <option value="Felipe">Felipe</option>
+                                    <option value="Amanda">Amanda</option>
+                                    <option value="Pietra">Pietra</option>
+                                    <option value="Lucas">Lucas</option>
+                                    <option value="Saymon">Saymon</option>
+                                    <option value="Clóvis">Clóvis</option>
+                                    <option value="Andrei">Andrei</option>
+                                    <option value="Nicoly E">Nicoly E</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editTaskResponsible">Responsável</label>
-                            <select class="form-control" id="editTaskResponsible">
-                                <option value="">Selecione um responsável</option>
-                                <option value="Mozer">Mozer</option>
-                                <option value="Marcielle">Marcielle</option>
-                                <option value="Ana Clara">Ana Clara</option>
-                                <option value="Monique">Monique</option>
-                                <option value="Rebekah">Rebekah</option>
-                                <option value="Lívia">Lívia</option>
-                                <option value="Pedro">Pedro</option>
-                                <option value="Felipe">Felipe</option>
-                                <option value="Amanda">Amanda</option>
-                                <option value="Pietra">Pietra</option>
-                                <option value="Lucas">Lucas</option>
-                                <option value="Saymon">Saymon</option>
-                                <option value="Clóvis">Clóvis</option>
-                                <option value="Andrei">Andrei</option>
-                                <option value="Nicoly E">Nicoly E</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="editTaskStatus">Status</label>
-                            <select class="form-control" id="editTaskStatus">
-                                <option value="todo">A Fazer</option>
-                                <option value="inProgress">Em Andamento</option>
-                                <option value="completed">Concluído</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="updateTaskBtn">Atualizar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="saveTaskBtn">Salvar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Modal de Detalhes da Tarefa -->
-    <div class="modal fade" id="taskDetailModal" tabindex="-1" role="dialog" aria-labelledby="taskDetailModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="taskDetailModalLabel">Detalhes da Tarefa</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+        <!-- Modal para Editar Tarefa -->
+        <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editTaskModalLabel">Editar Tarefa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editTaskForm">
+                            <input type="hidden" id="editTaskId">
+                            <div class="form-group">
+                                <label for="editTaskDepartment">Departamento</label>
+                                <select class="form-control" id="editTaskDepartment" required>
+                                    <option value="">Selecione um departamento</option>
+                                    <option value="Supervisão">Supervisão: Mozer e Marcielle</option>
+                                    <option value="Financeiro">Financeiro: Ana Clara</option>
+                                    <option value="Cronograma">Cronograma: Monique</option>
+                                    <option value="Midia">Midia: Rebekah</option>
+                                    <option value="MidiaFisica">Midia Fisica: Lívia</option>
+                                    <option value="Gincana">Gincana: Pedro / Felipe</option>
+                                    <option value="Decoração">Decoração: Amanda / Pietra / Lucas / Saymon</option>
+                                    <option value="Devocionais">Devocionais: Clóvis</option>
+                                    <option value="Louvor">Louvor: Mozer / Andrei / Nicoly E</option>
+                                    <option value="CoberturaEspiritual">Cobertura Espiritual</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTaskTitle">Título da Tarefa</label>
+                                <input type="text" class="form-control" id="editTaskTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTaskDescription">Descrição</label>
+                                <textarea class="form-control" id="editTaskDescription" rows="3"></textarea>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="editTaskDueDate">Data de Vencimento</label>
+                                    <input type="date" class="form-control" id="editTaskDueDate" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="editTaskPriority">Prioridade</label>
+                                    <select class="form-control" id="editTaskPriority">
+                                        <option value="low">Baixa</option>
+                                        <option value="medium">Média</option>
+                                        <option value="high">Alta</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTaskResponsible">Responsável</label>
+                                <select class="form-control" id="editTaskResponsible">
+                                    <option value="">Selecione um responsável</option>
+                                    <option value="Mozer">Mozer</option>
+                                    <option value="Marcielle">Marcielle</option>
+                                    <option value="Ana Clara">Ana Clara</option>
+                                    <option value="Monique">Monique</option>
+                                    <option value="Rebekah">Rebekah</option>
+                                    <option value="Lívia">Lívia</option>
+                                    <option value="Pedro">Pedro</option>
+                                    <option value="Felipe">Felipe</option>
+                                    <option value="Amanda">Amanda</option>
+                                    <option value="Pietra">Pietra</option>
+                                    <option value="Lucas">Lucas</option>
+                                    <option value="Saymon">Saymon</option>
+                                    <option value="Clóvis">Clóvis</option>
+                                    <option value="Andrei">Andrei</option>
+                                    <option value="Nicoly E">Nicoly E</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTaskStatus">Status</label>
+                                <select class="form-control" id="editTaskStatus">
+                                    <option value="todo">A Fazer</option>
+                                    <option value="inProgress">Em Andamento</option>
+                                    <option value="completed">Concluído</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="updateTaskBtn">Atualizar</button>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h4 id="detailTitle"></h4>
-                            <p class="lead" id="detailDescription"></p>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">Informações</div>
-                                <div class="card-body">
-                                    <p><strong>Departamento:</strong> <span id="detailDepartment"></span></p>
-                                    <p><strong>Responsável:</strong> <span id="detailResponsible"></span></p>
-                                    <p><strong>Vencimento:</strong> <span id="detailDueDate"></span></p>
-                                    <p><strong>Prioridade:</strong> <span id="detailPriority"></span></p>
-                                    <p><strong>Status:</strong> <span id="detailStatus"></span></p>
+            </div>
+        </div>
+
+        <!-- Modal de Detalhes da Tarefa -->
+        <div class="modal fade" id="taskDetailModal" tabindex="-1" role="dialog" aria-labelledby="taskDetailModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="taskDetailModalLabel">Detalhes da Tarefa</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 id="detailTitle"></h4>
+                                <p class="lead" id="detailDescription"></p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header">Informações</div>
+                                    <div class="card-body">
+                                        <p><strong>Departamento:</strong> <span id="detailDepartment"></span></p>
+                                        <p><strong>Responsável:</strong> <span id="detailResponsible"></span></p>
+                                        <p><strong>Vencimento:</strong> <span id="detailDueDate"></span></p>
+                                        <p><strong>Prioridade:</strong> <span id="detailPriority"></span></p>
+                                        <p><strong>Status:</strong> <span id="detailStatus"></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-info" id="editTaskBtn">Editar</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-info" id="editTaskBtn">Editar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-    <script>
-        // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyC31C1X13eqVAOq_o5K2evI8q3GOfnpOpo",
-            authDomain: "iebi-2e84e.firebaseapp.com",
-            projectId: "iebi-2e84e",
-            storageBucket: "iebi-2e84e.appspot.com",
-            messagingSenderId: "634456198202",
-            appId: "1:634456198202:web:8b4de1b4def23a49303903"
-        };
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script>
+            // Configuração do Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyC31C1X13eqVAOq_o5K2evI8q3GOfnpOpo",
+                authDomain: "iebi-2e84e.firebaseapp.com",
+                projectId: "iebi-2e84e",
+                storageBucket: "iebi-2e84e.appspot.com",
+                messagingSenderId: "634456198202",
+                appId: "1:634456198202:web:8b4de1b4def23a49303903"
+            };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
 
-        // Variáveis globais
-        let totalTarefas = 0;
-        let tarefasConcluidas = 0;
-        let tarefasPendentes = [];
-        let tarefasAtrasadas = 0;
-        let departamentos = {};
-        let dataTable;
+            // Variáveis globais
+            let totalTarefas = 0;
+            let tarefasConcluidas = 0;
+            let tarefasPendentes = [];
+            let tarefasAtrasadas = 0;
+            let departamentos = {};
+            let dataTable;
 
-        // Função para alternar entre as abas
-        $(document).ready(function () {
-            // Adicionar botão de atualização ao cabeçalho da primeira card
-            const primeiroCardHeader = $('#insights .card-header').first();
-            primeiroCardHeader.append(`
-        <button id="atualizarInsightsBtn" class="btn btn-sm btn-light float-right">
-            <i class="bi bi-arrow-clockwise"></i> Atualizar
-        </button>
-    `);
+            // Função para alternar entre as abas
+            $(document).ready(function () {
+                // Adicionar botão de atualização ao cabeçalho da primeira card
+                const primeiroCardHeader = $('#insights .card-header').first();
+                primeiroCardHeader.append(`
+                <button id="atualizarInsightsBtn" class="btn btn-sm btn-light float-right">
+                    <i class="bi bi-arrow-clockwise"></i> Atualizar
+                </button>
+            `);
 
-    
-            $('.list-group-item').on('click', function (e) {
-                e.preventDefault();
-
-                // Remover classe active de todos os itens
-                $('.list-group-item').removeClass('active');
-
-                // Adicionar classe active ao item clicado
-                $(this).addClass('active');
-
-                // Obter a seção a ser exibida
-                const section = $(this).data('section');
-
-                // Esconder todas as seções
-                $('.content-section').removeClass('active');
-
-                // Mostrar a seção correspondente
-                $('#' + section).addClass('active');
-
-                // Se for a seção de checklist, inicializar DataTable
-                if (section === 'checklist' && !dataTable) {
-                    inicializarDataTable();
-                }
-
-                // Se for a seção de insights, carregar os dados
-                if (section === 'insights') {
-                    carregarInsights();
-                }
-
-                if (section === 'insights' && window.faixaEtariaChart) {
-                    setTimeout(function () {
-                        window.faixaEtariaChart.resize();
-                        window.igrejaChart.resize();
-                        window.pagamentoChart.resize();
-                        window.progressoChart.resize();
-                    }, 100);
-                }
-
-            });
-
-            // Botão "Ver todas as tarefas"
-            $('#verTodasTarefas').on('click', function (e) {
-                e.preventDefault();
-                $('.list-group-item[data-section="checklist"]').click();
-            });
-
-            // Carregar dados do dashboard ao iniciar
-            carregarDadosDashboard();
-        });
-
-        // Inicializar DataTable
-        function inicializarDataTable() {
-            dataTable = $('#tarefasTable').DataTable({
-                language: {
-                    url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
-                },
-                responsive: true,
-                columns: [
-                    { data: 'titulo' },
-                    { data: 'departamento' },
-                    { data: 'responsavel' },
-                    { data: 'vencimento' },
-                    { data: 'prioridade' },
-                    { data: 'status' },
-                    { data: 'acoes' }
-                ]
-            });
-
-            carregarTarefasTable();
-        }
-
-        // Função para carregar dados do dashboard
-        function carregarDadosDashboard() {
-            // Limpar os dados anteriores
-            totalTarefas = 0;
-            tarefasConcluidas = 0;
-            tarefasPendentes = [];
-            tarefasAtrasadas = 0;
-            departamentos = {};
-
-            // Buscar tarefas do Firestore
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
-                .get()
-                .then((querySnapshot) => {
-                    const hoje = new Date();
-
-                    querySnapshot.forEach((doc) => {
-                        const tarefa = doc.data();
-                        totalTarefas++;
-
-                        // Verificar se a tarefa está concluída
-                        if (tarefa.status === "completed") {
-                            tarefasConcluidas++;
-                        }
-
-                        // Verificar se a tarefa está atrasada
-                        const dataVencimento = new Date(tarefa.dataVencimento);
-                        if (dataVencimento < hoje && tarefa.status !== "completed") {
-                            tarefasAtrasadas++;
-                        }
-
-                        // Adicionar à lista de pendentes se não estiver concluída
-                        if (tarefa.status !== "completed") {
-                            tarefasPendentes.push({
-                                id: doc.id,
-                                titulo: tarefa.titulo,
-                                departamento: tarefa.departamento,
-                                dataVencimento: dataVencimento,
-                                prioridade: tarefa.prioridade,
-                                responsavel: tarefa.responsavel
-                            });
-                        }
-
-                        // Contabilizar para as estatísticas de departamento
-                        if (!departamentos[tarefa.departamento]) {
-                            departamentos[tarefa.departamento] = {
-                                total: 0,
-                                concluidas: 0
-                            };
-                        }
-
-                        departamentos[tarefa.departamento].total++;
-                        if (tarefa.status === "completed") {
-                            departamentos[tarefa.departamento].concluidas++;
-                        }
-                    });
-
-                    // Atualizar a interface com os dados processados
-                    atualizarInterfaceDashboard();
-                })
-                .catch((error) => {
-                    console.error("Erro ao carregar tarefas: ", error);
+                // Event listener para o botão de exportação
+                $(document).on('click', '#exportarInsightsBtn', function () {
+                    exportarDadosInsights();
                 });
-        }
 
-        // Função para atualizar a interface do dashboard
-        function atualizarInterfaceDashboard() {
-            // Atualizar contadores
-            document.getElementById('totalTarefas').textContent = totalTarefas;
-            document.getElementById('tarefasConcluidas').textContent = tarefasConcluidas;
-            document.getElementById('tarefasAtrasadas').textContent = tarefasAtrasadas;
 
-            // Calcular progresso geral
-            const porcentagemConcluida = totalTarefas > 0 ? Math.round((tarefasConcluidas / totalTarefas) * 100) : 0;
-            const progressBar = document.getElementById('progressoGeral');
-            progressBar.style.width = porcentagemConcluida + '%';
-            progressBar.textContent = porcentagemConcluida + '% Concluído';
-            progressBar.setAttribute('aria-valuenow', porcentagemConcluida);
+                $('.list-group-item').on('click', function (e) {
+                    e.preventDefault();
 
-            // Atualizar lista de departamentos
-            const listaDepartamentos = document.getElementById('listaDepartamentos');
-            listaDepartamentos.innerHTML = '';
+                    // Remover classe active de todos os itens
+                    $('.list-group-item').removeClass('active');
 
-            for (const [nome, stats] of Object.entries(departamentos)) {
-                const porcentagem = stats.total > 0 ? Math.round((stats.concluidas / stats.total) * 100) : 0;
-                let badgeClass = 'badge-danger';
+                    // Adicionar classe active ao item clicado
+                    $(this).addClass('active');
 
-                if (porcentagem >= 70) {
-                    badgeClass = 'badge-success';
-                } else if (porcentagem >= 40) {
-                    badgeClass = 'badge-warning';
-                } else if (porcentagem >= 10) {
-                    badgeClass = 'badge-info';
-                }
+                    // Obter a seção a ser exibida
+                    const section = $(this).data('section');
 
-                const li = document.createElement('li');
-                li.className = 'list-group-item d-flex justify-content-between align-items-center';
-                li.innerHTML = `
+                    // Esconder todas as seções
+                    $('.content-section').removeClass('active');
+
+                    // Mostrar a seção correspondente
+                    $('#' + section).addClass('active');
+
+                    // Se for a seção de checklist, inicializar DataTable
+                    if (section === 'checklist' && !dataTable) {
+                        inicializarDataTable();
+                    }
+
+                    // Se for a seção de insights, carregar os dados
+                    if (section === 'insights') {
+                        carregarInsights();
+                    }
+
+                    if (section === 'insights' && window.faixaEtariaChart) {
+                        setTimeout(function () {
+                            window.faixaEtariaChart.resize();
+                            window.celulaChart.resize();
+                            window.igrejaChart.resize();
+                            window.pagamentoChart.resize();
+                            window.progressoChart.resize();
+                        }, 100);
+                    }
+
+                });
+
+                // Botão "Ver todas as tarefas"
+                $('#verTodasTarefas').on('click', function (e) {
+                    e.preventDefault();
+                    $('.list-group-item[data-section="checklist"]').click();
+                });
+
+                // Carregar dados do dashboard ao iniciar
+                carregarDadosDashboard();
+            });
+
+            // Inicializar DataTable
+            function inicializarDataTable() {
+                dataTable = $('#tarefasTable').DataTable({
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+                    },
+                    responsive: true,
+                    columns: [
+                        { data: 'titulo' },
+                        { data: 'departamento' },
+                        { data: 'responsavel' },
+                        { data: 'vencimento' },
+                        { data: 'prioridade' },
+                        { data: 'status' },
+                        { data: 'acoes' }
+                    ]
+                });
+
+                carregarTarefasTable();
+                
+                document.querySelectorAll('.filter-status').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            aplicarFiltros();
+        });
+    });
+            }
+
+            // Função para carregar dados do dashboard
+            function carregarDadosDashboard() {
+                // Limpar os dados anteriores
+                totalTarefas = 0;
+                tarefasConcluidas = 0;
+                tarefasPendentes = [];
+                tarefasAtrasadas = 0;
+                departamentos = {};
+
+                // Buscar tarefas do Firestore
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
+                    .get()
+                    .then((querySnapshot) => {
+                        const hoje = new Date();
+
+                        querySnapshot.forEach((doc) => {
+                            const tarefa = doc.data();
+                            totalTarefas++;
+
+                            // Verificar se a tarefa está concluída
+                            if (tarefa.status === "completed") {
+                                tarefasConcluidas++;
+                            }
+
+                            // Verificar se a tarefa está atrasada
+                            const dataVencimento = new Date(tarefa.dataVencimento);
+                            if (dataVencimento < hoje && tarefa.status !== "completed") {
+                                tarefasAtrasadas++;
+                            }
+
+                            // Adicionar à lista de pendentes se não estiver concluída
+                            if (tarefa.status !== "completed") {
+                                tarefasPendentes.push({
+                                    id: doc.id,
+                                    titulo: tarefa.titulo,
+                                    departamento: tarefa.departamento,
+                                    dataVencimento: dataVencimento,
+                                    prioridade: tarefa.prioridade,
+                                    responsavel: tarefa.responsavel
+                                });
+                            }
+
+                            // Contabilizar para as estatísticas de departamento
+                            if (!departamentos[tarefa.departamento]) {
+                                departamentos[tarefa.departamento] = {
+                                    total: 0,
+                                    concluidas: 0
+                                };
+                            }
+
+                            departamentos[tarefa.departamento].total++;
+                            if (tarefa.status === "completed") {
+                                departamentos[tarefa.departamento].concluidas++;
+                            }
+                        });
+
+                        // Atualizar a interface com os dados processados
+                        atualizarInterfaceDashboard();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao carregar tarefas: ", error);
+                    });
+            }
+
+            // Função para atualizar a interface do dashboard
+            function atualizarInterfaceDashboard() {
+                // Atualizar contadores
+                document.getElementById('totalTarefas').textContent = totalTarefas;
+                document.getElementById('tarefasConcluidas').textContent = tarefasConcluidas;
+                document.getElementById('tarefasAtrasadas').textContent = tarefasAtrasadas;
+
+                // Calcular progresso geral
+                const porcentagemConcluida = totalTarefas > 0 ? Math.round((tarefasConcluidas / totalTarefas) * 100) : 0;
+                const progressBar = document.getElementById('progressoGeral');
+                progressBar.style.width = porcentagemConcluida + '%';
+                progressBar.textContent = porcentagemConcluida + '% Concluído';
+                progressBar.setAttribute('aria-valuenow', porcentagemConcluida);
+
+                // Atualizar lista de departamentos
+                const listaDepartamentos = document.getElementById('listaDepartamentos');
+                listaDepartamentos.innerHTML = '';
+
+                for (const [nome, stats] of Object.entries(departamentos)) {
+                    const porcentagem = stats.total > 0 ? Math.round((stats.concluidas / stats.total) * 100) : 0;
+                    let badgeClass = 'badge-danger';
+
+                    if (porcentagem >= 70) {
+                        badgeClass = 'badge-success';
+                    } else if (porcentagem >= 40) {
+                        badgeClass = 'badge-warning';
+                    } else if (porcentagem >= 10) {
+                        badgeClass = 'badge-info';
+                    }
+
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                    li.innerHTML = `
                     ${nome}
                     <span class="badge ${badgeClass} badge-pill">${porcentagem}%</span>
                 `;
-                listaDepartamentos.appendChild(li);
-            }
+                    listaDepartamentos.appendChild(li);
+                }
 
-            // Ordenar tarefas pendentes por prioridade e data
-            tarefasPendentes.sort((a, b) => {
-                const prioridadeOrdem = { high: 1, medium: 2, low: 3 };
-                // Primeiro por prioridade
-                const compPrioridade = prioridadeOrdem[a.prioridade] - prioridadeOrdem[b.prioridade];
-                // Se mesma prioridade, ordena por data
-                return compPrioridade !== 0 ? compPrioridade : a.dataVencimento - b.dataVencimento;
-            });
+                // Ordenar tarefas pendentes por prioridade e data
+                tarefasPendentes.sort((a, b) => {
+                    const prioridadeOrdem = { high: 1, medium: 2, low: 3 };
+                    // Primeiro por prioridade
+                    const compPrioridade = prioridadeOrdem[a.prioridade] - prioridadeOrdem[b.prioridade];
+                    // Se mesma prioridade, ordena por data
+                    return compPrioridade !== 0 ? compPrioridade : a.dataVencimento - b.dataVencimento;
+                });
 
-            // Limitar a 5 tarefas
-            const tarefasExibir = tarefasPendentes.slice(0, 5);
+                // Limitar a 5 tarefas
+                const tarefasExibir = tarefasPendentes.slice(0, 5);
 
-            // Atualizar lista de tarefas pendentes
-            const listaTarefasPendentes = document.getElementById('listaTarefasPendentes');
-            listaTarefasPendentes.innerHTML = '';
+                // Atualizar lista de tarefas pendentes
+                const listaTarefasPendentes = document.getElementById('listaTarefasPendentes');
+                listaTarefasPendentes.innerHTML = '';
 
-            if (tarefasExibir.length === 0) {
-                const li = document.createElement('li');
-                li.className = 'list-group-item text-center';
-                li.textContent = 'Não há tarefas pendentes';
-                listaTarefasPendentes.appendChild(li);
-            } else {
-                tarefasExibir.forEach(tarefa => {
+                if (tarefasExibir.length === 0) {
                     const li = document.createElement('li');
-                    li.className = 'list-group-item';
+                    li.className = 'list-group-item text-center';
+                    li.textContent = 'Não há tarefas pendentes';
+                    listaTarefasPendentes.appendChild(li);
+                } else {
+                    tarefasExibir.forEach(tarefa => {
+                        const li = document.createElement('li');
+                        li.className = 'list-group-item';
 
-                    // Determinar a classe de prioridade
-                    let priorityClass = '';
-                    let priorityText = '';
+                        // Determinar a classe de prioridade
+                        let priorityClass = '';
+                        let priorityText = '';
 
-                    if (tarefa.prioridade === 'high') {
-                        priorityClass = 'text-danger';
-                        priorityText = 'Alta';
-                    } else if (tarefa.prioridade === 'medium') {
-                        priorityClass = 'text-warning';
-                        priorityText = 'Média';
-                    } else {
-                        priorityClass = 'text-info';
-                        priorityText = 'Baixa';
-                    }
+                        if (tarefa.prioridade === 'high') {
+                            priorityClass = 'text-danger';
+                            priorityText = 'Alta';
+                        } else if (tarefa.prioridade === 'medium') {
+                            priorityClass = 'text-warning';
+                            priorityText = 'Média';
+                        } else {
+                            priorityClass = 'text-info';
+                            priorityText = 'Baixa';
+                        }
 
-                    // Formatar data de vencimento
-                    const dataFormatada = tarefa.dataVencimento.toLocaleDateString('pt-BR');
+                        // Formatar data de vencimento
+                        const dataFormatada = tarefa.dataVencimento.toLocaleDateString('pt-BR');
 
-                    // Criar HTML para a tarefa
-                    li.innerHTML = `
+                        // Criar HTML para a tarefa
+                        li.innerHTML = `
                         <div class="form-check">
                             <input class="form-check-input task-checkbox" type="checkbox" value="${tarefa.id}" id="task${tarefa.id}">
                             <label class="form-check-label" for="task${tarefa.id}">
@@ -916,328 +995,264 @@
                         </div>
                     `;
 
-                    listaTarefasPendentes.appendChild(li);
+                        listaTarefasPendentes.appendChild(li);
 
-                    // Adicionar event listener para marcar como concluída
-                    const checkbox = li.querySelector('.task-checkbox');
-                    checkbox.addEventListener('change', function () {
-                        if (this.checked) {
-                            marcarComoConcluida(tarefa.id);
-                        }
+                        // Adicionar event listener para marcar como concluída
+                        const checkbox = li.querySelector('.task-checkbox');
+                        checkbox.addEventListener('change', function () {
+                            if (this.checked) {
+                                marcarComoConcluida(tarefa.id);
+                            }
+                        });
                     });
-                });
+                }
             }
-        }
 
-        // Função para carregar tarefas na tabela
-        function carregarTarefasTable() {
-            // Limpar tabela
-            dataTable.clear();
+            // Função para carregar tarefas na tabela
+            function carregarTarefasTable() {
+                // Limpar tabela
+                dataTable.clear();
 
-            // Buscar tarefas do Firestore
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
-                .get()
-                .then((querySnapshot) => {
-                    let tarefas = [];
+                // Buscar tarefas do Firestore
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
+                    .get()
+                    .then((querySnapshot) => {
+                        let tarefas = [];
 
-                    querySnapshot.forEach((doc) => {
-                        const tarefa = doc.data();
-                        const dataVencimento = new Date(tarefa.dataVencimento);
+                        querySnapshot.forEach((doc) => {
+                            const tarefa = doc.data();
+                            const dataVencimento = new Date(tarefa.dataVencimento);
 
-                        // Traduzir status
-                        let statusTexto = '';
-                        let statusBadge = '';
+                            // Traduzir status
+                            let statusTexto = '';
+                            let statusBadge = '';
 
-                        if (tarefa.status === 'todo') {
-                            statusTexto = 'A Fazer';
-                            statusBadge = 'badge-secondary';
-                        } else if (tarefa.status === 'inProgress') {
-                            statusTexto = 'Em Andamento';
-                            statusBadge = 'badge-primary';
-                        } else if (tarefa.status === 'completed') {
-                            statusTexto = 'Concluído';
-                            statusBadge = 'badge-success';
-                        }
+                            if (tarefa.status === 'todo') {
+                                statusTexto = 'A Fazer';
+                                statusBadge = 'badge-secondary';
+                            } else if (tarefa.status === 'inProgress') {
+                                statusTexto = 'Em Andamento';
+                                statusBadge = 'badge-primary';
+                            } else if (tarefa.status === 'completed') {
+                                statusTexto = 'Concluído';
+                                statusBadge = 'badge-success';
+                            }
 
-                        // Traduzir prioridade
-                        let prioridadeTexto = '';
-                        let prioridadeBadge = '';
+                            // Traduzir prioridade
+                            let prioridadeTexto = '';
+                            let prioridadeBadge = '';
 
-                        if (tarefa.prioridade === 'high') {
-                            prioridadeTexto = 'Alta';
-                            prioridadeBadge = 'badge-high';
-                        } else if (tarefa.prioridade === 'medium') {
-                            prioridadeTexto = 'Média';
-                            prioridadeBadge = 'badge-medium';
-                        } else if (tarefa.prioridade === 'low') {
-                            prioridadeTexto = 'Baixa';
-                            prioridadeBadge = 'badge-low';
-                        }
+                            if (tarefa.prioridade === 'high') {
+                                prioridadeTexto = 'Alta';
+                                prioridadeBadge = 'badge-high';
+                            } else if (tarefa.prioridade === 'medium') {
+                                prioridadeTexto = 'Média';
+                                prioridadeBadge = 'badge-medium';
+                            } else if (tarefa.prioridade === 'low') {
+                                prioridadeTexto = 'Baixa';
+                                prioridadeBadge = 'badge-low';
+                            }
 
-                        // Adicionar à lista
-                        tarefas.push({
-                            id: doc.id,
-                            titulo: tarefa.titulo,
-                            departamento: `<span class="badge badge-secondary">${tarefa.departamento}</span>`,
-                            responsavel: tarefa.responsavel || 'Não atribuído',
-                            vencimento: dataVencimento.toLocaleDateString('pt-BR'),
-                            prioridade: `<span class="badge ${prioridadeBadge}">${prioridadeTexto}</span>`,
-                            status: `<span class="badge ${statusBadge}">${statusTexto}</span>`,
-                            acoes: `
+                            // Adicionar à lista
+                            tarefas.push({
+                                id: doc.id,
+                                titulo: tarefa.titulo,
+                                departamento: `<span class="badge badge-secondary">${tarefa.departamento}</span>`,
+                                responsavel: tarefa.responsavel || 'Não atribuído',
+                                vencimento: dataVencimento.toLocaleDateString('pt-BR'),
+                                prioridade: `<span class="badge ${prioridadeBadge}">${prioridadeTexto}</span>`,
+                                status: `<span class="badge ${statusBadge}">${statusTexto}</span>`,
+                                acoes: `
                                 <button class="btn btn-sm btn-info view-task" data-id="${doc.id}"><i class="bi bi-eye"></i></button>
                                 <button class="btn btn-sm btn-primary edit-task" data-id="${doc.id}"><i class="bi bi-pencil"></i></button>
                                 <button class="btn btn-sm btn-danger delete-task" data-id="${doc.id}"><i class="bi bi-trash"></i></button>
                             `
+                            });
                         });
+
+                        // Adicionar dados à tabela
+                        dataTable.rows.add(tarefas).draw();
+
+                        // Adicionar event listeners para os botões de ação
+                        adicionarEventListenersBotoes();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao carregar tarefas: ", error);
                     });
+            }
 
-                    // Adicionar dados à tabela
-                    dataTable.rows.add(tarefas).draw();
-
-                    // Adicionar event listeners para os botões de ação
-                    adicionarEventListenersBotoes();
-                })
-                .catch((error) => {
-                    console.error("Erro ao carregar tarefas: ", error);
+            // Função para adicionar event listeners aos botões
+            function adicionarEventListenersBotoes() {
+                // Botão de visualizar tarefa
+                $('#tarefasTable').on('click', '.view-task', function () {
+                    const id = $(this).data('id');
+                    abrirModalDetalhes(id);
                 });
-        }
 
-        // Função para adicionar event listeners aos botões
-        function adicionarEventListenersBotoes() {
-            // Botão de visualizar tarefa
-            $('#tarefasTable').on('click', '.view-task', function () {
-                const id = $(this).data('id');
-                abrirModalDetalhes(id);
-            });
-
-            // Botão de editar tarefa
-            $('#tarefasTable').on('click', '.edit-task', function () {
-                const id = $(this).data('id');
-                abrirModalEdicao(id);
-            });
-
-            // Botão de excluir tarefa
-            $('#tarefasTable').on('click', '.delete-task', function () {
-                const id = $(this).data('id');
-                excluirTarefa(id);
-            });
-        }
-
-        // Função para marcar uma tarefa como concluída
-        function marcarComoConcluida(id) {
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id).update({
-                status: "completed",
-                dataAtualizacao: new Date().toISOString()
-            })
-                .then(() => {
-                    console.log("Tarefa marcada como concluída!");
-                    // Recarregar os dados do dashboard
-                    carregarDadosDashboard();
-                    // Se a tabela já foi inicializada, recarregar
-                    if (dataTable) {
-                        carregarTarefasTable();
-                    }
-                })
-                .catch((error) => {
-                    console.error("Erro ao marcar tarefa como concluída: ", error);
-                    alert("Erro ao marcar tarefa como concluída. Tente novamente.");
-                });
-        }
-
-        // Função para abrir modal de detalhes
-        function abrirModalDetalhes(id) {
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id)
-                .get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        const tarefa = doc.data();
-
-                        // Preencher dados no modal
-                        document.getElementById('detailTitle').textContent = tarefa.titulo;
-                        document.getElementById('detailDescription').textContent = tarefa.descricao || 'Sem descrição';
-                        document.getElementById('detailDepartment').textContent = tarefa.departamento;
-                        document.getElementById('detailResponsible').textContent = tarefa.responsavel || 'Não atribuído';
-
-                        // Formatar data
-                        const dataVencimento = new Date(tarefa.dataVencimento);
-                        document.getElementById('detailDueDate').textContent = dataVencimento.toLocaleDateString('pt-BR');
-
-                        // Traduzir prioridade
-                        let prioridadeTexto = '';
-                        if (tarefa.prioridade === 'high') {
-                            prioridadeTexto = '<span class="text-danger">Alta</span>';
-                        } else if (tarefa.prioridade === 'medium') {
-                            prioridadeTexto = '<span class="text-warning">Média</span>';
-                        } else {
-                            prioridadeTexto = '<span class="text-info">Baixa</span>';
-                        }
-                        document.getElementById('detailPriority').innerHTML = prioridadeTexto;
-
-                        // Traduzir status
-                        let statusTexto = '';
-                        if (tarefa.status === 'todo') {
-                            statusTexto = '<span class="badge badge-secondary">A Fazer</span>';
-                        } else if (tarefa.status === 'inProgress') {
-                            statusTexto = '<span class="badge badge-primary">Em Andamento</span>';
-                        } else if (tarefa.status === 'completed') {
-                            statusTexto = '<span class="badge badge-success">Concluído</span>';
-                        }
-                        document.getElementById('detailStatus').innerHTML = statusTexto;
-
-                        // Adicionar ID ao botão editar
-                        document.getElementById('editTaskBtn').setAttribute('data-id', id);
-
-                        // Abrir o modal
-                        $('#taskDetailModal').modal('show');
-                    }
-                })
-                .catch((error) => {
-                    console.error("Erro ao buscar detalhes da tarefa: ", error);
-                });
-        }
-
-        // Função para abrir modal de edição
-        function abrirModalEdicao(id) {
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id)
-                .get()
-                .then((doc) => {
-                    if (doc.exists) {
-                        const tarefa = doc.data();
-
-                        // Preencher campos do formulário
-                        document.getElementById('editTaskId').value = id;
-                        document.getElementById('editTaskDepartment').value = tarefa.departamento;
-                        document.getElementById('editTaskTitle').value = tarefa.titulo;
-                        document.getElementById('editTaskDescription').value = tarefa.descricao || '';
-                        document.getElementById('editTaskResponsible').value = tarefa.responsavel || '';
-                        document.getElementById('editTaskStatus').value = tarefa.status;
-                        document.getElementById('editTaskPriority').value = tarefa.prioridade;
-
-                        // Formatar a data para o padrão YYYY-MM-DD
-                        const dataVencimento = tarefa.dataVencimento.split('T')[0];
-                        document.getElementById('editTaskDueDate').value = dataVencimento;
-
-                        // Abrir o modal
-                        $('#editTaskModal').modal('show');
-                    }
-                })
-                .catch((error) => {
-                    console.error("Erro ao buscar dados para edição: ", error);
-                });
-        }
-
-        // Event listener para o botão de editar no modal de detalhes
-        document.getElementById('editTaskBtn').addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-
-            // Usar o evento 'hidden.bs.modal' para garantir sequência correta
-            $('#taskDetailModal').on('hidden.bs.modal', function () {
-                // Remove o event listener para evitar múltiplas chamadas
-                $('#taskDetailModal').off('hidden.bs.modal');
-                // Pequeno delay para garantir que o DOM foi atualizado
-                setTimeout(function () {
+                // Botão de editar tarefa
+                $('#tarefasTable').on('click', '.edit-task', function () {
+                    const id = $(this).data('id');
                     abrirModalEdicao(id);
-                }, 100);
+                });
+
+                // Botão de excluir tarefa
+                $('#tarefasTable').on('click', '.delete-task', function () {
+                    const id = $(this).data('id');
+                    excluirTarefa(id);
+                });
+            }
+
+            // Função para marcar uma tarefa como concluída
+            function marcarComoConcluida(id) {
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id).update({
+                    status: "completed",
+                    dataAtualizacao: new Date().toISOString()
+                })
+                    .then(() => {
+                        console.log("Tarefa marcada como concluída!");
+                        // Recarregar os dados do dashboard
+                        carregarDadosDashboard();
+                        // Se a tabela já foi inicializada, recarregar
+                        if (dataTable) {
+                            carregarTarefasTable();
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao marcar tarefa como concluída: ", error);
+                        alert("Erro ao marcar tarefa como concluída. Tente novamente.");
+                    });
+            }
+
+            // Função para abrir modal de detalhes
+            function abrirModalDetalhes(id) {
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id)
+                    .get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            const tarefa = doc.data();
+
+                            // Preencher dados no modal
+                            document.getElementById('detailTitle').textContent = tarefa.titulo;
+                            document.getElementById('detailDescription').textContent = tarefa.descricao || 'Sem descrição';
+                            document.getElementById('detailDepartment').textContent = tarefa.departamento;
+                            document.getElementById('detailResponsible').textContent = tarefa.responsavel || 'Não atribuído';
+
+                            // Formatar data
+                            const dataVencimento = new Date(tarefa.dataVencimento);
+                            document.getElementById('detailDueDate').textContent = dataVencimento.toLocaleDateString('pt-BR');
+
+                            // Traduzir prioridade
+                            let prioridadeTexto = '';
+                            if (tarefa.prioridade === 'high') {
+                                prioridadeTexto = '<span class="text-danger">Alta</span>';
+                            } else if (tarefa.prioridade === 'medium') {
+                                prioridadeTexto = '<span class="text-warning">Média</span>';
+                            } else {
+                                prioridadeTexto = '<span class="text-info">Baixa</span>';
+                            }
+                            document.getElementById('detailPriority').innerHTML = prioridadeTexto;
+
+                            // Traduzir status
+                            let statusTexto = '';
+                            if (tarefa.status === 'todo') {
+                                statusTexto = '<span class="badge badge-secondary">A Fazer</span>';
+                            } else if (tarefa.status === 'inProgress') {
+                                statusTexto = '<span class="badge badge-primary">Em Andamento</span>';
+                            } else if (tarefa.status === 'completed') {
+                                statusTexto = '<span class="badge badge-success">Concluído</span>';
+                            }
+                            document.getElementById('detailStatus').innerHTML = statusTexto;
+
+                            // Adicionar ID ao botão editar
+                            document.getElementById('editTaskBtn').setAttribute('data-id', id);
+
+                            // Abrir o modal
+                            $('#taskDetailModal').modal('show');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao buscar detalhes da tarefa: ", error);
+                    });
+            }
+
+            // Função para abrir modal de edição
+            function abrirModalEdicao(id) {
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id)
+                    .get()
+                    .then((doc) => {
+                        if (doc.exists) {
+                            const tarefa = doc.data();
+
+                            // Preencher campos do formulário
+                            document.getElementById('editTaskId').value = id;
+                            document.getElementById('editTaskDepartment').value = tarefa.departamento;
+                            document.getElementById('editTaskTitle').value = tarefa.titulo;
+                            document.getElementById('editTaskDescription').value = tarefa.descricao || '';
+                            document.getElementById('editTaskResponsible').value = tarefa.responsavel || '';
+                            document.getElementById('editTaskStatus').value = tarefa.status;
+                            document.getElementById('editTaskPriority').value = tarefa.prioridade;
+
+                            // Formatar a data para o padrão YYYY-MM-DD
+                            const dataVencimento = tarefa.dataVencimento.split('T')[0];
+                            document.getElementById('editTaskDueDate').value = dataVencimento;
+
+                            // Abrir o modal
+                            $('#editTaskModal').modal('show');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao buscar dados para edição: ", error);
+                    });
+            }
+
+            // Event listener para o botão de editar no modal de detalhes
+            document.getElementById('editTaskBtn').addEventListener('click', function () {
+                const id = this.getAttribute('data-id');
+
+                // Usar o evento 'hidden.bs.modal' para garantir sequência correta
+                $('#taskDetailModal').on('hidden.bs.modal', function () {
+                    // Remove o event listener para evitar múltiplas chamadas
+                    $('#taskDetailModal').off('hidden.bs.modal');
+                    // Pequeno delay para garantir que o DOM foi atualizado
+                    setTimeout(function () {
+                        abrirModalEdicao(id);
+                    }, 100);
+                });
+
+                // Inicia o fechamento do modal
+                $('#taskDetailModal').modal('hide');
             });
 
-            // Inicia o fechamento do modal
-            $('#taskDetailModal').modal('hide');
-        });
+            // Função para salvar nova tarefa
+            document.getElementById('saveTaskBtn').addEventListener('click', function () {
+                const taskDepartment = document.getElementById('taskDepartment').value;
+                const taskTitle = document.getElementById('taskTitle').value;
+                const taskDescription = document.getElementById('taskDescription').value;
+                const taskDueDate = document.getElementById('taskDueDate').value;
+                const taskPriority = document.getElementById('taskPriority').value;
+                const taskResponsible = document.getElementById('taskResponsible').value;
 
+                if (!taskTitle || !taskDueDate || !taskDepartment) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
 
-        // Função para salvar nova tarefa
-        document.getElementById('saveTaskBtn').addEventListener('click', function () {
-            const taskDepartment = document.getElementById('taskDepartment').value;
-            const taskTitle = document.getElementById('taskTitle').value;
-            const taskDescription = document.getElementById('taskDescription').value;
-            const taskDueDate = document.getElementById('taskDueDate').value;
-            const taskPriority = document.getElementById('taskPriority').value;
-            const taskResponsible = document.getElementById('taskResponsible').value;
-
-            if (!taskTitle || !taskDueDate || !taskDepartment) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-
-            // Adicionar ao Firestore
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").add({
-                departamento: taskDepartment,
-                titulo: taskTitle,
-                descricao: taskDescription,
-                dataVencimento: taskDueDate,
-                prioridade: taskPriority,
-                responsavel: taskResponsible,
-                status: "todo",
-                dataCriacao: new Date().toISOString(),
-                dataAtualizacao: new Date().toISOString()
-            })
-                .then(() => {
-                    console.log("Tarefa adicionada com sucesso!");
-                    $('#addTaskModal').modal('hide');
-                    document.getElementById('newTaskForm').reset();
-
-                    // Recarregar dados
-                    carregarDadosDashboard();
-                    if (dataTable) {
-                        carregarTarefasTable();
-                    }
+                // Adicionar ao Firestore
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").add({
+                    departamento: taskDepartment,
+                    titulo: taskTitle,
+                    descricao: taskDescription,
+                    dataVencimento: taskDueDate,
+                    prioridade: taskPriority,
+                    responsavel: taskResponsible,
+                    status: "todo",
+                    dataCriacao: new Date().toISOString(),
+                    dataAtualizacao: new Date().toISOString()
                 })
-                .catch((error) => {
-                    console.error("Erro ao adicionar tarefa: ", error);
-                    alert("Erro ao adicionar tarefa. Tente novamente.");
-                });
-        });
-
-        // Função para atualizar tarefa
-        document.getElementById('updateTaskBtn').addEventListener('click', function () {
-            const taskId = document.getElementById('editTaskId').value;
-            const taskDepartment = document.getElementById('editTaskDepartment').value;
-            const taskTitle = document.getElementById('editTaskTitle').value;
-            const taskDescription = document.getElementById('editTaskDescription').value;
-            const taskDueDate = document.getElementById('editTaskDueDate').value;
-            const taskPriority = document.getElementById('editTaskPriority').value;
-            const taskResponsible = document.getElementById('editTaskResponsible').value;
-            const taskStatus = document.getElementById('editTaskStatus').value;
-
-            if (!taskTitle || !taskDueDate || !taskDepartment) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-
-            // Atualizar no Firestore
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(taskId).update({
-                departamento: taskDepartment,
-                titulo: taskTitle,
-                descricao: taskDescription,
-                dataVencimento: taskDueDate,
-                prioridade: taskPriority,
-                responsavel: taskResponsible,
-                status: taskStatus,
-                dataAtualizacao: new Date().toISOString()
-            })
-                .then(() => {
-                    console.log("Tarefa atualizada com sucesso!");
-                    $('#editTaskModal').modal('hide');
-
-                    // Recarregar dados
-                    carregarDadosDashboard();
-                    if (dataTable) {
-                        carregarTarefasTable();
-                    }
-                })
-                .catch((error) => {
-                    console.error("Erro ao atualizar tarefa: ", error);
-                    alert("Erro ao atualizar tarefa. Tente novamente.");
-                });
-        });
-
-        // Função para excluir tarefa
-        function excluirTarefa(id) {
-            const confirmar = confirm("Tem certeza que deseja excluir esta tarefa?");
-            if (confirmar) {
-                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id).delete()
                     .then(() => {
-                        console.log("Tarefa excluída com sucesso!");
+                        console.log("Tarefa adicionada com sucesso!");
+                        $('#addTaskModal').modal('hide');
+                        document.getElementById('newTaskForm').reset();
 
                         // Recarregar dados
                         carregarDadosDashboard();
@@ -1246,396 +1261,745 @@
                         }
                     })
                     .catch((error) => {
-                        console.error("Erro ao excluir tarefa: ", error);
-                        alert("Erro ao excluir tarefa. Tente novamente.");
+                        console.error("Erro ao adicionar tarefa: ", error);
+                        alert("Erro ao adicionar tarefa. Tente novamente.");
                     });
-            }
-        }
+            });
 
-        // Filtrar tarefas na tabela
-        $('#filterForm').on('submit', function (e) {
-            e.preventDefault();
-            aplicarFiltros();
-        });
+            // Função para atualizar tarefa
+            document.getElementById('updateTaskBtn').addEventListener('click', function () {
+                const taskId = document.getElementById('editTaskId').value;
+                const taskDepartment = document.getElementById('editTaskDepartment').value;
+                const taskTitle = document.getElementById('editTaskTitle').value;
+                const taskDescription = document.getElementById('editTaskDescription').value;
+                const taskDueDate = document.getElementById('editTaskDueDate').value;
+                const taskPriority = document.getElementById('editTaskPriority').value;
+                const taskResponsible = document.getElementById('editTaskResponsible').value;
+                const taskStatus = document.getElementById('editTaskStatus').value;
 
-        $('#limparFiltro').on('click', function () {
-            document.getElementById('filterForm').reset();
-            aplicarFiltros();
-        });
+                if (!taskTitle || !taskDueDate || !taskDepartment) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
 
-        function aplicarFiltros() {
-            const filtroDepartamento = document.getElementById('filterDepartamento').value;
-            const filtroStatus = document.getElementById('filterStatus').value;
-            const filtroPrioridade = document.getElementById('filterPrioridade').value;
-
-            // Limpar filtros anteriores
-            dataTable.search('').columns().search('').draw();
-
-            // Aplicar filtros
-            if (filtroDepartamento) {
-                dataTable.column(1).search(filtroDepartamento).draw();
-            }
-
-            if (filtroStatus) {
-                let textoStatus = '';
-                if (filtroStatus === 'todo') textoStatus = 'A Fazer';
-                if (filtroStatus === 'inProgress') textoStatus = 'Em Andamento';
-                if (filtroStatus === 'completed') textoStatus = 'Concluído';
-
-                dataTable.column(5).search(textoStatus).draw();
-            }
-
-            if (filtroPrioridade) {
-                let textoPrioridade = '';
-                if (filtroPrioridade === 'high') textoPrioridade = 'Alta';
-                if (filtroPrioridade === 'medium') textoPrioridade = 'Média';
-                if (filtroPrioridade === 'low') textoPrioridade = 'Baixa';
-
-                dataTable.column(4).search(textoPrioridade).draw();
-            }
-        }
-
-        // Adicione este código ao final do script existente
-
-        // Função para carregar dados dos insights
-
-        // Função para carregar dados dos insights
-        function carregarInsights() {
-            // Verificar se os gráficos já foram criados
-            if (window.faixaEtariaChart) {
-                return; // Evitar recarregar os gráficos se já existirem
-            }
-
-            // Limpar dados anteriores
-            let totalParticipantes = 0;
-            let totalPagos = 0;
-            let totalPendentes = 0;
-
-            // Dados para gráficos
-            const faixasEtarias = {
-                "10-12 anos": 0,
-                "13-15 anos": 0,
-                "16-17 anos": 0,
-                "18+ anos": 0
-            };
-
-            const igrejas = {};
-            const statusPagamento = {
-                "Pago": 0,
-                "Pendente": 0
-            };
-
-            // Dados para progresso de inscrições (simulado por semana)
-            const progressoInscricoes = {
-                labels: [],
-                data: []
-            };
-
-            // Buscar participantes do Firestore
-            db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
-                .where("anoacamp", "==", "2025")
-                .get()
-                .then((querySnapshot) => {
-                    totalParticipantes = querySnapshot.size;
-
-                    // Processar dados dos participantes
-                    querySnapshot.forEach((doc) => {
-                        const participante = doc.data();
-
-                        // Contabilizar status de pagamento
-                        if (participante.statusPagamento === 'pago') {
-                            totalPagos++;
-                            statusPagamento["Pago"]++;
-                        } else {
-                            totalPendentes++;
-                            statusPagamento["Pendente"]++;
-                        }
-
-                        // Contabilizar faixa etária
-                        const idade = parseInt(participante.idade);
-                        if (idade >= 10 && idade <= 12) {
-                            faixasEtarias["10-12 anos"]++;
-                        } else if (idade >= 13 && idade <= 15) {
-                            faixasEtarias["13-15 anos"]++;
-                        } else if (idade >= 16 && idade <= 17) {
-                            faixasEtarias["16-17 anos"]++;
-                        } else {
-                            faixasEtarias["18+ anos"]++;
-                        }
-
-                        // Contabilizar igreja
-                        const igreja = participante.igreja === 'Outra' ? participante.outraIgreja : participante.igreja;
-                        igrejas[igreja] = (igrejas[igreja] || 0) + 1;
-
-                        // Processar data de registro para o gráfico de progresso
-                        if (participante.dtRegistro) {
-                            const dataRegistro = new Date(participante.dtRegistro);
-                            const semana = `Semana ${Math.floor(dataRegistro.getDate() / 7) + 1}`;
-
-                            if (!progressoInscricoes.labels.includes(semana)) {
-                                progressoInscricoes.labels.push(semana);
-                                progressoInscricoes.data.push(1);
-                            } else {
-                                const index = progressoInscricoes.labels.indexOf(semana);
-                                progressoInscricoes.data[index]++;
-                            }
-                        }
-                    });
-
-                    // Ordenar as semanas cronologicamente
-                    const semanas = progressoInscricoes.labels.map((semana, index) => {
-                        return {
-                            label: semana,
-                            data: progressoInscricoes.data[index],
-                            num: parseInt(semana.replace('Semana ', ''))
-                        };
-                    }).sort((a, b) => a.num - b.num);
-
-                    progressoInscricoes.labels = semanas.map(s => s.label);
-                    progressoInscricoes.data = semanas.map(s => s.data);
-
-                    // Atualizar contadores
-                    document.getElementById('totalParticipantesInsight').textContent = totalParticipantes;
-                    document.getElementById('totalPagosInsight').textContent = totalPagos;
-                    document.getElementById('totalPendentesInsight').textContent = totalPendentes;
-
-                    // Criar gráficos
-                    window.faixaEtariaChart = criarGraficoFaixaEtaria(faixasEtarias);
-                    window.igrejaChart = criarGraficoIgrejas(igrejas);
-                    window.pagamentoChart = criarGraficoPagamento(statusPagamento);
-                    window.progressoChart = criarGraficoProgressoInscricoes(progressoInscricoes);
-
-                    // Gerar recomendações
-                    gerarRecomendacoes(totalParticipantes, totalPagos, faixasEtarias);
+                // Atualizar no Firestore
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(taskId).update({
+                    departamento: taskDepartment,
+                    titulo: taskTitle,
+                    descricao: taskDescription,
+                    dataVencimento: taskDueDate,
+                    prioridade: taskPriority,
+                    responsavel: taskResponsible,
+                    status: taskStatus,
+                    dataAtualizacao: new Date().toISOString()
                 })
-                .catch((error) => {
-                    console.error("Erro ao carregar dados para insights: ", error);
-                });
-        }
+                    .then(() => {
+                        console.log("Tarefa atualizada com sucesso!");
+                        $('#editTaskModal').modal('hide');
 
-        // Função para criar gráfico de faixa etária
-        function criarGraficoFaixaEtaria(dados) {
-            const ctx = document.getElementById('faixaEtariaInsightChart').getContext('2d');
-            return new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(dados),
-                    datasets: [{
-                        label: 'Quantidade de Inscritos',
-                        data: Object.values(dados),
-                        backgroundColor: [
-                            '#48c9b0',  // Teal
-                            '#82e0aa',  // Mint Green
-                            '#f7dc6f',  // Soft Yellow
-                            '#f0b27a'   // Peach
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
-                            }
+                        // Recarregar dados
+                        carregarDadosDashboard();
+                        if (dataTable) {
+                            carregarTarefasTable();
                         }
-                    }
-                }
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao atualizar tarefa: ", error);
+                        alert("Erro ao atualizar tarefa. Tente novamente.");
+                    });
             });
-        }
 
-        // Função para criar gráfico de igrejas
-        function criarGraficoIgrejas(dados) {
-            const ctx = document.getElementById('igrejaInsightChart').getContext('2d');
-            return new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: Object.keys(dados),
-                    datasets: [{
-                        data: Object.values(dados),
-                        backgroundColor: [
-                            '#48c9b0',  // Teal
-                            '#82e0aa',  // Mint Green
-                            '#f7dc6f',  // Soft Yellow
-                            '#f0b27a',  // Peach
-                            '#ec7063'   // Coral Red
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }
+            // Função para excluir tarefa
+            function excluirTarefa(id) {
+                const confirmar = confirm("Tem certeza que deseja excluir esta tarefa?");
+                if (confirmar) {
+                    db.collection("Acampamentos").doc("AcampBT2025").collection("checklist").doc(id).delete()
+                        .then(() => {
+                            console.log("Tarefa excluída com sucesso!");
 
-        // Função para criar gráfico de status de pagamento
-        function criarGraficoPagamento(dados) {
-            const ctx = document.getElementById('pagamentoInsightChart').getContext('2d');
-            return new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(dados),
-                    datasets: [{
-                        data: Object.values(dados),
-                        backgroundColor: [
-                            '#28a745',  // Verde para Pago
-                            '#ffc107'   // Amarelo para Pendente
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }
-
-        // Função para criar gráfico de progresso de inscrições
-        function criarGraficoProgressoInscricoes(dados) {
-            const ctx = document.getElementById('progressoInscricoesChart').getContext('2d');
-            return new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dados.labels,
-                    datasets: [{
-                        label: 'Novas Inscrições',
-                        data: dados.data,
-                        backgroundColor: 'rgba(61, 117, 23, 0.2)',
-                        borderColor: 'rgba(61, 117, 23, 1)',
-                        borderWidth: 2,
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1
+                            // Recarregar dados
+                            carregarDadosDashboard();
+                            if (dataTable) {
+                                carregarTarefasTable();
                             }
-                        }
-                    }
+                        })
+                        .catch((error) => {
+                            console.error("Erro ao excluir tarefa: ", error);
+                            alert("Erro ao excluir tarefa. Tente novamente.");
+                        });
                 }
-            });
-        }
-
-        // Função para gerar recomendações baseadas nos dados
-        function gerarRecomendacoes(totalParticipantes, totalPagos, faixasEtarias) {
-            const recomendacoesList = document.getElementById('recomendacoesList');
-            recomendacoesList.innerHTML = '';
-
-            const recomendacoes = [];
-
-            // Recomendação baseada em pagamentos
-            const percentualPago = (totalPagos / totalParticipantes) * 100;
-            if (percentualPago < 50) {
-                recomendacoes.push({
-                    texto: `Apenas ${percentualPago.toFixed(0)}% dos participantes confirmaram pagamento. Considere enviar lembretes ou facilitar formas de pagamento.`,
-                    icone: 'bi-cash-coin',
-                    classe: 'text-warning'
-                });
             }
 
-            // Recomendação baseada em faixa etária
-            const menoresIdade = faixasEtarias["10-12 anos"] + faixasEtarias["13-15 anos"] + faixasEtarias["16-17 anos"];
-            if (menoresIdade > 0) {
-                recomendacoes.push({
-                    texto: `Há ${menoresIdade} participantes menores de idade. Certifique-se de que todos tenham autorização dos responsáveis.`,
-                    icone: 'bi-exclamation-triangle',
-                    classe: 'text-info'
+            // Filtrar tarefas na tabela
+            $('#filterForm').on('submit', function (e) {
+                e.preventDefault();
+                aplicarFiltros();
+            });
+
+            // Limpar filtros
+            $('#limparFiltro').on('click', function () {
+                // Resetar o formulário para os selects
+                document.getElementById('filterForm').reset();
+
+                // Desmarcar todos os checkboxes de status
+                document.querySelectorAll('.filter-status').forEach(checkbox => {
+                    checkbox.checked = false;
                 });
+
+                // Aplicar filtros (agora vazios)
+                aplicarFiltros();
+            });
+
+            // Função para aplicar filtros
+            function aplicarFiltros() {
+                const filtroDepartamento = document.getElementById('filterDepartamento').value;
+                // Obter valores dos checkboxes marcados
+                const filtroStatus = Array.from(document.querySelectorAll('.filter-status:checked'))
+                    .map(checkbox => checkbox.value);
+                const filtroPrioridade = document.getElementById('filterPrioridade').value;
+
+                // Limpar filtros anteriores
+                dataTable.search('').columns().search('').draw();
+
+                // Aplicar filtros
+                if (filtroDepartamento) {
+                    dataTable.column(1).search(filtroDepartamento).draw();
+                }
+
+                // Aplicar filtro de status com múltiplas seleções
+                if (filtroStatus.length > 0) {
+                    // Criar expressão regular para buscar qualquer um dos status selecionados
+                    const statusTextos = filtroStatus.map(status => {
+                        if (status === 'todo') return 'A Fazer';
+                        if (status === 'inProgress') return 'Em Andamento';
+                        if (status === 'completed') return 'Concluído';
+                        return '';
+                    });
+
+                    // Usar regex para filtrar por qualquer um dos status selecionados
+                    const regexStatus = statusTextos.join('|');
+                    dataTable.column(5).search(regexStatus, true, false).draw();
+                }
+
+                if (filtroPrioridade) {
+                    let textoPrioridade = '';
+                    if (filtroPrioridade === 'high') textoPrioridade = 'Alta';
+                    if (filtroPrioridade === 'medium') textoPrioridade = 'Média';
+                    if (filtroPrioridade === 'low') textoPrioridade = 'Baixa';
+
+                    dataTable.column(4).search(textoPrioridade).draw();
+                }
             }
 
-            // Recomendação sobre tarefas
-            recomendacoes.push({
-                texto: `Verifique se todas as tarefas relacionadas à acomodação estão sendo planejadas para ${totalParticipantes} participantes.`,
-                icone: 'bi-house',
-                classe: 'text-primary'
-            });
 
-            // Recomendação sobre equipe
-            const equipesNecessarias = Math.ceil(totalParticipantes / 15);
-            recomendacoes.push({
-                texto: `Com base no número de inscritos, recomenda-se formar pelo menos ${equipesNecessarias} equipes para atividades em grupo.`,
-                icone: 'bi-people',
-                classe: 'text-success'
-            });
+            // Função para carregar dados dos insights
+            function carregarInsights() {
+                // Destruir gráficos existentes para evitar o erro de canvas já em uso
+                if (window.faixaEtariaChart) {
+                    try {
+                        window.faixaEtariaChart.destroy();
+                        window.igrejaChart.destroy();
+                        window.pagamentoChart.destroy();
+                        window.progressoChart.destroy();
+                        window.celulaChart.destroy();
+                    } catch (e) {
+                        console.warn("Erro ao destruir gráficos existentes:", e);
+                    }
 
-            // Recomendação sobre tarefas pendentes
-            db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
-                .where("status", "!=", "completed")
-                .get()
-                .then((querySnapshot) => {
-                    if (querySnapshot.size > 0) {
-                        recomendacoes.push({
-                            texto: `Existem ${querySnapshot.size} tarefas pendentes. Considere priorizar as de alta prioridade.`,
-                            icone: 'bi-list-check',
-                            classe: 'text-danger'
+                    // Limpar referências
+                    window.faixaEtariaChart = null;
+                    window.igrejaChart = null;
+                    window.pagamentoChart = null;
+                    window.progressoChart = null;
+                    window.celulaChart = null;
+                }
+
+                // Recriar elementos canvas
+                const containers = [
+                    'faixaEtariaInsightChart',
+                    'igrejaInsightChart',
+                    'pagamentoInsightChart',
+                    'progressoInscricoesChart',
+                    'celulaInsightChart'
+                ];
+
+                containers.forEach(id => {
+                    const container = document.getElementById(id).parentNode;
+                    const oldCanvas = document.getElementById(id);
+                    if (oldCanvas) {
+                        container.removeChild(oldCanvas);
+                    }
+
+                    const newCanvas = document.createElement('canvas');
+                    newCanvas.id = id;
+                    container.appendChild(newCanvas);
+                });
+
+                // Verificar se os gráficos já foram criados
+                //if (window.faixaEtariaChart) {
+                //    return; // Evitar recarregar os gráficos se já existirem
+                //}
+
+                // Limpar dados anteriores
+                let totalParticipantes = 0;
+                let totalPagos = 0;
+                let totalPendentes = 0;
+
+                // Dados para gráficos
+                const faixasEtarias = {
+                    "10-12 anos": 0,
+                    "13-15 anos": 0,
+                    "16-17 anos": 0,
+                    "18+ anos": 0
+                };
+
+                const celulas = {};
+                const igrejas = {};
+                const statusPagamento = {
+                    "Pago": 0,
+                    "Pendente": 0
+                };
+
+                // Dados para progresso de inscrições (simulado por semana)
+                const progressoInscricoes = {
+                    labels: [],
+                    data: []
+                };
+
+                // Buscar participantes do Firestore
+                db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                    .where("anoacamp", "==", "2025")
+                    .get()
+                    .then((querySnapshot) => {
+                        totalParticipantes = querySnapshot.size;
+
+                        // Processar dados dos participantes
+                        querySnapshot.forEach((doc) => {
+                            const participante = doc.data();
+
+                            // Contabilizar status de pagamento
+                            if (participante.statusPagamento === 'pago') {
+                                totalPagos++;
+                                statusPagamento["Pago"]++;
+                            } else {
+                                totalPendentes++;
+                                statusPagamento["Pendente"]++;
+                            }
+
+                            // Contabilizar faixa etária
+                            const idade = parseInt(participante.idade);
+                            if (idade >= 10 && idade <= 12) {
+                                faixasEtarias["10-12 anos"]++;
+                            } else if (idade >= 13 && idade <= 15) {
+                                faixasEtarias["13-15 anos"]++;
+                            } else if (idade >= 16 && idade <= 17) {
+                                faixasEtarias["16-17 anos"]++;
+                            } else {
+                                faixasEtarias["18+ anos"]++;
+                            }
+
+                            // Contabilizar igreja
+                            const igreja = participante.igreja === 'Outra' ? participante.outraIgreja : participante.igreja;
+                            igrejas[igreja] = (igrejas[igreja] || 0) + 1;
+
+                            // Contabilizar célula
+                            if (participante.celula && participante.celula.trim() !== '') {
+                                celulas[participante.celula] = (celulas[participante.celula] || 0) + 1;
+                            } else {
+                                celulas['Sem célula'] = (celulas['Sem célula'] || 0) + 1;
+                            }
+
+                            // Processar data de registro para o gráfico de progresso
+                            if (participante.dtRegistro) {
+                                const dataRegistro = new Date(participante.dtRegistro);
+                                const semana = `Semana ${Math.floor(dataRegistro.getDate() / 7) + 1}`;
+
+                                if (!progressoInscricoes.labels.includes(semana)) {
+                                    progressoInscricoes.labels.push(semana);
+                                    progressoInscricoes.data.push(1);
+                                } else {
+                                    const index = progressoInscricoes.labels.indexOf(semana);
+                                    progressoInscricoes.data[index]++;
+                                }
+                            }
                         });
 
-                        // Adicionar recomendações à lista após buscar tarefas pendentes
-                        adicionarRecomendacoesALista(recomendacoes);
-                    } else {
-                        // Adicionar recomendações à lista se não houver tarefas pendentes
-                        adicionarRecomendacoesALista(recomendacoes);
+                        // Ordenar as semanas cronologicamente
+                        const semanas = progressoInscricoes.labels.map((semana, index) => {
+                            return {
+                                label: semana,
+                                data: progressoInscricoes.data[index],
+                                num: parseInt(semana.replace('Semana ', ''))
+                            };
+                        }).sort((a, b) => a.num - b.num);
+
+                        progressoInscricoes.labels = semanas.map(s => s.label);
+                        progressoInscricoes.data = semanas.map(s => s.data);
+
+                        // Ordenar células por quantidade (do maior para o menor)
+                        const celulasOrdenadas = Object.entries(celulas)
+                            .sort((a, b) => b[1] - a[1])
+                            .reduce((obj, [key, value]) => {
+                                obj[key] = value;
+                                return obj;
+                            }, {});
+
+                        // Atualizar contadores
+                        document.getElementById('totalParticipantesInsight').textContent = totalParticipantes;
+                        document.getElementById('totalPagosInsight').textContent = totalPagos;
+                        document.getElementById('totalPendentesInsight').textContent = totalPendentes;
+
+                        // Criar gráficos
+                        window.faixaEtariaChart = criarGraficoFaixaEtaria(faixasEtarias);
+                        window.igrejaChart = criarGraficoIgrejas(igrejas);
+                        window.pagamentoChart = criarGraficoPagamento(statusPagamento);
+                        window.progressoChart = criarGraficoProgressoInscricoes(progressoInscricoes);
+                        window.celulaChart = criarGraficoCelulas(celulasOrdenadas);
+
+                        // Gerar recomendações
+                        gerarRecomendacoes(totalParticipantes, totalPagos, faixasEtarias);
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao carregar dados para insights: ", error);
+                    });
+            }
+
+            // Função para criar gráfico de faixa etária
+            function criarGraficoFaixaEtaria(dados) {
+                const canvas = document.getElementById('faixaEtariaInsightChart');
+                const ctx = canvas.getContext('2d');
+
+                // Verificar se já existe um gráfico associado a este canvas
+                const chartInstance = Chart.getChart(canvas);
+                if (chartInstance) {
+                    chartInstance.destroy();
+                }
+
+                // Configuração do Chart
+                return new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(dados),
+                        datasets: [{
+                            label: 'Quantidade de Inscritos',
+                            data: Object.values(dados),
+                            backgroundColor: [
+                                '#48c9b0',  // Teal
+                                '#82e0aa',  // Mint Green
+                                '#f7dc6f',  // Soft Yellow
+                                '#f0b27a'   // Peach
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
                     }
-                })
-                .catch((error) => {
-                    console.error("Erro ao buscar tarefas pendentes: ", error);
-                    // Adicionar recomendações à lista mesmo em caso de erro
-                    adicionarRecomendacoesALista(recomendacoes);
                 });
-        }
+            }
 
-        // Função auxiliar para adicionar recomendações à lista
-        function adicionarRecomendacoesALista(recomendacoes) {
-            const recomendacoesList = document.getElementById('recomendacoesList');
+            // Função para criar gráfico de células
+            function criarGraficoCelulas(dados) {
+                const ctx = document.getElementById('celulaInsightChart').getContext('2d');
 
-            // Adicionar recomendações à lista
-            recomendacoes.forEach(rec => {
-                const li = document.createElement('li');
-                li.className = 'list-group-item d-flex align-items-center';
-                li.innerHTML = `
+                // Limitar a 15 células para melhor visualização
+                let labels = Object.keys(dados);
+                let values = Object.values(dados);
+
+                if (labels.length > 15) {
+                    // Pegar as 14 maiores células
+                    labels = labels.slice(0, 14);
+                    values = values.slice(0, 14);
+
+                    // Somar o restante como "Outras"
+                    const outrasSum = Object.values(dados).slice(14).reduce((sum, val) => sum + val, 0);
+                    if (outrasSum > 0) {
+                        labels.push('Outras');
+                        values.push(outrasSum);
+                    }
+                }
+
+                // Gerar cores para cada barra
+                const colors = generateColors(labels.length);
+
+                return new Chart(ctx, {
+                    type: 'bar', // Mudança aqui: usar 'bar' em vez de 'horizontalBar'
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Quantidade de Inscritos',
+                            data: values,
+                            backgroundColor: colors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y', // Adicionar esta opção para barras horizontais
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Função auxiliar para gerar cores
+            function generateColors(count) {
+                const baseColors = [
+                    '#48c9b0',  // Teal
+                    '#82e0aa',  // Mint Green
+                    '#f7dc6f',  // Soft Yellow
+                    '#f0b27a',  // Peach
+                    '#ec7063',  // Coral Red
+                    '#af7ac5',  // Lavender
+                    '#5dade2',  // Sky Blue
+                    '#45b39d',  // Turquoise
+                    '#52be80',  // Green
+                    '#58d68d',  // Emerald
+                    '#f4d03f',  // Yellow
+                    '#eb984e',  // Orange
+                    '#cd6155',  // Brick Red
+                    '#a569bd',  // Purple
+                    '#5499c7'   // Blue
+                ];
+
+                // Se temos menos cores que o necessário, repetimos as cores
+                if (count <= baseColors.length) {
+                    return baseColors.slice(0, count);
+                } else {
+                    const result = [];
+                    for (let i = 0; i < count; i++) {
+                        result.push(baseColors[i % baseColors.length]);
+                    }
+                    return result;
+                }
+            }
+
+            // Variável global para armazenar a referência ao gráfico
+            let igrejaChart = null;
+
+            function criarGraficoIgrejas(dados) {
+                const ctx = document.getElementById('igrejaInsightChart').getContext('2d');
+
+                // Verificar se já existe um gráfico e destruí-lo
+                if (igrejaChart !== null) {
+                    igrejaChart.destroy();
+                }
+
+                // Criar o novo gráfico
+                igrejaChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(dados),
+                        datasets: [{
+                            data: Object.values(dados),
+                            backgroundColor: [
+                                '#48c9b0',  // Teal
+                                '#82e0aa',  // Mint Green
+                                '#f7dc6f',  // Soft Yellow
+                                '#f0b27a',  // Peach
+                                '#ec7063'   // Coral Red
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+
+                return igrejaChart;
+            }
+
+
+            // Função para criar gráfico de status de pagamento
+            function criarGraficoPagamento(dados) {
+                const ctx = document.getElementById('pagamentoInsightChart').getContext('2d');
+                return new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(dados),
+                        datasets: [{
+                            data: Object.values(dados),
+                            backgroundColor: [
+                                '#28a745',  // Verde para Pago
+                                '#ffc107'   // Amarelo para Pendente
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+            // Função para criar gráfico de progresso de inscrições
+            function criarGraficoProgressoInscricoes(dados) {
+                const ctx = document.getElementById('progressoInscricoesChart').getContext('2d');
+                return new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dados.labels,
+                        datasets: [{
+                            label: 'Novas Inscrições',
+                            data: dados.data,
+                            backgroundColor: 'rgba(61, 117, 23, 0.2)',
+                            borderColor: 'rgba(61, 117, 23, 1)',
+                            borderWidth: 2,
+                            tension: 0.3,
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Função para gerar recomendações baseadas nos dados
+            function gerarRecomendacoes(totalParticipantes, totalPagos, faixasEtarias) {
+                const recomendacoesList = document.getElementById('recomendacoesList');
+                recomendacoesList.innerHTML = '';
+
+                const recomendacoes = [];
+
+                // Recomendação baseada em pagamentos
+                const percentualPago = (totalPagos / totalParticipantes) * 100;
+                if (percentualPago < 50) {
+                    recomendacoes.push({
+                        texto: `Apenas ${percentualPago.toFixed(0)}% dos participantes confirmaram pagamento. Considere enviar lembretes ou facilitar formas de pagamento.`,
+                        icone: 'bi-cash-coin',
+                        classe: 'text-warning'
+                    });
+                }
+
+                // Recomendação baseada em faixa etária
+                const menoresIdade = faixasEtarias["10-12 anos"] + faixasEtarias["13-15 anos"] + faixasEtarias["16-17 anos"];
+                if (menoresIdade > 0) {
+                    recomendacoes.push({
+                        texto: `Há ${menoresIdade} participantes menores de idade. Certifique-se de que todos tenham autorização dos responsáveis.`,
+                        icone: 'bi-exclamation-triangle',
+                        classe: 'text-info'
+                    });
+                }
+
+                // Recomendação sobre tarefas
+                recomendacoes.push({
+                    texto: `Verifique se todas as tarefas relacionadas à acomodação estão sendo planejadas para ${totalParticipantes} participantes.`,
+                    icone: 'bi-house',
+                    classe: 'text-primary'
+                });
+
+                // Recomendação sobre equipe
+                const equipesNecessarias = Math.ceil(totalParticipantes / 15);
+                recomendacoes.push({
+                    texto: `Com base no número de inscritos, recomenda-se formar pelo menos ${equipesNecessarias} equipes para atividades em grupo.`,
+                    icone: 'bi-people',
+                    classe: 'text-success'
+                });
+
+                // Recomendação sobre tarefas pendentes
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checklist")
+                    .where("status", "!=", "completed")
+                    .get()
+                    .then((querySnapshot) => {
+                        if (querySnapshot.size > 0) {
+                            recomendacoes.push({
+                                texto: `Existem ${querySnapshot.size} tarefas pendentes. Considere priorizar as de alta prioridade.`,
+                                icone: 'bi-list-check',
+                                classe: 'text-danger'
+                            });
+
+                            // Adicionar recomendações à lista após buscar tarefas pendentes
+                            adicionarRecomendacoesALista(recomendacoes);
+                        } else {
+                            // Adicionar recomendações à lista se não houver tarefas pendentes
+                            adicionarRecomendacoesALista(recomendacoes);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao buscar tarefas pendentes: ", error);
+                        // Adicionar recomendações à lista mesmo em caso de erro
+                        adicionarRecomendacoesALista(recomendacoes);
+                    });
+            }
+
+            // Função auxiliar para adicionar recomendações à lista
+            function adicionarRecomendacoesALista(recomendacoes) {
+                const recomendacoesList = document.getElementById('recomendacoesList');
+
+                // Adicionar recomendações à lista
+                recomendacoes.forEach(rec => {
+                    const li = document.createElement('li');
+                    li.className = 'list-group-item d-flex align-items-center';
+                    li.innerHTML = `
             <i class="bi ${rec.icone} ${rec.classe} me-3" style="font-size: 1.5rem; margin-right: 10px;"></i>
             <span>${rec.texto}</span>
         `;
-                recomendacoesList.appendChild(li);
+                    recomendacoesList.appendChild(li);
+                });
+            }
+
+            // Função para atualizar os gráficos de insights
+            function atualizarGraficosInsights() {
+                // Destruir gráficos existentes se houver
+                try {
+                    if (window.faixaEtariaChart) {
+                        window.faixaEtariaChart.destroy();
+                    }
+
+                    if (window.igrejaChart) {
+                        window.igrejaChart.destroy();
+                    }
+
+                    if (window.pagamentoChart) {
+                        window.pagamentoChart.destroy();
+                    }
+
+                    if (window.progressoChart) {
+                        window.progressoChart.destroy();
+                    }
+
+                    if (window.celulaChart) {
+                        window.celulaChart.destroy();
+                    }
+                } catch (e) {
+                    console.warn("Erro ao destruir gráficos:", e);
+                }
+
+                // Limpar referências
+                window.faixaEtariaChart = null;
+                window.igrejaChart = null;
+                window.pagamentoChart = null;
+                window.progressoChart = null;
+                window.celulaChart = null;
+
+                // Recarregar dados após um pequeno delay
+                setTimeout(function () {
+                    carregarInsights();
+                }, 100);
+            }
+
+            // Adicione esta função para exportar dados dos insights
+            function exportarDadosInsights() {
+                db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                    .where("anoacamp", "==", "2025")
+                    .get()
+                    .then((querySnapshot) => {
+                        const dados = [];
+                        querySnapshot.forEach((doc) => {
+                            dados.push(doc.data());
+                        });
+
+                        if (dados.length === 0) {
+                            alert('Não há dados para exportar');
+                            return;
+                        }
+
+                        // Define a ordem das colunas
+                        const ordemColunas = [
+                            "anoacamp",
+                            "dtRegistro",
+                            "nome",
+                            "dtnasc",
+                            "idade",
+                            "celular",
+                            "cpf",
+                            "igreja",
+                            "outraIgreja",
+                            "rede",
+                            "supervisor",
+                            "celula",
+                            "email",
+                            "endereco",
+                            "numero",
+                            "compl",
+                            "bairro",
+                            "cidade",
+                            "contato",
+                            "fonecontato",
+                            "statusPagamento",
+                            "dataPagamento",
+                            "formaPagamento"
+                        ];
+
+                        // Cria uma nova array com os dados ordenados
+                        const dadosOrdenados = dados.map(item => {
+                            const novoObj = {};
+                            ordemColunas.forEach(coluna => {
+                                novoObj[coluna] = item[coluna];
+                            });
+                            return novoObj;
+                        });
+
+                        // Usar a biblioteca XLSX para criar e baixar o arquivo Excel
+                        const ws = XLSX.utils.json_to_sheet(dadosOrdenados);
+                        const wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, "Participantes");
+                        XLSX.writeFile(wb, "Participantes_ACAMP2025.xlsx");
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao buscar dados: ", error);
+                        alert('Erro ao buscar dados. Por favor, tente novamente.');
+                    });
+            }
+
+            // Adicionar event listener para a aba de insights
+            $('.list-group-item[data-section="insights"]').on('click', function () {
+                // Carregar dados apenas quando a aba for selecionada
+                setTimeout(carregarInsights, 100);
             });
-        }
 
-        // Adicionar event listener para a aba de insights
-        $('.list-group-item[data-section="insights"]').on('click', function () {
-            // Carregar dados apenas quando a aba for selecionada
-            setTimeout(carregarInsights, 100);
-        });
-
-        // Adicionar CSS necessário
-        document.head.insertAdjacentHTML('beforeend', `
-<style>
-    .dashboard-card {
-        background: white;
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 15px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+            // Adicionar CSS necessário
+            document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                .dashboard-card {
+                    background: white;
+                    border-radius: 10px;
+                    padding: 20px;
+                    margin-bottom: 15px;
+                    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                }
     
-    .chart-container {
-        position: relative;
-        height: 300px;
-        width: 100%;
-    }
-</style>
-`);
+                .chart-container {
+                    position: relative;
+                    height: 300px;
+                    width: 100%;
+                }
+            </style>
+        `);
 
-    </script>
+        </script>
 </body>
 
 </html>
