@@ -398,7 +398,7 @@
                     </div>
                 </div>
 
-                <!-- Seção Relatórios -->
+                <!-- Seção dos Relatórios -->
                 <div id="insights" class="content-section">
                     <!-- Seção Geral de Inscritos -->
                     <div class="card mb-4">
@@ -470,13 +470,33 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
+                        <!-- >inha 3 -->
+                        <div class="row mt-4">
                             <!-- Progresso de Inscrições -->
                             <div class="col-md-6">
                                 <div class="dashboard-card">
                                     <h4>Progresso de Inscrições</h4>
                                     <div class="chart-container">
                                         <canvas id="progressoInscricoesChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Controle de Rifas -->
+                            <div class="col-md-6">
+                                <div class="dashboard-card">
+                                    <h4>Controle de Rifas</h4>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 text-center">
+                                            <h3 id="rifasEntreguesCount">0</h3>
+                                            <p>Rifas Entregues</p>
+                                        </div>
+                                        <div class="col-md-6 text-center">
+                                            <h3 id="valorPrevistoRifas">R$ 0,00</h3>
+                                            <p>Valor Previsto</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -826,12 +846,12 @@
                 });
 
                 carregarTarefasTable();
-                
+
                 document.querySelectorAll('.filter-status').forEach(checkbox => {
-        checkbox.addEventListener('change', function() {
-            aplicarFiltros();
-        });
-    });
+                    checkbox.addEventListener('change', function () {
+                        aplicarFiltros();
+                    });
+                });
             }
 
             // Função para carregar dados do dashboard
@@ -1555,6 +1575,19 @@
                         window.pagamentoChart = criarGraficoPagamento(statusPagamento);
                         window.progressoChart = criarGraficoProgressoInscricoes(progressoInscricoes);
                         window.celulaChart = criarGraficoCelulas(celulasOrdenadas);
+
+                        // Buscar informações sobre as rifas
+                        fetch('/count_rifas.php')
+                            .then(response => response.json())
+                            .then(data => {
+                                // Atualizar a interface
+                                document.getElementById('rifasEntreguesCount').textContent = data.rifasEntregues;
+                                document.getElementById('valorPrevistoRifas').textContent =
+                                    `R$ ${data.valorPrevisto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+                            })
+                            .catch(error => {
+                                console.error("Erro ao buscar informações de rifas:", error);
+                            });
 
                         // Gerar recomendações
                         gerarRecomendacoes(totalParticipantes, totalPagos, faixasEtarias);
