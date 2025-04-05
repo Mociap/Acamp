@@ -35,6 +35,9 @@
         .table-responsive {
             border-radius: 10px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: auto;
         }
 
         .badge-pago {
@@ -75,9 +78,11 @@
         }
 
         /* Adicione isso à seção de estilos */
+        /*
         .dataTables_scrollBody {
             border-bottom: 1px solid #dee2e6;
         }
+        */
 
         .table-responsive {
             border-radius: 10px;
@@ -86,13 +91,20 @@
             /* Espaço adicional na parte inferior */
         }
 
-        /* Ajuste para garantir que a tabela ocupe toda a largura disponível */
-        table.dataTable {
+        /* Garante que o cabeçalho e o corpo da tabela tenham a mesma largura */
+        #participantesTable thead th,
+        #participantesTable tbody td {
+            white-space: nowrap;
+            min-width: 100px;
+        }
+
+        /* Melhora a aparência da tabela com rolagem */
+        #participantesTable {
             width: 100% !important;
+            margin-bottom: 0;
         }
     </style>
 </head>
-
 <body>
     <div class="header">
         <a href="gestao.html" class="btn-voltar">
@@ -315,8 +327,7 @@
                 responsive: true,
                 dom: 'Bfrti', // Removido 'p' (paginação)
                 paging: false, // Desativa a paginação
-                scrollY: '400px', // Altura fixa com rolagem vertical
-                scrollCollapse: true, // Colapsa a altura quando há poucos registros
+                scrollCollapse: true, // Mantém o colapso da altura
                 buttons: [
                     {
                         extend: 'excel',
