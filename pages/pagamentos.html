@@ -17,7 +17,7 @@
             color: #333;
             padding-top: 80px;
         }
-
+/* modelo */
         .dashboard-card {
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -104,8 +104,42 @@
         .btn-voltar .material-icons {
             font-size: 24px;
         }
-
-
+        .btn-group .btn {
+        margin-right: 2px;
+    }
+    
+    .btn-group .btn:last-child {
+        margin-right: 0;
+    }
+    
+    .btn-info {
+        background-color: #17a2b8;
+        color: white;
+    }
+    
+    .btn-info:hover {
+        background-color: #138496;
+    }
+    .sort-btn {
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+    
+    .sort-btn:hover {
+        transform: scale(1.2);
+    }
+    
+    .sort-btn:focus {
+        outline: none;
+        box-shadow: none;
+    }
+    
+    .sort-asc .material-icons {
+        transform: rotate(180deg);
+    }
     </style>
 </head>
 
@@ -221,7 +255,14 @@
                             <table class="table table-striped" id="pagamentosTable">
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th>Participante</th>
+                                        <th>
+                                            <div class="d-flex align-items-center">
+                                                Participante
+                                                <button class="btn btn-sm text-white ml-2 sort-btn" data-sort="participante">
+                                                    <i class="material-icons" id="sortIconParticipante">sort</i>
+                                                </button>
+                                            </div>
+                                        </th>
                                         <th>Data de Pagamento</th>
                                         <th>Valor</th>
                                         <th>Forma</th>
@@ -258,6 +299,55 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-danger" id="confirmarEstorno">Confirmar Estorno</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Edição de Pagamento -->
+    <div class="modal fade" id="editarPagamentoModal" tabindex="-1" role="dialog" aria-labelledby="editarPagamentoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editarPagamentoModalLabel">Editar Pagamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editarPagamentoForm">
+                        <input type="hidden" id="editPagamentoId">
+                        <input type="hidden" id="editParticipanteId">
+                        
+                        <div class="form-group">
+                            <label for="editParticipanteNome">Participante</label>
+                            <input type="text" class="form-control" id="editParticipanteNome" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editDataPagamento">Data de Pagamento</label>
+                            <input type="text" class="form-control" id="editDataPagamento" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editValorPagamento">Valor</label>
+                            <input type="text" class="form-control" id="editValorPagamento" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editFormaPagamento">Forma de Pagamento</label>
+                            <select class="form-control" id="editFormaPagamento" required>
+                                <option value="pix">PIX</option>
+                                <option value="cartao">Cartão</option>
+                                <option value="dinheiro">Dinheiro</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="salvarEdicaoPagamento">Salvar Alterações</button>
                 </div>
             </div>
         </div>
@@ -491,44 +581,71 @@
             const tabelaPagamentos = $('#pagamentosList');
             tabelaPagamentos.html('');
 
-            // Buscar últimos pagamentos
+            // Buscar pagamentos
             db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos")
                 .orderBy("dataPagamento", "desc")
-                .limit(10)
                 .get()
                 .then((querySnapshot) => {
+                    todosPagamentos = [];
+            
                     querySnapshot.forEach((doc) => {
                         const pagamento = doc.data();
-                        const dataPagamento = formatarData(pagamento.dataPagamento);
-                        const valor = (pagamento.valor).toFixed(2).replace('.', ',');
-
-                        const linha = `
-                    <tr>
-                        <td>${pagamento.participanteNome}</td>
-                        <td>${dataPagamento}</td>
-                        <td>R$ ${valor}</td>
-                        <td>${formatarFormaPagamento(pagamento.formaPagamento)}</td>
-                        <td>
-                            <span class="badge ${pagamento.status === 'confirmado' ? 'badge-pago' : 'badge-pendente'}">
-                                ${pagamento.status === 'confirmado' ? 'Confirmado' : 'Estornado'}
-                            </span>
-                        </td>
-                        <td>
-                            ${pagamento.status === 'confirmado' ?
-                                `<button class="btn btn-danger btn-sm" onclick="prepararEstorno('${doc.id}', '${pagamento.participanteId}', '${pagamento.participanteNome}')">
-                                    <i class="material-icons">cancel</i>
-                                </button>` :
-                                ''}
-                        </td>
-                    </tr>
-                `;
-
-                        tabelaPagamentos.append(linha);
+                        pagamento.id = doc.id; // Armazenar o ID do documento
+                        todosPagamentos.push(pagamento);
                     });
+            
+                    // Inicializar a ordenação
+                    updateSortIcon();
+            
+                    // Aplicar filtros e ordenação
+                    aplicarOrdenacao();
                 })
                 .catch((error) => {
                     console.error("Erro ao carregar pagamentos: ", error);
                 });
+        }
+
+        function atualizarTabelaPagamentos(pagamentos) {
+            const tabelaPagamentos = $('#pagamentosList');
+            tabelaPagamentos.html('');
+            
+            if (pagamentos.length === 0) {
+                tabelaPagamentos.html('<tr><td colspan="6" class="text-center">Nenhum pagamento encontrado</td></tr>');
+                return;
+            }
+            
+            pagamentos.forEach(pagamento => {
+                const dataPagamento = formatarData(pagamento.dataPagamento);
+                const valor = (pagamento.valor).toFixed(2).replace('.', ',');
+
+                const linha = `
+            <tr>
+                <td>${pagamento.participanteNome}</td>
+                <td>${dataPagamento}</td>
+                <td>R$ ${valor}</td>
+                <td>${formatarFormaPagamento(pagamento.formaPagamento)}</td>
+                <td>
+                    <span class="badge ${pagamento.status === 'confirmado' ? 'badge-pago' : 'badge-pendente'}">
+                        ${pagamento.status === 'confirmado' ? 'Confirmado' : 'Estornado'}
+                    </span>
+                </td>
+                <td>
+                    ${pagamento.status === 'confirmado' ? `
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-info btn-sm" onclick="prepararEdicao('${pagamento.id}')">
+                                <i class="material-icons">edit</i>
+                            </button>
+                            <button class="btn btn-danger btn-sm" onclick="prepararEstorno('${pagamento.id}', '${pagamento.participanteId}', '${pagamento.participanteNome}')">
+                                <i class="material-icons">cancel</i>
+                            </button>
+                        </div>
+                    ` : ''}
+                </td>
+            </tr>
+            `;
+
+                tabelaPagamentos.append(linha);
+            });
         }
 
         function prepararEstorno(pagamentoId, participanteId, participanteNome) {
@@ -641,6 +758,170 @@
                 case 'dinheiro': return 'Dinheiro';
                 default: return forma;
             }
+        }
+
+        // Função para preparar a edição de um pagamento
+        function prepararEdicao(pagamentoId) {
+            // Buscar o pagamento pelo ID
+            const pagamento = todosPagamentos.find(p => p.id === pagamentoId);
+            
+            if (!pagamento) {
+                alert('Pagamento não encontrado!');
+                return;
+            }
+            
+            // Preencher o formulário com os dados do pagamento
+            $('#editPagamentoId').val(pagamentoId);
+            $('#editParticipanteId').val(pagamento.participanteId);
+            $('#editParticipanteNome').val(pagamento.participanteNome);
+            $('#editDataPagamento').val(formatarData(pagamento.dataPagamento));
+            $('#editValorPagamento').val(pagamento.valor.toFixed(2).replace('.', ','));
+            $('#editFormaPagamento').val(pagamento.formaPagamento);
+            
+            // Abrir o modal
+            $('#editarPagamentoModal').modal('show');
+        }
+
+        // Adicione este event listener no document.ready
+        $(document).ready(function () {
+            // ... código existente ...
+            
+            // Salvar edição de pagamento
+            $('#salvarEdicaoPagamento').on('click', function() {
+                const pagamentoId = $('#editPagamentoId').val();
+                const participanteId = $('#editParticipanteId').val();
+                const valorPagamento = parseFloat($('#editValorPagamento').val().replace(',', '.'));
+                const formaPagamento = $('#editFormaPagamento').val();
+                
+                if (!valorPagamento || isNaN(valorPagamento) || valorPagamento <= 0) {
+                    alert('Por favor, informe um valor válido para o pagamento.');
+                    return;
+                }
+                
+                // Atualizar o pagamento no Firestore
+                db.collection("Acampamentos").doc("AcampBT2025").collection("pagamentos").doc(pagamentoId)
+                    .update({
+                        valor: valorPagamento,
+                        formaPagamento: formaPagamento,
+                        dataEdicao: new Date().toISOString()
+                    })
+                    .then(() => {
+                        // Atualizar o participante com as novas informações
+                        return db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes").doc(participanteId)
+                            .update({
+                                formaPagamento: formaPagamento,
+                                valorPago: valorPagamento
+                            });
+                    })
+                    .then(() => {
+                        alert('Pagamento atualizado com sucesso!');
+                        $('#editarPagamentoModal').modal('hide');
+                        
+                        // Recarregar dados
+                        carregarDashboard();
+                        carregarUltimosPagamentos();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao atualizar pagamento: ", error);
+                        alert("Erro ao atualizar pagamento. Tente novamente.");
+                    });
+            });
+        });
+
+        // Adicione estas variáveis globais no início do seu script
+        let sortConfig = {
+            field: 'dataPagamento', // Campo padrão para ordenação (data de pagamento)
+            direction: 'desc'       // Direção padrão (decrescente)
+        };
+
+        // Adicione este event listener no document.ready
+        $(document).ready(function () {
+            // ... código existente ...
+            
+            // Adicionar evento de clique no botão de classificação
+            $('.sort-btn').on('click', function() {
+                const sortField = $(this).data('sort');
+                
+                // Se clicar no mesmo campo, inverte a direção
+                if (sortField === sortConfig.field) {
+                    sortConfig.direction = sortConfig.direction === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Se clicar em um campo diferente, define o novo campo e direção padrão (asc)
+                    sortConfig.field = sortField;
+                    sortConfig.direction = 'asc';
+                }
+                
+                // Atualizar ícone
+                updateSortIcon();
+                
+                // Aplicar a ordenação
+                aplicarOrdenacao();
+            });
+        });
+
+        // Função para atualizar o ícone de ordenação
+        function updateSortIcon() {
+            // Remover classes de todos os ícones
+            $('.sort-btn').removeClass('sort-asc sort-desc');
+            
+            // Adicionar classe ao ícone atual
+            $(`.sort-btn[data-sort="${sortConfig.field}"]`).addClass(
+                sortConfig.direction === 'asc' ? 'sort-asc' : 'sort-desc'
+            );
+        }
+
+        // Função para aplicar a ordenação
+        function aplicarOrdenacao() {
+            let pagamentosFiltrados = [...todosPagamentos];
+            
+            // Aplicar filtros ativos
+            // ... código de filtragem existente ...
+            
+            // Aplicar ordenação
+            pagamentosFiltrados.sort((a, b) => {
+                let valorA, valorB;
+                
+                // Determinar os valores a comparar com base no campo de ordenação
+                switch(sortConfig.field) {
+                    case 'participante':
+                        valorA = a.participanteNome.toLowerCase();
+                        valorB = b.participanteNome.toLowerCase();
+                        break;
+                    case 'data':
+                        valorA = new Date(a.dataPagamento);
+                        valorB = new Date(b.dataPagamento);
+                        break;
+                    case 'valor':
+                        valorA = a.valor;
+                        valorB = b.valor;
+                        break;
+                    case 'forma':
+                        valorA = a.formaPagamento;
+                        valorB = b.formaPagamento;
+                        break;
+                    default:
+                        valorA = new Date(a.dataPagamento);
+                        valorB = new Date(b.dataPagamento);
+                }
+                
+                // Comparar os valores na direção especificada
+                if (sortConfig.direction === 'asc') {
+                    return valorA > valorB ? 1 : -1;
+                } else {
+                    return valorA < valorB ? 1 : -1;
+                }
+            });
+            
+            // Atualizar a tabela com os resultados ordenados
+            atualizarTabelaPagamentos(pagamentosFiltrados);
+        }
+
+        // Modificar a função aplicarFiltros para usar a nova função de ordenação
+        function aplicarFiltros() {
+            // ... código de filtragem existente ...
+            
+            // Aplicar ordenação após a filtragem
+            aplicarOrdenacao();
         }
     </script>
 </body>
