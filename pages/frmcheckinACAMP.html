@@ -242,13 +242,16 @@
 
             <div class="form-group">
                 <label for="nome">Nome Completo</label>
-                <input type="text" class="form-control" id="nome" required>
+                <select class="form-control" id="nome" required>
+                    <option value="">Selecione o acampante</option>
+                    <!-- As opções serão carregadas dinamicamente via JavaScript -->
+                </select>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="dtnasc">Data de Nascimento</label>
-                    <input type="date" class="form-control" id="dtnasc" required>
+                    <input type="date" class="form-control" id="dtnasc" readonly>
                 </div>
                 <div class="form-group col-md-4">
                     <label for="idade">Idade</label>
@@ -256,7 +259,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="cpf">CPF</label>
-                    <input type="text" class="form-control" id="cpf" required>
+                    <input type="text" class="form-control" id="cpf" readonly>
                 </div>
             </div>
 
@@ -527,7 +530,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.0/vanilla-masker.min.js"></script>
-    <script src="firebaseConfig2.js"></script>
+    <script src="../firebaseConfig2.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
     <script>
@@ -630,17 +633,60 @@
             });
         });
 
-        // Função para buscar dados do acampante pelo nome
-        function buscarAcampante() {
-            const nome = document.getElementById('nome').value.trim().toUpperCase();
-            if (nome) {
+        // Função para carregar os acampantes com status "pago" no dropdown
+        function carregarAcampantes() {
+            const selectNome = document.getElementById('nome');
+            
+            // Limpar opções existentes, mantendo apenas a primeira
+            while (selectNome.options.length > 1) {
+                selectNome.remove(1);
+            }
+            
+            // Buscar acampantes com status "pago" no Firestore
+            db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                .where("statusPagamento", "==", "pago")
+                .where("anoacamp", "==", "2025")
+                .orderBy("nome")
+                .get()
+                .then((querySnapshot) => {
+                    if (!querySnapshot.empty) {
+                        querySnapshot.forEach((doc) => {
+                            const data = doc.data();
+                            const option = document.createElement('option');
+                            option.value = data.nome;
+                            option.textContent = data.nome;
+                            option.setAttribute('data-id', doc.id);
+                            selectNome.appendChild(option);
+                        });
+                        console.log(`${querySnapshot.size} acampantes carregados no dropdown.`);
+                    } else {
+                        console.log("Nenhum acampante com status 'pago' encontrado.");
+                        const option = document.createElement('option');
+                        option.value = "";
+                        option.textContent = "Nenhum acampante disponível para check-in";
+                        selectNome.appendChild(option);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar acampantes:", error);
+                    alert('Erro ao carregar lista de acampantes. Por favor, recarregue a página.');
+                });
+        }
+
+        // Carregar acampantes quando a página for carregada
+        document.addEventListener('DOMContentLoaded', carregarAcampantes);
+
+        // Modificar o evento de seleção do nome para buscar os dados do acampante
+        document.getElementById('nome').addEventListener('change', function() {
+            const nomeAcampante = this.value;
+            if (nomeAcampante) {
+                // Buscar dados do acampante selecionado
                 db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
-                    .where("nome", "==", nome)
+                    .where("nome", "==", nomeAcampante)
                     .where("anoacamp", "==", "2025")
                     .get()
                     .then((querySnapshot) => {
                         if (!querySnapshot.empty) {
-                            // Preencher os campos com os dados do acampante
                             querySnapshot.forEach((doc) => {
                                 const data = doc.data();
                                 document.getElementById('cpf').value = data.cpf || '';
@@ -654,19 +700,20 @@
                                 if (data.celular) document.getElementById('telefone1').value = data.celular;
                                 if (data.contato) document.getElementById('responsavel').value = data.contato;
                             });
-                        } else {
-                            alert('Acampante não encontrado. Verifique se o nome está correto ou se a inscrição foi realizada.');
                         }
                     })
                     .catch((error) => {
-                        console.error("Erro ao buscar acampante:", error);
-                        alert('Erro ao buscar dados do acampante. Por favor, tente novamente.');
+                        console.error("Erro ao buscar dados do acampante:", error);
                     });
+            } else {
+                // Limpar campos se nenhum acampante for selecionado
+                document.getElementById('cpf').value = '';
+                document.getElementById('dtnasc').value = '';
+                document.getElementById('idade').value = '';
+                document.getElementById('telefone1').value = '';
+                document.getElementById('responsavel').value = '';
             }
-        }
-
-        // Adicionar evento para buscar acampante quando o nome for preenchido
-        document.getElementById('nome').addEventListener('blur', buscarAcampante);
+        });
 
         // Definir a data de preenchimento
         const dataAtual = new Date().toLocaleDateString('pt-BR');
