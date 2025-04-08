@@ -198,6 +198,24 @@
                 z-index: 1000;
             }
         }
+
+        .signature-container {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .signature-pad {
+            width: 100%;
+            height: 200px;
+            touch-action: none;
+        }
+
+        .signature-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 
@@ -490,6 +508,18 @@
                 <input type="text" class="form-control" id="dataPreenchimento" readonly>
             </div>
 
+            <div class="form-group">
+                <label for="assinatura">Assinatura do Responsável</label>
+                <div class="signature-container">
+                    <canvas id="signature-pad" class="signature-pad" width="400" height="200"></canvas>
+                </div>
+                <div class="signature-buttons mt-2">
+                    <button type="button" class="btn btn-secondary btn-sm" id="clear-signature">Limpar Assinatura</button>
+                </div>
+                <input type="hidden" id="assinaturaData" name="assinaturaData">
+                <small class="form-text text-muted">Por favor, assine usando a caneta do tablet.</small>
+            </div>
+
             <button type="submit" class="btn btn-primary btn-block" id="cadastrarBtn">Confirmar Check-in</button>
         </form>
     </div>
@@ -498,6 +528,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.0/vanilla-masker.min.js"></script>
     <script src="firebaseConfig2.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
     <script>
         // Configuração do Firebase
@@ -781,6 +812,44 @@
                 header.classList.remove('scrolled');
                 headerTitle.classList.remove('visible');
             }
+
+                // Inicializar o pad de assinatura
+    const canvas = document.getElementById('signature-pad');
+    const signaturePad = new SignaturePad(canvas, {
+        backgroundColor: 'rgb(255, 255, 255)',
+        penColor: 'rgb(0, 0, 0)'
+    });
+
+    // Ajustar o tamanho do canvas quando a janela for redimensionada
+    function resizeCanvas() {
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+        canvas.width = canvas.offsetWidth * ratio;
+        canvas.height = canvas.offsetHeight * ratio;
+        canvas.getContext("2d").scale(ratio, ratio);
+        signaturePad.clear(); // Limpa a assinatura
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    // Botão para limpar a assinatura
+    document.getElementById('clear-signature').addEventListener('click', function() {
+        signaturePad.clear();
+    });
+
+    // Modificar o evento de envio do formulário para incluir a assinatura
+    document.getElementById('checkinForm').addEventListener('submit', function(e) {
+        // Verificar se a assinatura foi feita
+        if (signaturePad.isEmpty()) {
+            e.preventDefault();
+            alert('Por favor, forneça a assinatura do responsável antes de confirmar o check-in.');
+            return;
+        }
+
+        // Capturar a assinatura como uma imagem base64
+        const assinaturaData = signaturePad.toDataURL('image/png');
+        document.getElementById('assinaturaData').value = assinaturaData;
+    });
         });
     </script>
 </body>
