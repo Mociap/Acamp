@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+<!-- Checkin -->
 
 <head>
     <meta charset="UTF-8">
@@ -222,6 +223,7 @@
                     <a href="#" class="list-group-item list-group-item-action" data-section="insights">Relatórios</a>
                     <a href="#" class="list-group-item list-group-item-action" data-section="financeiro">Fluxo de
                         Caixa</a>
+                    <a href="#" class="list-group-item list-group-item-action" data-section="checkin">Check-in</a>
                     <!--<a href="#" class="list-group-item list-group-item-action">Participantes</a>
                     <a href="#" class="list-group-item list-group-item-action">Configurações</a>-->
                 </div>
@@ -640,6 +642,105 @@
                                 <!-- Os dados serão carregados dinamicamente do Firebase -->
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <!-- Seção do Check-in -->
+                <div id="checkin" class="content-section">
+                    <div class="row mb-4">
+                        <div class="col-md-8">
+                            <h3>Controle de Check-in do Acampamento</h3>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            <button class="btn btn-outline-secondary" id="exportarCheckinBtn">
+                                <i class="bi bi-download"></i> Exportar Dados
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Resumo de Check-in -->
+                    <div class="row mb-4">
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Total de Inscritos</h5>
+                                    <h3 id="totalInscritosCheckin">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Check-ins Realizados</h5>
+                                    <h3 id="totalCheckinsRealizados" class="text-success">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Pendentes</h5>
+                                    <h3 id="totalCheckinsPendentes" class="text-warning">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-light">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Progresso</h5>
+                                    <div class="progress mt-2" style="height: 30px;">
+                                        <div class="progress-bar bg-success" id="progressoCheckin" role="progressbar"
+                                            style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                            0%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gráficos de Check-in -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <h4>Check-ins por Hora</h4>
+                                <div class="chart-container">
+                                    <canvas id="checkinPorHoraChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="dashboard-card">
+                                <h4>Check-ins por Célula</h4>
+                                <div class="chart-container">
+                                    <canvas id="checkinPorCelulaChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Check-ins -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Últimos Check-ins Realizados</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="checkinsTable">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Célula</th>
+                                            <th>Data/Hora</th>
+                                            <th>Status</th>
+                                            <th>Responsável</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="checkinsList">
+                                        <!-- Os dados serão carregados dinamicamente do Firebase -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -3187,6 +3288,262 @@
                 }, 100);
             });
 
+            // Variáveis globais para o check-in
+            let checkinsDataTable;
+            let totalInscritos = 0;
+            let totalCheckins = 0;
+            let checkinsPorHora = {};
+            let checkinsPorCelula = {};
+
+            // Função para inicializar a tabela de check-ins
+            function inicializarTabelaCheckins() {
+                if (checkinsDataTable) {
+                    checkinsDataTable.destroy();
+                }
+
+                checkinsDataTable = $('#checkinsTable').DataTable({
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.11.5/i18n/pt-BR.json'
+                    },
+                    responsive: true,
+                    order: [[2, 'desc']], // Ordenar por data/hora (decrescente)
+                    columns: [
+                        { data: 'nome' },
+                        { data: 'celula' },
+                        { data: 'dataHora' },
+                        { data: 'status' },
+                        { data: 'responsavel' }
+                    ]
+                });
+
+                carregarDadosCheckin();
+            }
+
+            // Função para carregar dados de check-in
+            function carregarDadosCheckin() {
+                // Limpar dados anteriores
+                checkinsDataTable.clear();
+                totalCheckins = 0;
+                checkinsPorHora = {};
+                checkinsPorCelula = {};
+
+                // Primeiro, buscar o total de inscritos
+                db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                    .where("anoacamp", "==", "2025")
+                    .get()
+                    .then((querySnapshot) => {
+                        totalInscritos = querySnapshot.size;
+
+                        // Agora, buscar os check-ins
+                        return db.collection("Acampamentos").doc("AcampBT2025").collection("checkins").get();
+                    })
+                    .then((querySnapshot) => {
+                        let checkins = [];
+                        totalCheckins = querySnapshot.size;
+
+                        querySnapshot.forEach((doc) => {
+                            const checkin = doc.data();
+                            const dataObj = new Date(checkin.dataHora);
+
+                            // Formatar data e hora
+                            const dataFormatada = dataObj.toLocaleDateString('pt-BR');
+                            const horaFormatada = dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+                            const dataHoraFormatada = `${dataFormatada} ${horaFormatada}`;
+
+                            // Contabilizar check-ins por hora
+                            const hora = dataObj.getHours();
+                            const horaChave = `${hora}:00`;
+                            checkinsPorHora[horaChave] = (checkinsPorHora[horaChave] || 0) + 1;
+
+                            // Contabilizar check-ins por célula
+                            const celula = checkin.celula || 'Sem célula';
+                            checkinsPorCelula[celula] = (checkinsPorCelula[celula] || 0) + 1;
+
+                            // Adicionar à lista de check-ins
+                            checkins.push({
+                                id: doc.id,
+                                nome: checkin.nome,
+                                celula: checkin.celula || 'Não informado',
+                                dataHora: dataHoraFormatada,
+                                status: '<span class="badge badge-success">Confirmado</span>',
+                                responsavel: checkin.responsavel || 'Sistema'
+                            });
+                        });
+
+                        // Adicionar dados à tabela
+                        checkinsDataTable.rows.add(checkins).draw();
+
+                        // Atualizar resumo de check-in
+                        atualizarResumoCheckin();
+
+                        // Criar gráficos
+                        criarGraficosCheckin();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao carregar dados de check-in: ", error);
+                    });
+            }
+
+            // Função para atualizar o resumo de check-in
+            function atualizarResumoCheckin() {
+                const pendentes = totalInscritos - totalCheckins;
+                const percentual = totalInscritos > 0 ? Math.round((totalCheckins / totalInscritos) * 100) : 0;
+
+                document.getElementById('totalInscritosCheckin').textContent = totalInscritos;
+                document.getElementById('totalCheckinsRealizados').textContent = totalCheckins;
+                document.getElementById('totalCheckinsPendentes').textContent = pendentes;
+
+                // Atualizar barra de progresso
+                const progressBar = document.getElementById('progressoCheckin');
+                progressBar.style.width = percentual + '%';
+                progressBar.textContent = percentual + '%';
+                progressBar.setAttribute('aria-valuenow', percentual);
+            }
+
+            // Função para criar gráficos de check-in
+            function criarGraficosCheckin() {
+                // Destruir gráficos existentes se houver
+                try {
+                    // Verificar se os gráficos existem e são instâncias de Chart antes de destruí-los
+                    if (window.checkinPorHoraChart instanceof Chart) {
+                        window.checkinPorHoraChart.destroy();
+                    }
+
+                    if (window.checkinPorCelulaChart instanceof Chart) {
+                        window.checkinPorCelulaChart.destroy();
+                    }
+                } catch (e) {
+                    console.warn("Erro ao destruir gráficos de check-in:", e);
+                }
+
+                // Limpar referências
+                window.checkinPorHoraChart = null;
+                window.checkinPorCelulaChart = null;
+
+                // Recriar elementos canvas
+                const containers = [
+                    'checkinPorHoraChart',
+                    'checkinPorCelulaChart'
+                ];
+
+                containers.forEach(id => {
+                    const container = document.getElementById(id).parentNode;
+                    const oldCanvas = document.getElementById(id);
+                    if (oldCanvas) {
+                        container.removeChild(oldCanvas);
+                    }
+
+                    const newCanvas = document.createElement('canvas');
+                    newCanvas.id = id;
+                    container.appendChild(newCanvas);
+                });
+
+                // Ordenar horas cronologicamente
+                const horasOrdenadas = Object.keys(checkinsPorHora).sort((a, b) => {
+                    return parseInt(a) - parseInt(b);
+                });
+
+                // Gráfico de Check-ins por Hora
+                const ctxHora = document.getElementById('checkinPorHoraChart').getContext('2d');
+                window.checkinPorHoraChart = new Chart(ctxHora, {
+                    type: 'bar',
+                    data: {
+                        labels: horasOrdenadas,
+                        datasets: [{
+                            label: 'Quantidade de Check-ins',
+                            data: horasOrdenadas.map(hora => checkinsPorHora[hora]),
+                            backgroundColor: 'rgba(61, 117, 23, 0.7)',
+                            borderColor: 'rgba(61, 117, 23, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    stepSize: 1
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Ordenar células por quantidade (do maior para o menor)
+                const celulasOrdenadas = Object.entries(checkinsPorCelula)
+                    .sort((a, b) => b[1] - a[1])
+                    .reduce((obj, [key, value]) => {
+                        obj[key] = value;
+                        return obj;
+                    }, {});
+
+                // Gerar cores para o gráfico de células
+                const coresCelulas = generateColors(Object.keys(celulasOrdenadas).length);
+
+                // Gráfico de Check-ins por Célula
+                const ctxCelula = document.getElementById('checkinPorCelulaChart').getContext('2d');
+                window.checkinPorCelulaChart = new Chart(ctxCelula, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(celulasOrdenadas),
+                        datasets: [{
+                            data: Object.values(celulasOrdenadas),
+                            backgroundColor: coresCelulas
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false
+                    }
+                });
+            }
+
+
+            // Função para exportar dados de check-in
+            document.getElementById('exportarCheckinBtn').addEventListener('click', function () {
+                db.collection("Acampamentos").doc("AcampBT2025").collection("checkins")
+                    .get()
+                    .then((querySnapshot) => {
+                        const dados = [];
+                        querySnapshot.forEach((doc) => {
+                            const checkin = doc.data();
+                            const dataObj = new Date(checkin.dataHora);
+
+                            dados.push({
+                                'Nome': checkin.nome,
+                                'Célula': checkin.celula || 'Não informado',
+                                'Data': dataObj.toLocaleDateString('pt-BR'),
+                                'Hora': dataObj.toLocaleTimeString('pt-BR'),
+                                'Responsável': checkin.responsavel || 'Sistema'
+                            });
+                        });
+
+                        if (dados.length === 0) {
+                            alert('Não há dados de check-in para exportar');
+                            return;
+                        }
+
+                        // Usar a biblioteca XLSX para criar e baixar o arquivo Excel
+                        const ws = XLSX.utils.json_to_sheet(dados);
+                        const wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, "Check-ins");
+                        XLSX.writeFile(wb, "Checkins_ACAMP2025.xlsx");
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao buscar dados: ", error);
+                        alert('Erro ao buscar dados. Por favor, tente novamente.');
+                    });
+            });
+
+            // Adicionar event listener para a aba de check-in
+            $('.list-group-item[data-section="checkin"]').on('click', function () {
+                // Inicializar tabela e carregar dados apenas quando a aba for selecionada
+                setTimeout(function () {
+                    inicializarTabelaCheckins();
+                }, 100);
+            });
 
 
         </script>
