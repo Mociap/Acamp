@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
+<!-- Excluir Checkin -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -145,6 +145,30 @@
             color: white;
             border-color: #6108a1;
         }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #bd2130;
+        }
+
+        .spinner-border {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            vertical-align: text-bottom;
+            border: 0.2em solid currentColor;
+            border-right-color: transparent;
+            border-radius: 50%;
+            animation: spinner-border .75s linear infinite;
+        }
+
+        @keyframes spinner-border {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 
@@ -282,6 +306,28 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <button type="button" class="btn btn-primary" id="exportarPDF">Exportar PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" role="dialog" aria-labelledby="confirmarExclusaoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmarExclusaoModalLabel">Confirmar Exclusão</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza que deseja excluir o check-in de <strong id="nomeAcampanteExclusao"></strong>?</p>
+                    <p class="text-danger">Esta ação não pode ser desfeita.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Excluir Check-in</button>
                 </div>
             </div>
         </div>
@@ -493,8 +539,11 @@
                         `<button class="btn btn-info btn-sm mr-2" onclick="verDetalhes('${acampante.nome}')">
                                     <i class="material-icons">visibility</i>
                                 </button>
-                                <button class="btn btn-pdf" onclick="exportarPDF('${acampante.nome}')">
+                                <button class="btn btn-pdf mr-2" onclick="exportarPDF('${acampante.nome}')">
                                     <i class="material-icons">picture_as_pdf</i>
+                                </button>
+                                <button class="btn btn-danger btn-sm" onclick="confirmarExclusao('${acampante.nome}')">
+                                    <i class="material-icons">delete</i>
                                 </button>` :
                         `<button class="btn btn-primary btn-sm" onclick="realizarCheckin('${acampante.nome}')">
                                     <i class="material-icons">how_to_reg</i>
@@ -936,6 +985,82 @@
             } catch (e) {
                 return dataString;
             }
+        }
+
+        // Função para mostrar o modal de confirmação de exclusão
+        function confirmarExclusao(nomeAcampante) {
+            // Armazenar o nome do acampante no modal
+            $('#nomeAcampanteExclusao').text(nomeAcampante);
+            
+            // Configurar o botão de confirmação
+            $('#confirmarExclusaoBtn').off('click').on('click', function() {
+                excluirCheckin(nomeAcampante);
+            });
+            
+            // Mostrar o modal
+            $('#confirmarExclusaoModal').modal('show');
+        }
+
+        // Função para excluir o check-in
+        function excluirCheckin(nomeAcampante) {
+            // Mostrar indicador de carregamento
+            $('#confirmarExclusaoBtn').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Excluindo...');
+            $('#confirmarExclusaoBtn').prop('disabled', true);
+            
+            // 1. Buscar o documento de check-in para excluir
+            db.collection("Acampamentos").doc("AcampBT2025").collection("checkin")
+                .where("nome", "==", nomeAcampante)
+                .get()
+                .then((querySnapshot) => {
+                    // Array de promessas para exclusão
+                    const deletePromises = [];
+            
+                    querySnapshot.forEach((doc) => {
+                        // Adicionar promessa de exclusão ao array
+                        deletePromises.push(doc.ref.delete());
+                    });
+            
+                    // 2. Atualizar o status na coleção de inscrições
+                    const updatePromise = db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
+                        .where("nome", "==", nomeAcampante)
+                        .where("anoacamp", "==", "2025")
+                        .get()
+                        .then((inscricoesSnapshot) => {
+                            const inscricoesPromises = [];
+                    
+                            inscricoesSnapshot.forEach((doc) => {
+                                // Remover campos relacionados ao check-in
+                                inscricoesPromises.push(doc.ref.update({
+                                    statusCheckin: firebase.firestore.FieldValue.delete(),
+                                    dtCheckin: firebase.firestore.FieldValue.delete()
+                                }));
+                            });
+                    
+                            return Promise.all(inscricoesPromises);
+                        });
+            
+                    // Executar todas as promessas
+                    return Promise.all([...deletePromises, updatePromise]);
+                })
+                .then(() => {
+                    // Fechar o modal
+                    $('#confirmarExclusaoModal').modal('hide');
+            
+                    // Mostrar mensagem de sucesso
+                    alert('Check-in excluído com sucesso!');
+            
+                    // Recarregar os dados
+                    carregarDashboard();
+                    carregarCheckins();
+                })
+                .catch((error) => {
+                    console.error("Erro ao excluir check-in:", error);
+                    alert('Erro ao excluir check-in. Por favor, tente novamente.');
+            
+                    // Restaurar botão
+                    $('#confirmarExclusaoBtn').html('Excluir Check-in');
+                    $('#confirmarExclusaoBtn').prop('disabled', false);
+                });
         }
     </script>
 </body>

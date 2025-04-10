@@ -633,7 +633,7 @@
             });
         });
 
-        // Função para carregar os acampantes com status "pago" no dropdown
+        // Função para carregar os acampantes com status "pago" e sem check-in no dropdown
         function carregarAcampantes() {
             const selectNome = document.getElementById('nome');
             
@@ -642,7 +642,7 @@
                 selectNome.remove(1);
             }
             
-            // Buscar acampantes com status "pago" no Firestore
+            // Buscar acampantes com status "pago" no Firestore e que não fizeram check-in
             db.collection("Acampamentos").doc("AcampBT2025").collection("inscricoes")
                 .where("statusPagamento", "==", "pago")
                 .where("anoacamp", "==", "2025")
@@ -650,15 +650,30 @@
                 .get()
                 .then((querySnapshot) => {
                     if (!querySnapshot.empty) {
+                        let acampantesDisponiveis = 0;
+                        
                         querySnapshot.forEach((doc) => {
                             const data = doc.data();
-                            const option = document.createElement('option');
-                            option.value = data.nome;
-                            option.textContent = data.nome;
-                            option.setAttribute('data-id', doc.id);
-                            selectNome.appendChild(option);
+                            
+                            // Verificar se o acampante ainda não realizou o check-in
+                            if (!data.statusCheckin || data.statusCheckin !== "realizado") {
+                                const option = document.createElement('option');
+                                option.value = data.nome;
+                                option.textContent = data.nome;
+                                option.setAttribute('data-id', doc.id);
+                                selectNome.appendChild(option);
+                                acampantesDisponiveis++;
+                            }
                         });
-                        console.log(`${querySnapshot.size} acampantes carregados no dropdown.`);
+                        
+                        console.log(`${acampantesDisponiveis} acampantes disponíveis para check-in carregados no dropdown.`);
+                        
+                        if (acampantesDisponiveis === 0) {
+                            const option = document.createElement('option');
+                            option.value = "";
+                            option.textContent = "Todos os acampantes já realizaram check-in";
+                            selectNome.appendChild(option);
+                        }
                     } else {
                         console.log("Nenhum acampante com status 'pago' encontrado.");
                         const option = document.createElement('option');
